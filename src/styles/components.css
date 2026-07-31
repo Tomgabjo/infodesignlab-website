@@ -145,3 +145,32 @@ a.work:hover .work__title {opacity:.62}
    means a markdown author gets the rhythm for free and never hand-manages a
    presentational div. .copy .sub is kept above so existing markup still works. */
 .copy h2:not(:first-child) { margin-top: clamp(28px, 4.5vh, 48px); }
+
+/* ---------- reference list ----------
+   Article apparatus, not body copy: same serif, stepped down and muted, with a
+   hanging indent so author surnames align down the left edge. Constrained to
+   the same 62ch as .copy p so the right edge agrees with the prose above it. */
+.refs {
+  margin-top: clamp(20px, 3vh, 30px);
+  max-width: 62ch;
+}
+.refs p {
+  font-family: var(--serif);
+  font-size: clamp(.92rem, 1.02vw, 1.02rem);
+  line-height: 1.42;
+  color: var(--ink-cap);
+  margin-bottom: .85em;
+  /* hanging indent: first line flush, continuations indented */
+  padding-left: 1.4em;
+  text-indent: -1.4em;
+  max-width: none;
+}
+.refs p:last-child { margin-bottom: 0; }
+.refs a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  /* long DOIs must not force a horizontal scroll on a phone */
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

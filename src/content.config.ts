@@ -36,11 +36,21 @@ const caseStudies = defineCollection({
     venue: z.object({ label: z.string(), value: z.string() }).optional(),
     /**
      * Authors with affiliations, as the rail renders them: name in ink,
-     * affiliation beneath in muted mono. Affiliations are migrated verbatim —
-     * they are how collaborators are credited, not decoration.
+     * affiliations beneath in muted mono. Migrated verbatim — this is how
+     * collaborators are credited, not decoration.
+     *
+     * `affiliations` is an ARRAY because authors genuinely hold more than one:
+     * Shobha Maharaj on the Overshoot abstract has two, listed on separate
+     * lines in the source. The prototype flattened them into one string joined
+     * by "·", which misrepresented two institutions as one.
      */
     authors: z
-      .array(z.object({ name: z.string(), affiliation: z.string() }))
+      .array(
+        z.object({
+          name: z.string(),
+          affiliations: z.array(z.string()).min(1),
+        })
+      )
       .default([]),
     year: z.number().optional(),
     /** Card image for the work grid. */
