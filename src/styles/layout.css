@@ -71,6 +71,26 @@
   .intro { padding-top: clamp(30px, 5vh, 48px); }
 }
 
+/* PHONE LANDSCAPE — restore the two-column split.
+   The stacked rule above is width-only, so a phone turned sideways (~844x390)
+   still matched it while 28svh collapsed the media panel to a ~110px band, which
+   read as the image "riding up" with no second column. Two columns is the design
+   intent whenever there is horizontal room; the constraint here is vertical.
+   Bounded by min-width so a genuinely narrow landscape window stays stacked, and
+   by max-height so tablet portrait (e.g. 768x1024) is untouched. */
+@media (max-width: 900px) and (min-width: 640px) and (max-height: 560px) {
+  .split { grid-template-columns: 48% 52%; }
+  .media {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    order: 0;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+  }
+  .intro { padding-top: calc(var(--pad) + clamp(28px, 5vh, 56px)); }
+}
+
 /* ---------- inner pages: asymmetric editorial grid ---------- */
 .wrap { padding: calc(var(--pad) + clamp(56px, 9vh, 110px)) var(--pad) 0; }
 

@@ -1,19 +1,26 @@
 ---
 /**
- * Homepage — hero half.
+ * Homepage — the full signed-off v14 layout.
  *
- * SCOPE: this round is the scaffold, so the page carries the split-screen hero,
- * the auto-advancing media reel, the mission copy and the Shobha Maharaj quote.
- * The work rows, the Clients and Collaborators ticker and Latest events are
- * driven by content collections and land with the content migration; they are
- * not stubbed here, because a stub would have to be thrown away.
+ * Structure, faithful to the prototype: contained split screen with a sticky
+ * media reel left and a scrolling column right holding, in order, the intro
+ * (hero + mission + Shobha Maharaj quote + Clients and Collaborators ticker),
+ * the selected-work plugs, and Latest events.
  *
- * IMAGES: still the published prototype URLs. They move into src/assets during
- * migration so Astro/sharp can optimise them — the ~150 real figures are
- * harvestable from the Squarespace HTML at up to 2500w.
+ * .intro sits DIRECTLY inside .col — deliberately not wrapped in .wrap. .wrap is
+ * the inner-page wrapper and carries its own sticky-logo clearance; nesting the
+ * two stacked the paddings and pushed the hero heading far off the image above.
+ *
+ * The work plugs and events are driven by the content collections, so the menu's
+ * #work and #events anchors resolve and every card is a real link. The earlier
+ * scaffold rendered neither section, which is why no navigation worked.
  */
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import Base from "../layouts/Base.astro";
 
+/** Left-hand reel: five real portfolio figures, independent of the right column. */
 const reel = [
   {
     src: "https://pub.hyperagent.com/api/published/pbf01KYQWS3FE_7D5PF6REYNFAP9XV/work-overshoot-figure.jpg",
@@ -41,6 +48,35 @@ const reel = [
     cap: "IPCC — Reasons for Concern, RFC1–5",
   },
 ];
+
+/**
+ * Clients and Collaborators, verbatim from the signed-off list. Rendered twice
+ * in the markup because the ticker wraps modulo one span's width — two spans is
+ * what makes the loop seamless, so the duplication is structural, not a typo.
+ */
+const clients =
+  "IPCC · CICERO · CMCC Foundation · ICEDS · ANU · Kenya Met. Dept. · Exalt Editing · " +
+  "World Design Congress · WMO · IPPNW · EEA · The Guardian · The Norwegian Environmental Agency · " +
+  "UAL: Central Saint Martins · Informed Health Choices · University of Oslo · " +
+  "Norwegian Research Council · Royal College of Art · European Monitoring Center for Drugs and Drug Addiction · " +
+  "Western Sydney University · NRK The Norwegian Broadcaster · DOGA Design and Architecture Norway · " +
+  "Scientific American";
+
+/** Five most prominent pieces, by the shared `order` field. */
+const plugs = (await getCollection("caseStudies", ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 5);
+
+/** Upcoming first (soonest to furthest), then past (most recent back). */
+const now = new Date();
+const allEvents = await getCollection("events", ({ data }) => !data.draft);
+const upcoming = allEvents
+  .filter((e) => e.data.date >= now)
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const past = allEvents
+  .filter((e) => e.data.date < now)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const events = [...upcoming, ...past];
 ---
 
 <Base title="InfoDesignLab — information design for climate science">
@@ -57,49 +93,150 @@ const reel = [
     </div>
 
     <div class="col">
-      <div class="wrap">
-        <section class="intro">
-          <h1>We are<br />Infodesignlab</h1>
+      <section class="intro">
+        <h1>We are<br />Infodesignlab</h1>
 
-          <div class="prose">
-            <p>
-              We use design to bring <b>clarity, intent, and impact</b> into complex
-              research processes.
-            </p>
-            <p>
-              As <b>design partners</b> in <b>research projects</b>, we embed
-              <b>co-creation</b> and information design across work packages, helping
-              diverse stakeholders align around common goals. From the beginning to the
-              final outcome, we work alongside scientists to <b>make knowledge</b> more
-              <b>actionable, inclusive, and visible</b>.
-            </p>
-            <p>
-              Through <b>collaborative methods</b> and <b>deep contextual understanding</b>,
-              we <b>co-create data visualisations</b>, communication tools, and strategic
-              narratives that connect research with real-world audiences. Our work spans
-              <b>scientific reports</b>, editorial design, social media, visual platforms,
-              and <b>decision making tools for policy</b> — all tailored to make science
-              more engaging, rigorous, and effective.
-            </p>
-            <p>
-              Our <b>workshops &amp; talks</b> distill over 15 years of practice. These
-              hands-on sessions for scientists, designers, analysts and journalists are
-              trusted formats that teach, challenge, and inspire — fostering a culture of
-              better science communication.
-            </p>
+        <div class="prose">
+          <p>
+            We use design to bring <b>clarity, intent, and impact</b> into complex
+            research processes.
+          </p>
+          <p>
+            As <b>design partners</b> in <b>research projects</b>, we embed
+            <b>co-creation</b> and information design across work packages, helping
+            diverse stakeholders align around common goals. From the beginning to the
+            final outcome, we work alongside scientists to <b>make knowledge</b> more
+            <b>actionable, inclusive, and visible</b>.
+          </p>
+          <p>
+            Through <b>collaborative methods</b> and <b>deep contextual understanding</b>,
+            we <b>co-create data visualisations</b>, communication tools, and strategic
+            narratives that connect research with real-world audiences. Our work spans
+            <b>scientific reports</b>, editorial design, social media, visual platforms,
+            and <b>decision making tools for policy</b> — all tailored to make science
+            more engaging, rigorous, and effective.
+          </p>
+          <p>
+            Our <b>workshops &amp; talks</b> distill over 15 years of practice. These
+            hands-on sessions for scientists, designers, analysts and journalists are
+            trusted formats that teach, challenge, and inspire — fostering a culture of
+            better science communication.
+          </p>
+        </div>
+
+        <blockquote class="quote">
+          <p>
+            “I found the participatory process to be a very effective way to
+            combine/coalesce the (at times contradicting) ideas of different
+            stakeholders during our conceptualization workshops. It was honestly great
+            to have such a mechanism which allowed me to focus on contributing to the
+            ideation development with minimal disruptions”
+          </p>
+          <cite>Shobha Maharaj, IPCC AR6 Lead Author</cite>
+        </blockquote>
+
+        {/* Structured as a .work row so it reads as a case-study block: mono label,
+            same hairline border-top and padding, same --measure right edge. */}
+        <div class="work">
+          <div class="work__label">Clients and Collaborators</div>
+          <div class="ticker__track">
+            <div class="ticker__inner" id="tickerInner">
+              <span>{clients}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span>{clients}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <blockquote class="quote">
-            <p>
-              “I found the participatory process to be a very effective way to
-              combine/coalesce the (at times contradicting) ideas of different
-              stakeholders during our conceptualization workshops. It was honestly great to
-              have such a mechanism which allowed me to focus on contributing my ideas.”
-            </p>
-            <cite>Shobha Maharaj — contributing author, IPCC AR6</cite>
-          </blockquote>
-        </section>
-      </div>
+      <section id="work">
+        {
+          plugs.map((entry) => {
+            const { title, label, summary, cover, coverAlt, coverVariant, covers, stub } =
+              entry.data;
+            // A stub has no page yet, so it renders as a non-link — the same
+            // behaviour the work grid gives it.
+            const Tag = stub ? "div" : "a";
+            const href = stub ? undefined : `/selected-projects/${entry.id}/`;
+            const go = label.toLowerCase().includes("abstract")
+              ? "Read abstract →"
+              : "Read case study →";
+
+            return (
+              <Tag class="work" href={href}>
+                <div class="work__label">{label}</div>
+
+                {
+                  coverVariant === "covers" ? (
+                    <div class="plug__img plug__img--covers">
+                      {
+                        covers.map((c) =>
+                          typeof c === "string" ? (
+                            <img src={c} alt="" loading="lazy" />
+                          ) : (
+                            <Image src={c as ImageMetadata} alt="" loading="lazy" />
+                          )
+                        )
+                      }
+                    </div>
+                  ) : (
+                    cover && (
+                      <div class="plug__img">
+                        {
+                          typeof cover === "string" ? (
+                            <img src={cover} alt={coverAlt} loading="lazy" />
+                          ) : (
+                            <Image
+                              src={cover as ImageMetadata}
+                              alt={coverAlt}
+                              sizes="(max-width: 900px) 100vw, 46vw"
+                              loading="lazy"
+                            />
+                          )
+                        }
+                      </div>
+                    )
+                  )
+                }
+
+                <div class="work__title">{title}</div>
+                <p class="work__desc">{summary}</p>
+                {!stub && <span class="work__go">{go}</span>}
+              </Tag>
+            );
+          })
+        }
+      </section>
+
+      <section class="events" id="events">
+        <h2>Latest events</h2>
+        <p class="events__intro">
+          We strive to facilitate or join events that enable others to harness the full
+          potential of the knowledge we share.
+        </p>
+
+        {
+          events.map((e) => {
+            const isNext = e.data.date >= now;
+            return (
+              <article class:list={["evt", isNext && "evt--next"]}>
+                <div class="evt__date">{e.data.dateLabel ?? ""}</div>
+                <div class="evt__title">
+                  {
+                    e.data.href ? (
+                      <a href={e.data.href} target="_blank" rel="noopener noreferrer">
+                        {e.data.title} ↗
+                      </a>
+                    ) : (
+                      e.data.title
+                    )
+                  }
+                </div>
+                <div class="evt__where">{e.data.where}</div>
+              </article>
+            );
+          })
+        }
+      </section>
     </div>
   </div>
 </Base>
@@ -107,17 +244,14 @@ const reel = [
 <script>
   /**
    * Media reel: independent auto-advancing crossfade with its own caption.
-   * It is deliberately NOT driven by scroll position in the right column —
-   * the IntersectionObserver version was removed at the studio's request.
-   *
-   * Honours prefers-reduced-motion by holding on the first figure, and pauses
-   * while the reel is offscreen so it costs nothing on inner scroll.
+   * Deliberately NOT driven by scroll position in the right column — the
+   * IntersectionObserver-per-plug version was removed at the studio's request.
    */
   const slides = [...document.querySelectorAll<HTMLElement>(".media__slide")];
   const cap = document.getElementById("reelCap");
-  const reel = document.getElementById("reel");
+  const reelEl = document.getElementById("reel");
 
-  if (slides.length > 1 && reel && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (slides.length > 1 && reelEl && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const INTERVAL = 5600;
     let i = 0;
     let timer: number | undefined;
@@ -139,9 +273,143 @@ const reel = [
       }
     };
 
-    new IntersectionObserver(
-      ([entry]) => (entry.isIntersecting ? start() : stop()),
-      { threshold: 0.05 }
-    ).observe(reel);
+    new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()), {
+      threshold: 0.05,
+    }).observe(reelEl);
   }
+</script>
+
+<script>
+  /**
+   * Clients and Collaborators ticker — ported verbatim from the signed-off
+   * prototype. Driven by requestAnimationFrame at an explicit px/s rate, NOT a
+   * CSS keyframe: four rounds of keyframe tuning produced visibly different
+   * speeds on iPhone versus iPad, because translateX(-50%) is a percentage of
+   * rendered content width. Do not "simplify" this back to a CSS animation.
+   *
+   * touch-action:none on .ticker__track (in components.css) is load-bearing —
+   * without it mobile Safari claims the horizontal gesture and fires
+   * pointercancel immediately, so drag-to-scrub silently never registers.
+   */
+  (function () {
+    const track = document.querySelector<HTMLElement>(".ticker__track");
+    const inner = document.getElementById("tickerInner");
+    if (!track || !inner) return;
+
+    const SPEED = 90; // px per second, identical on every device by construction
+    const FRICTION = 0.94; // per 1/60s frame, applied to flick inertia
+    let offset = 0; // current x translation in px (<= 0)
+    let vel = 0; // inertia velocity in px/s after a flick
+    let spanW = 1;
+    let dragging = false;
+    let visible = true;
+    let raf: number | null = null;
+    let startX = 0;
+    let startOffset = 0;
+    let lastX = 0;
+    let lastT = 0;
+
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+
+    const measure = () => {
+      const s = inner.querySelector("span");
+      spanW = s && s.offsetWidth ? s.offsetWidth : 1;
+    };
+
+    const wrap = (v: number) => {
+      if (spanW <= 0) return 0;
+      v = v % spanW;
+      if (v > 0) v -= spanW;
+      return v;
+    };
+
+    const apply = () => {
+      inner.style.transform = `translateX(${offset.toFixed(2)}px)`;
+    };
+
+    const frame = (t: number) => {
+      if (!lastT) lastT = t;
+      const dt = Math.min((t - lastT) / 1000, 0.05); // clamp after tab-switch stalls
+      lastT = t;
+
+      if (!dragging) {
+        if (Math.abs(vel) > SPEED) {
+          offset += vel * dt;
+          vel *= Math.pow(FRICTION, dt * 60);
+        } else {
+          vel = 0;
+          // Reduced motion: hold the strip still, but leave it draggable.
+          if (!reduce?.matches) offset -= SPEED * dt;
+        }
+        offset = wrap(offset);
+        apply();
+      }
+
+      raf = visible ? requestAnimationFrame(frame) : null;
+    };
+
+    const start = () => {
+      if (raf) return;
+      lastT = 0;
+      raf = requestAnimationFrame(frame);
+    };
+
+    track.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      vel = 0;
+      startX = lastX = e.clientX;
+      startOffset = offset;
+      lastT = 0;
+      track.classList.add("dragging");
+      try {
+        track.setPointerCapture(e.pointerId);
+      } catch {
+        /* setPointerCapture is unavailable in some embedded webviews */
+      }
+    });
+
+    track.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      const nowT = performance.now();
+      offset = wrap(startOffset + (e.clientX - startX));
+      apply();
+      const dt = (nowT - (lastT || nowT)) / 1000;
+      if (dt > 0.004) vel = (e.clientX - lastX) / dt;
+      lastX = e.clientX;
+      lastT = nowT;
+    });
+
+    const release = () => {
+      if (!dragging) return;
+      dragging = false;
+      lastT = 0;
+      track.classList.remove("dragging");
+    };
+    track.addEventListener("pointerup", release);
+    track.addEventListener("pointercancel", release);
+
+    window.addEventListener("resize", () => {
+      measure();
+      offset = wrap(offset);
+      apply();
+    });
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(
+        (entries) => {
+          visible = entries[0].isIntersecting;
+          if (visible) start();
+          else if (raf) {
+            cancelAnimationFrame(raf);
+            raf = null;
+          }
+        },
+        { rootMargin: "120px" }
+      ).observe(track);
+    }
+
+    measure();
+    apply();
+    start();
+  })();
 </script>
