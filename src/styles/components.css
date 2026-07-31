@@ -82,7 +82,12 @@ a.work:hover .work__title {opacity:.62}
 .meta {font-family:var(--mono);font-size:.72rem;line-height:1.62;color:var(--soft)}
 .meta__block {margin-bottom:26px}
 .meta__block strong {display:block;color:var(--ink);font-weight:400;margin-bottom:7px}
-.meta__block .who {color:var(--ink)}
+/* Author names sit in the SAME grey as every other value in this column — the
+   rail is one uniform register, not a place for emphasis. Each name and each
+   affiliation is its own block, so entries separate by a single line break
+   rather than a blank line. */
+.meta__block .who {display:block}
+.meta__block .aff {display:block}
 .copy h2 {font-weight:var(--w-secondary);letter-spacing:-.015em;font-size:clamp(1.35rem,2.3vw,1.85rem);margin:0 0 14px}
 .copy p {font-family:var(--serif);font-size:clamp(1.18rem,1.52vw,1.46rem);line-height:1.45;color:var(--ink-body);
   margin-bottom:1.05em;max-width:62ch}
@@ -153,8 +158,11 @@ a.work:hover .work__title {opacity:.62}
 /* ---------- references, in the left rail ----------
    References live in column one with the rest of the metadata, not at the foot
    of the article. They are apparatus: present and checkable, but never
-   competing with the prose. So they inherit the rail's mono at a step smaller,
-   with a hanging indent so author surnames align down the left edge.
+   competing with the prose. So they inherit the rail's mono at a step smaller.
+
+   NO hanging indent: every line in this column starts on the same left margin.
+   An earlier version indented continuation lines, which broke that alignment
+   and was the only thing in the rail not flush left.
 
    The earlier body-width serif `.refs` block is withdrawn — references are rail
    content now, on every template. */
@@ -163,9 +171,8 @@ a.work:hover .work__title {opacity:.62}
   font-size: .68rem;
   line-height: 1.55;
   margin-bottom: 11px;
-  /* hanging indent: first line flush, continuations tucked under it */
-  padding-left: 1.1em;
-  text-indent: -1.1em;
+  padding-left: 0;
+  text-indent: 0;
 }
 .meta__refs li:last-child { margin-bottom: 0; }
 .meta__refs ul { margin: 0; padding: 0; }

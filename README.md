@@ -83,10 +83,36 @@ spine across seventeen pages is worth more than a bespoke structure per page.
 
 When in doubt, treat it as verbatim and ask.
 
+### Two case studies can share one body of work
+
+`overshoot-annual-review` and `designing-climate-understanding` are **different
+case studies about the same underlying project**, and must not be merged or
+cross-contaminated:
+
+- **`overshoot-annual-review`** — the studio's case study on the design work for
+  the Annual Review paper. Lives on the live site. It is *not* the paper, so the
+  paper's twelve authors are **not** credited as this page's authors; that would
+  read as if the page were the publication. Their names appear once, verbatim, in
+  the reference.
+- **`designing-climate-understanding`** — an abstract InfoDesignLab authored with
+  several of the Annual Review authors and submitted to the World Design Congress
+  2025. It is *about* the process of working as information designers on that
+  paper. Its six authors are the abstract's authors, with affiliations.
+
+Expect more of these. Before filling in a rail, ask what the page *is* — the
+work, a paper about the work, or a talk about the work — because the authorship
+differs in each case.
+
 ### Attribution lives in the left rail
 
 Column one carries the metadata, quietly, in mono: `venue`, `authors`, `design`
 and `references`. None of it belongs in the body copy.
+
+**One uniform register.** Every value in this column is the same grey at the same
+size; only the `↳` labels are in ink. Nothing is emphasised, nothing is indented —
+every line, including the second line of a wrapped reference, starts flush on the
+same left margin. Entries within a block run on consecutive lines, never
+separated by a blank line.
 
 - `authors` — the publication's author list. `affiliations` is optional and must
   be **omitted rather than guessed**; a fabricated affiliation is a false credit.

@@ -69,20 +69,12 @@ const { Content } = await render(entry);
             <div class="meta__block">
               <strong>↳ {authors.length === 1 ? "Author" : "Authors"}</strong>
               {
+                // Name and each affiliation are separate blocks, so entries run
+                // on consecutive lines with no blank line between them.
                 authors.map((a) => (
                   <>
-                    <div class="who">{a.name}</div>
-                    {
-                      // Each affiliation on its own line — several authors hold
-                      // posts at two institutions.
-                      a.affiliations.map((aff, i) => (
-                        <>
-                          {i > 0 && <br />}
-                          {aff}
-                        </>
-                      ))
-                    }
-                    <br /><br />
+                    <span class="who">{a.name}</span>
+                    {a.affiliations.map((aff) => <span class="aff">{aff}</span>)}
                   </>
                 ))
               }
@@ -94,14 +86,7 @@ const { Content } = await render(entry);
           design.length > 0 && (
             <div class="meta__block">
               <strong>↳ Design</strong>
-              {
-                design.map((d) => (
-                  <>
-                    {d}
-                    <br />
-                  </>
-                ))
-              }
+              {design.map((d) => <span class="who">{d}</span>)}
             </div>
           )
         }
