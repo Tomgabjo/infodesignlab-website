@@ -53,9 +53,28 @@ const caseStudies = defineCollection({
       .array(
         z.object({
           name: z.string(),
-          affiliations: z.array(z.string()).min(1),
+          /**
+           * Optional: a published paper's full author list is often available
+           * without affiliations, and inventing one would be a fabricated
+           * credit. Omit rather than guess — the rail renders the name alone.
+           */
+          affiliations: z.array(z.string()).default([]),
         })
       )
+      .default([]),
+    /**
+     * Who did the DESIGN work, as distinct from the paper's authors. On science
+     * collaborations these are different groups of people, and conflating them
+     * misattributes the work in both directions.
+     */
+    design: z.array(z.string()).default([]),
+    /**
+     * References, rendered in the left rail rather than at the foot of the
+     * article. Citations are migrated verbatim, punctuation and capitalisation
+     * included — scholarly attribution, not copy to tidy.
+     */
+    references: z
+      .array(z.object({ text: z.string(), href: z.string().optional() }))
       .default([]),
     year: z.number().optional(),
     /**

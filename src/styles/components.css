@@ -87,11 +87,15 @@ a.work:hover .work__title {opacity:.62}
 .copy p {font-family:var(--serif);font-size:clamp(1.18rem,1.52vw,1.46rem);line-height:1.45;color:var(--ink-body);
   margin-bottom:1.05em;max-width:62ch}
 .copy .sub {margin-top:clamp(28px,4.5vh,48px)}
-.fig {position:relative;margin:clamp(24px,3.6vh,44px) 0 0;background:#fff;line-height:0}
+/* Space BELOW a figure must equal the space above it. The prototypes set a top
+   margin only, so a figure sat tight against the paragraph that followed and the
+   vertical rhythm read lopsided. Same value both sides, here and on .figs. */
+.fig {position:relative;margin:clamp(24px,3.6vh,44px) 0;background:#fff;line-height:0}
 .fig img {width:100%;height:auto}
 .fig figcaption {position:absolute;left:16px;bottom:14px;right:16px;line-height:1.4;
   font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;color:var(--ink-cap)}
-.figs {display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,18px);margin:clamp(24px,3.6vh,44px) 0 0}
+.figs {display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,18px);margin:clamp(24px,3.6vh,44px) 0}
+/* inner figures inherit the row's spacing, so they must not add their own */
 .figs .fig {margin:0}
 .more {border-top:1px solid var(--line);margin-top:clamp(36px,6vh,72px);padding-top:clamp(22px,3.4vh,38px)}
 .more__head {display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
@@ -146,31 +150,30 @@ a.work:hover .work__title {opacity:.62}
    presentational div. .copy .sub is kept above so existing markup still works. */
 .copy h2:not(:first-child) { margin-top: clamp(28px, 4.5vh, 48px); }
 
-/* ---------- reference list ----------
-   Article apparatus, not body copy: same serif, stepped down and muted, with a
-   hanging indent so author surnames align down the left edge. Constrained to
-   the same 62ch as .copy p so the right edge agrees with the prose above it. */
-.refs {
-  margin-top: clamp(20px, 3vh, 30px);
-  max-width: 62ch;
+/* ---------- references, in the left rail ----------
+   References live in column one with the rest of the metadata, not at the foot
+   of the article. They are apparatus: present and checkable, but never
+   competing with the prose. So they inherit the rail's mono at a step smaller,
+   with a hanging indent so author surnames align down the left edge.
+
+   The earlier body-width serif `.refs` block is withdrawn — references are rail
+   content now, on every template. */
+.meta__refs li {
+  list-style: none;
+  font-size: .68rem;
+  line-height: 1.55;
+  margin-bottom: 11px;
+  /* hanging indent: first line flush, continuations tucked under it */
+  padding-left: 1.1em;
+  text-indent: -1.1em;
 }
-.refs p {
-  font-family: var(--serif);
-  font-size: clamp(.92rem, 1.02vw, 1.02rem);
-  line-height: 1.42;
-  color: var(--ink-cap);
-  margin-bottom: .85em;
-  /* hanging indent: first line flush, continuations indented */
-  padding-left: 1.4em;
-  text-indent: -1.4em;
-  max-width: none;
-}
-.refs p:last-child { margin-bottom: 0; }
-.refs a {
+.meta__refs li:last-child { margin-bottom: 0; }
+.meta__refs ul { margin: 0; padding: 0; }
+.meta__refs a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 2px;
-  /* long DOIs must not force a horizontal scroll on a phone */
+  /* a long DOI must not push the rail wide or force a sideways scroll */
   overflow-wrap: break-word;
   word-break: break-word;
 }

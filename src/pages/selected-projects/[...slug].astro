@@ -17,7 +17,6 @@ import Base from "../../layouts/Base.astro";
 import WorkGrid from "../../components/WorkGrid.astro";
 import Figure from "../../components/Figure.astro";
 import Figures from "../../components/Figures.astro";
-import References from "../../components/References.astro";
 
 export const getStaticPaths = (async () => {
   // Stubs are listed in the work grid but have no page yet, so they get no route.
@@ -32,12 +31,13 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { title, label, summary, venue, authors, cover } = entry.data;
+const { title, label, summary, venue, authors, design, references, cover } =
+  entry.data;
 
-// These are made available to MDX bodies so a figure can sit between the
-// paragraphs it belongs to, and a reference list can close the article.
-// Any component used in an .mdx body MUST be listed in the map below.
-const mdxComponents = { Figure, Figures, References };
+// Made available to MDX bodies so a figure can sit between the paragraphs it
+// belongs to. Any component used in an .mdx body MUST be listed in this map,
+// or the build fails with "Expected component X to be defined".
+const mdxComponents = { Figure, Figures };
 
 // Open Graph needs a URL string. A migrated cover is an imported image object,
 // whose .src is the built asset path; a stub cover is already a URL.
@@ -86,6 +86,49 @@ const { Content } = await render(entry);
                   </>
                 ))
               }
+            </div>
+          )
+        }
+
+        {
+          design.length > 0 && (
+            <div class="meta__block">
+              <strong>↳ Design</strong>
+              {
+                design.map((d) => (
+                  <>
+                    {d}
+                    <br />
+                  </>
+                ))
+              }
+            </div>
+          )
+        }
+
+        {
+          references.length > 0 && (
+            <div class="meta__block meta__refs">
+              <strong>↳ References</strong>
+              <ul>
+                {
+                  references.map((r) => (
+                    <li>
+                      {r.text}
+                      {
+                        r.href && (
+                          <>
+                            {" "}
+                            <a href={r.href} target="_blank" rel="noopener noreferrer">
+                              {r.href.replace(/^https?:\/\//, "")}
+                            </a>
+                          </>
+                        )
+                      }
+                    </li>
+                  ))
+                }
+              </ul>
             </div>
           )
         }
