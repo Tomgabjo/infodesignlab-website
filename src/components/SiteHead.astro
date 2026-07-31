@@ -1,0 +1,60 @@
+---
+/**
+ * Everything that belongs in <head>: metadata, Open Graph, canonical URL and
+ * the one webfont the design system loads.
+ *
+ * TYPE NOTE — exactly three faces, never a fourth:
+ *   --serif = Newsreader, loaded here from Google Fonts. It is the serif for
+ *             menu descriptions, work descriptions and long-form body copy.
+ *             An old project note claiming Newsreader was dropped is wrong
+ *             and withdrawn.
+ *   --sans  = a SYSTEM stack ("Helvetica Neue", Helvetica, Arial). Deliberately
+ *             not a webfont for now, by the studio's decision. Consequence to
+ *             settle before the domain cutover: Windows and Android fall back
+ *             to Arial, which has no 300 weight, so the signature light hero
+ *             headings render heavier there.
+ *   --mono  = system monospace, small labels and metadata only.
+ * Only the serif is fetched, so there is one font request on the whole site.
+ */
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = "InfoDesignLab is an information design studio in Oslo. We work with scientists to turn complex climate data into visualisations, narratives and communication products that people can actually understand.",
+  image,
+  noindex = false,
+} = Astro.props;
+
+// Astro.site is set in astro.config.mjs; guard so a missing site doesn't throw.
+const canonical = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : Astro.url.pathname;
+const ogImage = image && Astro.site ? new URL(image, Astro.site).href : image;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="InfoDesignLab" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+<meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap"
+/>

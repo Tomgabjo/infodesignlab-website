@@ -1,0 +1,46 @@
+---
+/**
+ * Half-screen pink "Table of contents" panel, ported from the homepage
+ * prototype. Rows are a grotesque title plus a serif description; every link
+ * is underlined, including the h3 headings (styling in chrome.css).
+ *
+ * SCROLL-LOCK GOTCHA: body.locked { overflow:hidden } silently kills
+ * position:sticky on desktop. The lock is therefore scoped to
+ * max-width:900px in chrome.css and the panel carries
+ * overscroll-behavior:contain instead. Do not widen that media query.
+ */
+---
+
+<button class="menu-btn" id="menuOpen" aria-label="Open menu">
+  Menu <span class="bars"><i></i><i></i><i></i></span>
+</button>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="toc" id="toc" aria-hidden="true"> <div class="toc__top"> <h2>Table of contents</h2> <button class="toc__close" id="menuClose" aria-label="Close">✕</button> </div> <div class="toc__row"> <h3><a href="#work">What we do</a></h3> <p>We <b>work with scientists</b> to turn complex data into unique visualisations, meaningful narratives, compelling messages and stunning communication products. Our <a href="#work">co-design process</a> helps us meet our audience where they are.</p> </div> <div class="toc__row"> <h3><a href="#work">How we do it</a></h3> <p><i>Co-design</i> encapsulates a way of approaching <a href="#work">data visualisation</a> that ensures a deep and shared understanding between those creating the visuals and the audience.</p> </div> <div class="toc__row"> <h3><a href="#events">Workshops and talks</a></h3> <p>We are <a href="#events">lecturers</a> and international speakers and we run hands-on <a href="#events">workshops</a> for businesses and organizations. Talks serve as a means to inspire and share our co-design process through case studies, while workshops provide an immersive, hands-on experience to learn about the <a href="#work">design tools</a> we use in our projects.</p> </div> <div class="toc__row"> <h3><a href="#events">Latest events</a></h3> <p>Where to find us next, and the archive of talks and workshops — <a href="#events">see the list</a>.</p> </div> <div class="toc__foot">Get in touch: <a href="mailto:post@infodesignlab.com">post@infodesignlab.com</a></div> </aside>
+
+<script>
+  const openBtn  = document.getElementById("menuOpen");
+  const closeBtn = document.getElementById("menuClose");
+  const scrim    = document.getElementById("scrim");
+  const toc      = document.getElementById("toc");
+
+  const setOpen = (open: boolean) => {
+    if (!toc || !scrim) return;
+    toc.classList.toggle("open", open);
+    scrim.classList.toggle("on", open);
+    toc.setAttribute("aria-hidden", String(!open));
+    document.body.classList.toggle("locked", open);
+  };
+
+  openBtn?.addEventListener("click", () => setOpen(true));
+  closeBtn?.addEventListener("click", () => setOpen(false));
+  scrim?.addEventListener("click", () => setOpen(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
+  // Close when a row link is followed, so in-page anchors reveal the target.
+  toc?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => setOpen(false))
+  );
+</script>

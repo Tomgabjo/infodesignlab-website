@@ -19,6 +19,7 @@
   --ink-desc: #3b3b35;    /* work descriptions, event venues */
   --ink-quote: #22221f;
   --ink-cap: #3d3d38;     /* figure captions */
+  --ink-ticker: #555550;  /* clients + collaborators ticker names */
 
   /* ---- type: EXACTLY THREE FACES. Never add a fourth. ----
      sans   = grotesque, for display headings and homepage body copy

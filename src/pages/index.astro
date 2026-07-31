@@ -1,0 +1,147 @@
+---
+/**
+ * Homepage — hero half.
+ *
+ * SCOPE: this round is the scaffold, so the page carries the split-screen hero,
+ * the auto-advancing media reel, the mission copy and the Shobha Maharaj quote.
+ * The work rows, the Clients and Collaborators ticker and Latest events are
+ * driven by content collections and land with the content migration; they are
+ * not stubbed here, because a stub would have to be thrown away.
+ *
+ * IMAGES: still the published prototype URLs. They move into src/assets during
+ * migration so Astro/sharp can optimise them — the ~150 real figures are
+ * harvestable from the Squarespace HTML at up to 2500w.
+ */
+import Base from "../layouts/Base.astro";
+
+const reel = [
+  {
+    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS3FE_7D5PF6REYNFAP9XV/work-overshoot-figure.jpg",
+    alt: "Conceptual dimensions of overshoot, printed figure",
+    cap: "Overshoot Annual Review — Figure 1, conceptual dimensions of overshoot",
+  },
+  {
+    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS531_6Z9HXFGTV4HWC5GP/work-03.jpg",
+    alt: "Regional attribution of observed change, printed figure",
+    cap: "IPCC AR6 — regional attribution of observed change",
+  },
+  {
+    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS32D_KB1A2QDKBVE6XKZX/work-overshoot-target.jpg",
+    alt: "Emissions peak, temperature target and overshoot, printed figure",
+    cap: "Scientific American — emissions peak, target and overshoot",
+  },
+  {
+    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS3X7_2EMWN4AD4A9W556S/work-02.jpg",
+    alt: "Cumulative carbon dioxide removal from 2020 to 2100, bar chart",
+    cap: "The State of Carbon Dioxide Removal — cumulative CDR, 2020–2100",
+  },
+  {
+    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS5EB_CVW02WNC1WDYG5X2/work-04.jpg",
+    alt: "IPCC Reasons for Concern burning embers diagram",
+    cap: "IPCC — Reasons for Concern, RFC1–5",
+  },
+];
+---
+
+<Base title="InfoDesignLab — information design for climate science">
+  <div class="split">
+    <div class="media" id="reel">
+      {
+        reel.map((f, i) => (
+          <div class:list={["media__slide", i === 0 && "on"]} data-cap={f.cap}>
+            <img src={f.src} alt={f.alt} loading={i === 0 ? "eager" : "lazy"} />
+          </div>
+        ))
+      }
+      <div class="media__cap" id="reelCap">{reel[0].cap}</div>
+    </div>
+
+    <div class="col">
+      <div class="wrap">
+        <section class="intro">
+          <h1>We are<br />Infodesignlab</h1>
+
+          <div class="prose">
+            <p>
+              We use design to bring <b>clarity, intent, and impact</b> into complex
+              research processes.
+            </p>
+            <p>
+              As <b>design partners</b> in <b>research projects</b>, we embed
+              <b>co-creation</b> and information design across work packages, helping
+              diverse stakeholders align around common goals. From the beginning to the
+              final outcome, we work alongside scientists to <b>make knowledge</b> more
+              <b>actionable, inclusive, and visible</b>.
+            </p>
+            <p>
+              Through <b>collaborative methods</b> and <b>deep contextual understanding</b>,
+              we <b>co-create data visualisations</b>, communication tools, and strategic
+              narratives that connect research with real-world audiences. Our work spans
+              <b>scientific reports</b>, editorial design, social media, visual platforms,
+              and <b>decision making tools for policy</b> — all tailored to make science
+              more engaging, rigorous, and effective.
+            </p>
+            <p>
+              Our <b>workshops &amp; talks</b> distill over 15 years of practice. These
+              hands-on sessions for scientists, designers, analysts and journalists are
+              trusted formats that teach, challenge, and inspire — fostering a culture of
+              better science communication.
+            </p>
+          </div>
+
+          <blockquote class="quote">
+            <p>
+              “I found the participatory process to be a very effective way to
+              combine/coalesce the (at times contradicting) ideas of different
+              stakeholders during our conceptualization workshops. It was honestly great to
+              have such a mechanism which allowed me to focus on contributing my ideas.”
+            </p>
+            <cite>Shobha Maharaj — contributing author, IPCC AR6</cite>
+          </blockquote>
+        </section>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  /**
+   * Media reel: independent auto-advancing crossfade with its own caption.
+   * It is deliberately NOT driven by scroll position in the right column —
+   * the IntersectionObserver version was removed at the studio's request.
+   *
+   * Honours prefers-reduced-motion by holding on the first figure, and pauses
+   * while the reel is offscreen so it costs nothing on inner scroll.
+   */
+  const slides = [...document.querySelectorAll<HTMLElement>(".media__slide")];
+  const cap = document.getElementById("reelCap");
+  const reel = document.getElementById("reel");
+
+  if (slides.length > 1 && reel && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const INTERVAL = 5600;
+    let i = 0;
+    let timer: number | undefined;
+
+    const advance = () => {
+      slides[i].classList.remove("on");
+      i = (i + 1) % slides.length;
+      slides[i].classList.add("on");
+      if (cap) cap.textContent = slides[i].dataset.cap ?? "";
+    };
+
+    const start = () => {
+      if (timer === undefined) timer = window.setInterval(advance, INTERVAL);
+    };
+    const stop = () => {
+      if (timer !== undefined) {
+        clearInterval(timer);
+        timer = undefined;
+      }
+    };
+
+    new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { threshold: 0.05 }
+    ).observe(reel);
+  }
+</script>

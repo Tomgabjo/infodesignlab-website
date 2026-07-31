@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# Astro generated types and cache
+.astro/
+
+# environment — the Tina read-only token and client ID live in Netlify's
+# environment variables, never in the repo
+.env
+.env.*
+!.env.example
+
+# editor / OS noise
+.DS_Store
+*.log
+npm-debug.log*
+.vscode/
+.idea/

@@ -1,0 +1,21 @@
+---
+/**
+ * Site footer. Ported from the prototypes, with two changes: the prototype's
+ * "Prototype v5" slot is gone, and the email is a plain mailto — the published
+ * prototype had it run through Cloudflare's email obfuscation, which is a
+ * publish-wrapper artefact and not part of the design.
+ *
+ * Per the settled site structure, Contact folds into this footer plus a short
+ * overview page, rather than getting a template of its own.
+ */
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <span>InfoDesignLab — Oslo, Norway</span>
+  <span>
+    Get in touch:
+    <a href="mailto:post@infodesignlab.com">post@infodesignlab.com</a>
+  </span>
+  <span>&copy; {year}</span>
+</footer>
