@@ -1,0 +1,22 @@
+---
+/**
+ * A real portfolio figure, aligned to the text column, caption sitting over the
+ * image. No borders and no grey gutters — figures sit on white, per the design
+ * system, and the graph itself is the focus.
+ *
+ * Available inside MDX body copy so a figure can be placed between paragraphs
+ * where it belongs, rather than being pushed into frontmatter.
+ */
+interface Props {
+  src: string;
+  alt: string;
+  /** Caption as published. Never rewritten during migration. */
+  caption?: string;
+}
+const { src, alt, caption } = Astro.props;
+---
+
+<figure class="fig">
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

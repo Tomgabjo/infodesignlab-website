@@ -1,0 +1,82 @@
+---
+/**
+ * The work card grid, plus its hairline "more" header. Genuinely shared: the
+ * abstract and overview prototypes carried byte-identical markup and CSS for
+ * this block, so it lives in one component rather than being duplicated per
+ * template.
+ *
+ * Card behaviour, faithful to the prototypes:
+ *   - the current page renders as a <span> labelled "You are here"
+ *   - a stub (listed but not yet migrated) also renders as a <span>, which is
+ *     what the prototypes' href="#" cards effectively were
+ *   - everything else is a real link
+ */
+import { getCollection } from "astro:content";
+
+interface Props {
+  /** Section heading, e.g. "All work" on an article, "Selected work" on an overview. */
+  heading?: string;
+  /** Right-hand link in the header. */
+  moreHref?: string;
+  moreText?: string;
+  /** id of the entry to mark "You are here"; omit on pages that aren't in the grid. */
+  currentId?: string;
+  id?: string;
+}
+const {
+  heading = "All work",
+  moreHref = "/selected-projects/",
+  moreText = "All work →",
+  currentId,
+  id,
+} = Astro.props;
+
+const work = (await getCollection("caseStudies", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<section class="more" id={id}>
+  <div class="more__head">
+    <h2>{heading}</h2>
+    <a href={moreHref}>{moreText}</a>
+  </div>
+
+  <div class="grid">
+    {
+      work.map((entry) => {
+        const { title, label, cover, coverAlt, coverVariant, covers, stub } = entry.data;
+        const isCurrent = entry.id === currentId;
+        // Non-navigable cards: the page you're on, and anything not migrated yet.
+        const Tag = isCurrent || stub ? "span" : "a";
+        const href = isCurrent || stub ? undefined : `/selected-projects/${entry.id}/`;
+
+        return (
+          <Tag
+            class:list={["card", isCurrent && "card--current"]}
+            href={href}
+            aria-current={isCurrent ? "page" : undefined}
+          >
+            {
+              coverVariant === "covers" ? (
+                <div class="card__img card__img--covers">
+                  {covers.map((c) => <img src={c} alt="" loading="lazy" />)}
+                </div>
+              ) : (
+                cover && (
+                  <div class="card__img">
+                    <img src={cover} alt={coverAlt} loading="lazy" />
+                  </div>
+                )
+              )
+            }
+            <div class="card__label">
+              {isCurrent ? `You are here — ${label}` : label}
+            </div>
+            <div class="card__title">{title}</div>
+          </Tag>
+        );
+      })
+    }
+  </div>
+</section>

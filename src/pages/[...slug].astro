@@ -1,0 +1,115 @@
+---
+/**
+ * Overview template. Per the approved template mapping this covers the three
+ * prose pages — Co-design process ("How we do it"), Who we are, and Workshops
+ * and talks — from one file. Nothing here is specific to "What we do".
+ *
+ * Structure: content-type label + big light title, then a rail (In short / See
+ * also) beside serif intro prose, then the capability list on hairline rows, an
+ * optional pull quote, then the shared work grid.
+ *
+ * Root-level catch-all, so page slugs map to the live site's own paths
+ * (/co-design-process, /who-we-are, /workshops-talks). index.astro still wins
+ * for "/" because a static route beats a dynamic one in Astro.
+ */
+import { getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Base from "../layouts/Base.astro";
+import WorkGrid from "../components/WorkGrid.astro";
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("pages", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { title, label, summary, inShort, seeAlso, capabilities, quote } = entry.data;
+
+const { Content } = await render(entry);
+---
+
+<Base title={`${title} — InfoDesignLab`} description={summary}>
+  <main class="wrap">
+    <header class="head">
+      <div class="head__label">{label}</div>
+      <h1 class="head__title">{title}</h1>
+    </header>
+
+    <div class="body">
+      <aside class="rail">
+        {
+          inShort && (
+            <>
+              <strong>↳ In short</strong>
+              {inShort}
+            </>
+          )
+        }
+
+        {
+          seeAlso.length > 0 && (
+            <>
+              <br /><br />
+              <strong>↳ See also</strong>
+              {
+                seeAlso.map((link) => (
+                  <>
+                    <a href={link.href}>{link.text}</a>
+                    <br />
+                  </>
+                ))
+              }
+            </>
+          )
+        }
+      </aside>
+
+      <div class="copy">
+        <Content />
+      </div>
+    </div>
+
+    {
+      (capabilities.length > 0 || quote) && (
+        <section class="caps">
+          {
+            capabilities.length > 0 && (
+              <>
+                <div class="caps__head">↳ What that looks like in practice</div>
+                <div class="caps__list">
+                  {
+                    capabilities.map((cap) => (
+                      <div class="cap">
+                        <div class="cap__name">{cap.name}</div>
+                        <div class="cap__note">{cap.note}</div>
+                      </div>
+                    ))
+                  }
+                </div>
+              </>
+            )
+          }
+
+          {
+            quote && (
+              <blockquote class="quote">
+                <p>{quote.text}</p>
+                <cite>{quote.cite}</cite>
+              </blockquote>
+            )
+          }
+        </section>
+      )
+    }
+
+    <WorkGrid
+      id="work"
+      heading="Selected work"
+      moreHref="/selected-projects/"
+      moreText="All work →"
+    />
+  </main>
+</Base>

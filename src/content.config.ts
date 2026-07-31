@@ -20,19 +20,6 @@ import { glob } from "astro/loaders";
  * decoration, and the studio's own client work depends on them being exact.
  */
 
-/** A real portfolio figure. Captions are migrated verbatim, never rewritten. */
-const figure = z.object({
-  src: z.string(),
-  /** Caption as published. Substance is never edited during migration. */
-  caption: z.string().optional(),
-  alt: z.string(),
-  /**
-   * Real figures sit on white or light backgrounds by design-system rule.
-   * Set false only for a figure that carries its own background.
-   */
-  light: z.boolean().default(true),
-});
-
 const caseStudies = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/case-studies" }),
   schema: z.object({
@@ -41,19 +28,36 @@ const caseStudies = defineCollection({
     label: z.string().default("Case study"),
     /** Short deck used in listings and as the meta description. */
     summary: z.string(),
-    client: z.string().optional(),
-    /** Named collaborators and credits, kept exactly as given. */
-    credits: z.array(z.string()).default([]),
+    /**
+     * First meta-rail block: where the piece was published or presented.
+     * Kept as label + value because the label wording varies by piece
+     * ("Abstract for the", "Published in", "Prepared for").
+     */
+    venue: z.object({ label: z.string(), value: z.string() }).optional(),
+    /**
+     * Authors with affiliations, as the rail renders them: name in ink,
+     * affiliation beneath in muted mono. Affiliations are migrated verbatim —
+     * they are how collaborators are credited, not decoration.
+     */
+    authors: z
+      .array(z.object({ name: z.string(), affiliation: z.string() }))
+      .default([]),
     year: z.number().optional(),
-    /** Card image for the "All work" grid. */
+    /** Card image for the work grid. */
     cover: z.string().optional(),
-    coverAlt: z.string().optional(),
+    coverAlt: z.string().default(""),
     /** Trio-of-covers card variant, as used by the country reports. */
     coverVariant: z.enum(["single", "covers"]).default("single"),
     covers: z.array(z.string()).default([]),
-    figures: z.array(figure).default([]),
-    /** Controls listing order and the "You are here" grid. */
+    /** Controls grid order. */
     order: z.number().default(0),
+    /**
+     * A stub is listed in the work grid but has no page yet, so its card
+     * renders as a non-link — exactly what the signed-off prototypes did with
+     * their href="#" cards. Route generation skips stubs, so migrating one is
+     * just deleting this flag and adding the body copy.
+     */
+    stub: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
 });

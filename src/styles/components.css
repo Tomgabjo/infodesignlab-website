@@ -130,3 +130,18 @@ a.work:hover .work__title {opacity:.62}
 .cap {display:grid;grid-template-columns:1fr;gap:4px;padding:clamp(13px,1.8vh,18px) 0;border-top:1px solid var(--line)}
 .cap__name {font-weight:var(--w-secondary);letter-spacing:-.01em;font-size:clamp(1.02rem,1.4vw,1.18rem)}
 .cap__note {font-family:var(--serif);font-size:1rem;color:var(--ink-desc);line-height:1.4}
+
+/* --------------------------------------------------------------------------
+   Added during the route-template build (31 Jul)
+   -------------------------------------------------------------------------- */
+
+/* The overview prototype underlined its rail links with an inline style
+   attribute. Moved here so the rule is part of the design system and content
+   never has to carry presentation. */
+.rail a { text-decoration: underline; text-underline-offset: 2px; color: var(--ink); }
+
+/* Replaces the prototype's .copy .sub wrapper, whose only job was extra top
+   margin before a second "How it was done"-style section. Making it structural
+   means a markdown author gets the rhythm for free and never hand-manages a
+   presentational div. .copy .sub is kept above so existing markup still works. */
+.copy h2:not(:first-child) { margin-top: clamp(28px, 4.5vh, 48px); }

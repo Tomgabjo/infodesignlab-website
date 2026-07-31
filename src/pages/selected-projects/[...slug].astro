@@ -1,0 +1,89 @@
+---
+/**
+ * Abstract / article template. Per the approved template mapping this one
+ * covers all 17 case studies and postings — it is not abstract-specific; the
+ * content-type label in the left rail is what varies.
+ *
+ * Route lives at /selected-projects/<slug>/ deliberately: that is the existing
+ * Squarespace path, so inbound links and search results survive the migration.
+ * astro.config.mjs sets build.format:"directory" for the same reason.
+ *
+ * Asymmetric editorial grid (layout.css): left rail = content-type label and
+ * mono metadata, right = title and body.
+ */
+import { getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Base from "../../layouts/Base.astro";
+import WorkGrid from "../../components/WorkGrid.astro";
+import Figure from "../../components/Figure.astro";
+import Figures from "../../components/Figures.astro";
+
+export const getStaticPaths = (async () => {
+  // Stubs are listed in the work grid but have no page yet, so they get no route.
+  const entries = await getCollection(
+    "caseStudies",
+    ({ data }) => !data.draft && !data.stub
+  );
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { title, label, summary, venue, authors, cover } = entry.data;
+
+// Figure and Figures are made available to MDX bodies so a figure can sit
+// between the paragraphs it belongs to.
+const { Content } = await render(entry);
+---
+
+<Base title={`${title} — InfoDesignLab`} description={summary} image={cover}>
+  <main class="wrap">
+    <header class="head">
+      <div class="head__label">{label}</div>
+      <h1 class="head__title">{title}</h1>
+    </header>
+
+    <div class="body">
+      <aside class="meta">
+        {
+          venue && (
+            <div class="meta__block">
+              <strong>↳ {venue.label}</strong>
+              {venue.value}
+            </div>
+          )
+        }
+
+        {
+          authors.length > 0 && (
+            <div class="meta__block">
+              <strong>↳ {authors.length === 1 ? "Author" : "Authors"}</strong>
+              {
+                authors.map((a) => (
+                  <>
+                    <div class="who">{a.name}</div>
+                    {a.affiliation}
+                    <br /><br />
+                  </>
+                ))
+              }
+            </div>
+          )
+        }
+      </aside>
+
+      <div class="copy">
+        <Content components={{ Figure, Figures }} />
+      </div>
+    </div>
+
+    <WorkGrid
+      heading="All work"
+      moreHref="/selected-projects/"
+      moreText="Back to overview →"
+      currentId={entry.id}
+    />
+  </main>
+</Base>
