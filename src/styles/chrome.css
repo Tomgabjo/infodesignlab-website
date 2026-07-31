@@ -1,0 +1,138 @@
+/* ==========================================================================
+   InfoDesignLab — persistent chrome: logo, menu button, Table of contents,
+   footer. Shared by every template.
+   ========================================================================== */
+
+/* ---------- sticky logo (top padding == side padding) ---------- */
+.brand {
+  position: fixed;
+  top: var(--pad);
+  left: var(--pad);
+  z-index: 45;
+  display: block;
+  width: clamp(48px, 3.6vw, 58px);
+}
+.brand svg { width: 100%; height: auto; display: block; }
+
+/* ---------- menu button ----------
+   GOTCHA: bar height must be an INTEGER px. At 1.4px the bars rounded
+   differently per device DPI, so the icon looked uneven on iPhone versus
+   iPad. 2px renders identically everywhere. */
+.menu-btn {
+  position: fixed;
+  top: var(--pad);
+  right: var(--pad);
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 0;
+}
+.menu-btn .bars { display: inline-block; width: 24px; }
+.menu-btn .bars i { display: block; height: 2px; background: var(--ink); margin: 4px 0; }
+
+/* ---------- scrim ---------- */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, .26);
+  opacity: 0;
+  visibility: hidden;
+  transition: .35s;
+  z-index: 50;
+}
+.scrim.on { opacity: 1; visibility: visible; }
+
+/* ---------- Table of contents: half-screen pink panel ---------- */
+.toc {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(520px, 100%);
+  background: var(--pink);
+  z-index: 60;
+  transform: translateX(100%);
+  transition: transform .55s cubic-bezier(.76, 0, .24, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* contains its own scroll so the desktop page doesn't need body.locked */
+  overscroll-behavior: contain;
+  padding: var(--pad) var(--pad) 56px;
+}
+.toc.open { transform: translateX(0); }
+
+.toc__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: clamp(18px, 3.4vh, 38px);
+}
+.toc__top h2 {
+  font-weight: var(--w-secondary);
+  letter-spacing: -.018em;
+  line-height: .96;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+}
+.toc__close {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 1.55rem;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* rows: grotesque title left, serif description right. Every link underlined,
+   including the h3 headings. */
+.toc__row { padding: clamp(15px, 2.1vw, 22px) 0; border-top: 1px solid rgba(26, 26, 26, .16); }
+.toc__row h3 {
+  font-size: clamp(1.16rem, 2vw, 1.44rem);
+  font-weight: var(--w-toc-row);
+  letter-spacing: -.008em;
+  margin-bottom: 7px;
+}
+.toc__row h3 a { text-decoration: underline; text-underline-offset: 3px; }
+.toc__row p {
+  font-family: var(--serif);
+  font-size: 1.03rem;
+  line-height: 1.42;
+  color: #3a3530;
+  max-width: 44ch;
+}
+.toc__row p a { text-decoration: underline; text-underline-offset: 2px; }
+
+.toc__foot {
+  margin-top: clamp(20px, 3.4vh, 36px);
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #7c6c6c;
+}
+.toc__foot a { text-decoration: underline; text-underline-offset: 2px; color: var(--ink); }
+
+/* ---------- footer ---------- */
+.foot {
+  border-top: 1px solid var(--line);
+  padding: clamp(28px, 4vw, 48px) var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+.foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }

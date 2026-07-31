@@ -1,0 +1,42 @@
+/* ==========================================================================
+   InfoDesignLab — reset and base elements
+   ========================================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* GOTCHA: overflow-x:hidden here creates a scroll container, which silently
+   disables position:sticky on every descendant. Use clip — it prevents
+   sideways scroll WITHOUT creating a container. Do not "simplify" to hidden. */
+html {
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* GOTCHA: body.locked with overflow:hidden ALSO kills sticky. Scope the
+   menu-open scroll lock to mobile, where the media panel isn't sticky
+   anyway. On desktop the open panel contains its own scroll instead
+   (see overscroll-behavior on .toc). */
+@media (max-width: 900px) {
+  body.locked { overflow: hidden; }
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* GOTCHA: this blanket rule will silently disable any CSS-animation-driven
+   component for users with Reduce Motion on. The clients ticker is therefore
+   driven by requestAnimationFrame and handles the preference deliberately —
+   it holds still but stays draggable. */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

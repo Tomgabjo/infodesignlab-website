@@ -1,0 +1,70 @@
+/* ==========================================================================
+   InfoDesignLab — design tokens
+   --------------------------------------------------------------------------
+   The single source of truth for the locked design system. Ported verbatim
+   from the three signed-off prototypes; see notes below for the three points
+   where the prototypes disagreed with each other and had to be reconciled.
+   ========================================================================== */
+
+:root {
+  /* ---- palette ---- */
+  --bg: #f2f2f2;          /* canvas: light warm grey */
+  --ink: #1a1a1a;
+  --soft: #78776f;        /* mono labels, metadata */
+  --line: rgba(26, 26, 26, .14);   /* hairline rules */
+  --pink: #ffe7e7;        /* Table of contents panel */
+
+  /* body-copy inks — held as tokens so they stop drifting between templates */
+  --ink-body: #262622;    /* prose and article body */
+  --ink-desc: #3b3b35;    /* work descriptions, event venues */
+  --ink-quote: #22221f;
+  --ink-cap: #3d3d38;     /* figure captions */
+
+  /* ---- type: EXACTLY THREE FACES. Never add a fourth. ----
+     sans   = grotesque, for display headings and homepage body copy
+     serif  = long-form article body and menu descriptions
+     mono   = small labels and metadata ONLY                             */
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --serif: "Newsreader", Georgia, serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* ---- heading weights: LIGHT and large ----
+     Signed off 30 Jul. The earlier 700/600 weights are withdrawn.        */
+  --w-hero: 300;      /* homepage h1 */
+  --w-article: 500;   /* article headline — 500 is genuine Medium in
+                         Helvetica Neue; 600 made Linux synthesise a fake
+                         bold, so it was dropped */
+  --w-secondary: 400; /* work titles, section h2s, event titles, cards */
+  --w-toc-row: 500;   /* ToC h3 only — needs it for legibility at small size */
+
+  /* ---- spacing and rhythm ---- */
+  --pad: clamp(20px, 4.4vw, 60px);
+
+  /* One shared measure, in rem, so titles and body copy break at the SAME
+     right edge regardless of font-size. It governs hairline rules and
+     section wrappers too, not just text — otherwise rules overrun the text
+     on wide viewports (visible on iPad landscape). */
+  --measure: min(30rem, 100%);
+
+  /* Left rail on inner pages: content-type label + mono metadata. */
+  --rail: minmax(180px, 26%);
+}
+
+/* --------------------------------------------------------------------------
+   Reconciliation notes — three genuine disagreements between the prototypes
+   --------------------------------------------------------------------------
+   1. SERIF. An earlier project note claimed "Newsreader was dropped". That
+      note is WRONG and withdrawn: all three signed-off prototypes load
+      Newsreader from Google Fonts and use it as --serif. Newsreader is the
+      serif.
+
+   2. HEADING WEIGHTS. The light-heading revision was applied to the homepage
+      only; the abstract and overview prototypes still carried 600 and 700.
+      Normalised here to the locked system via the --w-* tokens. Each is a
+      one-line revert if any specific heading now reads too light.
+
+   3. MEASURE. The homepage set --measure to min(30rem,100%); overview set
+      min(34rem,100%); abstract set none at all. Both the abstract and
+      overview declarations were DEAD — neither sheet ever referenced
+      var(--measure). Unified on 30rem with no visual change to either.
+   -------------------------------------------------------------------------- */
