@@ -22,7 +22,12 @@ import { glob } from "astro/loaders";
 
 const caseStudies = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/case-studies" }),
-  schema: z.object({
+  // The schema is a function so it can use image(), which validates a local
+  // file path and hands the template an ImageMetadata object that sharp can
+  // process. Migrated pages use local files; not-yet-migrated stubs still
+  // point at remote URLs, so cover accepts either.
+  schema: ({ image }) =>
+    z.object({
     title: z.string(),
     /** Left-rail content-type label, e.g. "Abstract", "Case study". */
     label: z.string().default("Case study"),
@@ -53,12 +58,15 @@ const caseStudies = defineCollection({
       )
       .default([]),
     year: z.number().optional(),
-    /** Card image for the work grid. */
-    cover: z.string().optional(),
+    /**
+     * Card image for the work grid. A local path (optimised by sharp) once the
+     * page is migrated; a remote URL while it is still a stub.
+     */
+    cover: z.union([image(), z.string()]).optional(),
     coverAlt: z.string().default(""),
     /** Trio-of-covers card variant, as used by the country reports. */
     coverVariant: z.enum(["single", "covers"]).default("single"),
-    covers: z.array(z.string()).default([]),
+    covers: z.array(z.union([image(), z.string()])).default([]),
     /** Controls grid order. */
     order: z.number().default(0),
     /**
@@ -67,9 +75,9 @@ const caseStudies = defineCollection({
      * their href="#" cards. Route generation skips stubs, so migrating one is
      * just deleting this flag and adding the body copy.
      */
-    stub: z.boolean().default(false),
-    draft: z.boolean().default(false),
-  }),
+      stub: z.boolean().default(false),
+      draft: z.boolean().default(false),
+    }),
 });
 
 const pages = defineCollection({

@@ -1,10 +1,19 @@
 ---
 /**
- * A pair of figures side by side, collapsing to one column under 700px
- * (see .figs in components.css). Wrap two <Figure> elements in this.
+ * A row of figures. Two columns by default (see .figs in components.css),
+ * collapsing to one under 700px.
+ *
+ * cols={3} is for sets of square tiles — the Overshoot page closes with six
+ * 1080×1080 platform cards, which read as a contact sheet rather than a pair of
+ * figures. It collapses to two columns on tablet and one on a phone, so a
+ * square never shrinks below legibility.
  */
+interface Props {
+  cols?: 2 | 3;
+}
+const { cols = 2 } = Astro.props;
 ---
 
-<div class="figs">
+<div class:list={["figs", cols === 3 && "figs--3"]}>
   <slot />
 </div>

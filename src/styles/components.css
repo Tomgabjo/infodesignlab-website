@@ -174,3 +174,9 @@ a.work:hover .work__title {opacity:.62}
   overflow-wrap: break-word;
   word-break: break-word;
 }
+
+/* Three-up variant for sets of square tiles (e.g. the six Overshoot platform
+   cards). Steps down rather than letting a square get too small to read. */
+.figs--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .figs--3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px)  { .figs--3 { grid-template-columns: 1fr; } }

@@ -39,10 +39,14 @@ const { title, label, summary, venue, authors, cover } = entry.data;
 // Any component used in an .mdx body MUST be listed in the map below.
 const mdxComponents = { Figure, Figures, References };
 
+// Open Graph needs a URL string. A migrated cover is an imported image object,
+// whose .src is the built asset path; a stub cover is already a URL.
+const ogImage = typeof cover === "string" ? cover : cover?.src;
+
 const { Content } = await render(entry);
 ---
 
-<Base title={`${title} — InfoDesignLab`} description={summary} image={cover}>
+<Base title={`${title} — InfoDesignLab`} description={summary} image={ogImage}>
   <main class="wrap">
     <header class="head">
       <div class="head__label">{label}</div>

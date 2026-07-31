@@ -4,19 +4,44 @@
  * image. No borders and no grey gutters — figures sit on white, per the design
  * system, and the graph itself is the focus.
  *
- * Available inside MDX body copy so a figure can be placed between paragraphs
- * where it belongs, rather than being pushed into frontmatter.
+ * Accepts either:
+ *   - an imported local image (ImageMetadata) -> goes through Astro/sharp, which
+ *     emits a responsive srcset. This is the path for migrated portfolio files
+ *     in src/assets, and the reason they live there.
+ *   - a plain URL string -> rendered as a bare <img>. Only for images hosted
+ *     elsewhere, which sharp cannot process at build time.
+ *
+ * Available inside MDX bodies so a figure can sit between the paragraphs it
+ * belongs to, rather than being pushed into frontmatter.
  */
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
 interface Props {
-  src: string;
+  src: ImageMetadata | string;
   alt: string;
   /** Caption as published. Never rewritten during migration. */
   caption?: string;
+  /** Hint for srcset selection; figures span the text column, not the viewport. */
+  sizes?: string;
 }
-const { src, alt, caption } = Astro.props;
+const {
+  src,
+  alt,
+  caption,
+  sizes = "(max-width: 900px) 100vw, 60vw",
+} = Astro.props;
+
+const isLocal = typeof src !== "string";
 ---
 
 <figure class="fig">
-  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  {
+    isLocal ? (
+      <Image src={src as ImageMetadata} alt={alt} sizes={sizes} loading="lazy" decoding="async" />
+    ) : (
+      <img src={src as string} alt={alt} loading="lazy" decoding="async" />
+    )
+  }
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
