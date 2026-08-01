@@ -11,7 +11,10 @@
 .media {
   position: sticky;
   top: 0;
-  height: 100svh;
+  /* dvh (dynamic viewport height) tracks the actual visible viewport as the
+     browser chrome shows/hides. svh was fixed to the smaller chrome-visible
+     height, leaving a white gap below the panel when chrome hid. */
+  height: 100dvh;
   background: #fff;
   border-right: 1px solid var(--line);
   overflow: hidden;
@@ -61,10 +64,12 @@
    hidden (not clip) because clip proved unreliable in iOS Safari for
    composited animated content. Safe for sticky here because .col is a
    SIBLING of .media, not its ancestor. */
-/* safe-area-inset-right: home indicator is on the right in iPhone landscape;
-   text content must not run into it. Left pad stays as-is — the media panel
-   occupies the full left side and .col's left edge starts at 48%. */
-.col { padding: 0 calc(var(--pad) + env(safe-area-inset-right, 0px)) 0 var(--pad); overflow-x: hidden; }
+/* GOTCHA: overflow-x on the COLUMN contains the ticker's animated content so
+   it can't inflate the page's horizontal scroll width on mobile portrait.
+   hidden (not clip) because clip proved unreliable in iOS Safari for
+   composited animated content. Safe for sticky here because .col is a
+   SIBLING of .media, not its ancestor. */
+.col { padding: 0 var(--pad); overflow-x: hidden; }
 
 @media (max-width: 900px) {
   .split { grid-template-columns: 1fr; }
@@ -94,7 +99,7 @@
   .media {
     position: sticky;
     top: 0;
-    height: 100svh;
+    height: 100dvh;
     order: 0;
     border-right: 1px solid var(--line);
     border-bottom: 0;

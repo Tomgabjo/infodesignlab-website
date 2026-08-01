@@ -20,12 +20,10 @@
    GOTCHA: bar height must be an INTEGER px. At 1.4px the bars rounded
    differently per device DPI, so the icon looked uneven on iPhone versus
    iPad. 2px renders identically everywhere. */
-/* safe-area-inset-right: home indicator sits on the right in iPhone landscape;
-   in portrait it is at the bottom and inset-right is 0. */
 .menu-btn {
   position: fixed;
   top: var(--pad);
-  right: calc(var(--pad) + env(safe-area-inset-right, 0px));
+  right: var(--pad);
   z-index: 45;
   display: inline-flex;
   align-items: center;
