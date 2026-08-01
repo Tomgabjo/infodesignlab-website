@@ -143,8 +143,8 @@ const publications = defineCollection({
     publisher: z.string(),
     date: z.coerce.date().optional(),
     dateLabel: z.string().optional(),
-    /** Citations point outward; the site does not reproduce them. */
-    href: z.string().url(),
+    /** Citations point outward. Optional when no public URL exists yet. */
+    href: z.string().url().optional(),
     authors: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),

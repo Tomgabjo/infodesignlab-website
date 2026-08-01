@@ -1,0 +1,66 @@
+---
+/**
+ * Publications — listing page. External citations sorted by date (most recent
+ * first). Each row is a hairline entry pointing outward; the site does not
+ * reproduce the publications themselves.
+ * Route /publications/ mirrors the existing Squarespace path.
+ */
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+const allPubs = await getCollection("publications", ({ data }) => !data.draft);
+const pubs = allPubs.sort((a, b) => {
+  const da = a.data.date ? a.data.date.valueOf() : 0;
+  const db = b.data.date ? b.data.date.valueOf() : 0;
+  return db - da;
+});
+---
+
+<Base
+  title="Publications — InfoDesignLab"
+  description="Selected external publications and citations featuring InfoDesignLab's work."
+>
+  <main class="wrap">
+    <header class="head">
+      <div class="head__label">Archive</div>
+      <h1 class="head__title">Publications</h1>
+    </header>
+
+    <div class="body">
+      <aside class="rail">
+        <strong>↳ In short</strong>
+        Selected external publications featuring InfoDesignLab's work.
+      </aside>
+
+      <div class="copy">
+        <p>Papers, articles and reports in which InfoDesignLab has been involved as designers, contributors or named co-authors.</p>
+      </div>
+    </div>
+
+    <section class="events" id="publications">
+      {
+        pubs.length === 0 ? (
+          <p style="padding: var(--pad);">No publications listed yet.</p>
+        ) : (
+          pubs.map((p) => (
+            <article class="evt">
+              <div class="evt__date">{p.data.dateLabel ?? (p.data.date ? p.data.date.getFullYear().toString() : "")}</div>
+              <div class="evt__title">
+                {
+                  p.data.href ? (
+                    <a href={p.data.href} target="_blank" rel="noopener noreferrer">
+                      {p.data.title} ↗
+                    </a>
+                  ) : (
+                    p.data.title
+                  )
+                }
+              </div>
+              <div class="evt__where">{p.data.publisher}</div>
+            </article>
+          ))
+        )
+      }
+    </section>
+  </main>
+</Base>

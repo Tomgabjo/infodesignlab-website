@@ -44,7 +44,7 @@ const work = (await getCollection("caseStudies", ({ data }) => !data.draft)).sor
 <section class="more" id={id}>
   <div class="more__head">
     <h2>{heading}</h2>
-    <a href={moreHref}>{moreText}</a>
+    {moreText && <a href={moreHref}>{moreText}</a>}
   </div>
 
   <div class="grid">

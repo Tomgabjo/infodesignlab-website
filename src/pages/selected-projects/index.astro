@@ -1,0 +1,25 @@
+---
+/**
+ * Selected work — full listing page. Shows every non-draft case study and
+ * posting via the shared WorkGrid component. The grid already handles stubs
+ * (non-clickable spans) and the "You are here" marker for inner-page views.
+ * Route /selected-projects/ mirrors the existing Squarespace path so inbound
+ * links survive the migration.
+ */
+import Base from "../../layouts/Base.astro";
+import WorkGrid from "../../components/WorkGrid.astro";
+---
+
+<Base
+  title="Selected work — InfoDesignLab"
+  description="Information design and data visualisation projects for climate science, public health and sustainable development."
+>
+  <main class="wrap">
+    <header class="head">
+      <div class="head__label">Overview</div>
+      <h1 class="head__title">Selected work</h1>
+    </header>
+
+    <WorkGrid heading="All work" />
+  </main>
+</Base>

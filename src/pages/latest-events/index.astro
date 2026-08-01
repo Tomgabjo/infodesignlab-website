@@ -1,0 +1,70 @@
+---
+/**
+ * Latest events — full listing page. Upcoming first (soonest to furthest),
+ * then past (most recent back), mirroring the homepage section.
+ * Route /latest-events/ mirrors the existing Squarespace path.
+ */
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+const now = new Date();
+const allEvents = await getCollection("events", ({ data }) => !data.draft);
+
+const upcoming = allEvents
+  .filter((e) => e.data.date >= now)
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+
+const past = allEvents
+  .filter((e) => e.data.date < now)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const events = [...upcoming, ...past];
+---
+
+<Base
+  title="Latest events — InfoDesignLab"
+  description="Talks, workshops and conferences — where to find us next, and the archive of past events."
+>
+  <main class="wrap">
+    <header class="head">
+      <div class="head__label">Archive</div>
+      <h1 class="head__title">Latest events</h1>
+    </header>
+
+    <div class="body">
+      <aside class="rail">
+        <strong>↳ In short</strong>
+        Talks, workshops and conferences — where to find us next.
+      </aside>
+
+      <div class="copy">
+        <p>We strive to facilitate or join events that enable others to harness the full potential of the knowledge we share.</p>
+      </div>
+    </div>
+
+    <section class="events" id="events">
+      {
+        events.map((e) => {
+          const isNext = e.data.date >= now;
+          return (
+            <article class:list={["evt", isNext && "evt--next"]}>
+              <div class="evt__date">{e.data.dateLabel ?? ""}</div>
+              <div class="evt__title">
+                {
+                  e.data.href ? (
+                    <a href={e.data.href} target="_blank" rel="noopener noreferrer">
+                      {e.data.title} ↗
+                    </a>
+                  ) : (
+                    e.data.title
+                  )
+                }
+              </div>
+              <div class="evt__where">{e.data.where}</div>
+            </article>
+          );
+        })
+      }
+    </section>
+  </main>
+</Base>
