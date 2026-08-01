@@ -69,6 +69,9 @@ a.work:hover .work__title {opacity:.62}
   padding:clamp(13px,1.8vh,19px) 0;border-top:1px solid var(--line)}
 .evt__date {font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;color:var(--soft)}
 .evt__title {font-weight:var(--w-secondary);letter-spacing:-.006em;font-size:clamp(1rem,1.5vw,1.16rem)}
+/* External link arrow: text-presentation selector (\fe0e) prevents emoji rendering.
+   Colour matches ↳ rail labels so the indicator sits quieter than the title. */
+.evt__title a[target="_blank"]::after {content:" ↗\fe0e";color:var(--soft);font-variant-emoji:text;text-decoration:none}
 .evt__where {font-family:var(--serif);font-size:.99rem;color:var(--ink-desc);grid-column:2}
 .evt--next .evt__date {color:var(--ink)}
 .events__more {margin-top:clamp(20px,3vh,32px);display:inline-block;font-family:var(--mono);font-size:.72rem;
