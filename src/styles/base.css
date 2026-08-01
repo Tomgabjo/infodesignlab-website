@@ -11,6 +11,15 @@ html {
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
+  /* GOTCHA: without this, mobile Safari and Chrome apply their own text
+     auto-inflation when a phone is turned to landscape, silently scaling up
+     type in wide blocks. It showed worst on the figure captions, which are a
+     fixed .66rem and so should never change size at all — they ballooned in
+     landscape while every other value stayed put, which reads like a CSS bug
+     but is the browser. 100% pins text to the authored size in both
+     orientations without disabling the user's own pinch-zoom. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
