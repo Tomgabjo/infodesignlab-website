@@ -133,16 +133,20 @@ const events = [...upcoming, ...past];
             research processes.
           </p>
           <p>
-            As <b>design partners</b> in <b>research projects</b>, we embed
+            As <b>design partners</b> in <b>research projects</b>, we embed{" "}
             <b>co-creation</b> and information design across work packages, helping
             diverse stakeholders align around common goals. From the beginning to the
-            final outcome, we work alongside scientists to <b>make knowledge</b> more
+            final outcome, we work alongside scientists to <b>make knowledge</b> more{" "}
             <b>actionable, inclusive, and visible</b>.
           </p>
           <p>
             Through <b>collaborative methods</b> and <b>deep contextual understanding</b>,
             we <b>co-create data visualisations</b>, communication tools, and strategic
-            narratives that connect research with real-world audiences. Our work spans
+            {/* NOTE: the {" "} at these line ends is load-bearing. Astro strips
+                whitespace at a line break, so a line ending in a word followed by a
+                line starting with <b> renders as "spansscientific". Three of these
+                shipped live before it was spotted. */}
+            narratives that connect research with real-world audiences. Our work spans{" "}
             <b>scientific reports</b>, editorial design, social media, visual platforms,
             and <b>decision making tools for policy</b> — all tailored to make science
             more engaging, rigorous, and effective.
