@@ -64,12 +64,13 @@
    hidden (not clip) because clip proved unreliable in iOS Safari for
    composited animated content. Safe for sticky here because .col is a
    SIBLING of .media, not its ancestor. */
-/* GOTCHA: overflow-x on the COLUMN contains the ticker's animated content so
-   it can't inflate the page's horizontal scroll width on mobile portrait.
-   hidden (not clip) because clip proved unreliable in iOS Safari for
-   composited animated content. Safe for sticky here because .col is a
-   SIBLING of .media, not its ancestor. */
 .col { padding: 0 var(--pad); overflow-x: hidden; }
+
+/* Sticky-logo clearance — base (desktop) value. Kept here alongside the mobile
+   override so both are in the same stylesheet: equal-specificity rules from a
+   later stylesheet (components.css) would silently win the cascade otherwise.
+   Do NOT add this rule to components.css. */
+.intro { padding-top: calc(var(--pad) + clamp(56px, 9vh, 110px)); }
 
 @media (max-width: 900px) {
   .split { grid-template-columns: 1fr; }
@@ -81,9 +82,10 @@
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
-  /* Halved again (1 Aug) at the studio's request — was clamp(15px,2.5vh,24px),
-     itself already halved from the original desktop-derived value. */
-  .intro { padding-top: clamp(8px, 1.25vh, 12px); }
+  /* ~50% of the desktop logo-clearance value. Previous halvings had no effect
+     because the base rule in components.css (a later stylesheet) silently won
+     the cascade — now fixed by moving the base rule here. */
+  .intro { padding-top: clamp(40px, 5vh, 56px); }
 }
 
 /* PHONE LANDSCAPE — restore the two-column split.
