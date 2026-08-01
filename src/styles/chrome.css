@@ -4,10 +4,12 @@
    ========================================================================== */
 
 /* ---------- sticky logo (top padding == side padding) ---------- */
+/* safe-area-inset-left: in iPhone landscape the notch is on the left; the logo
+   must clear it. In portrait safe-area-inset-left is 0, so no visual change. */
 .brand {
   position: fixed;
   top: var(--pad);
-  left: var(--pad);
+  left: calc(var(--pad) + env(safe-area-inset-left, 0px));
   z-index: 45;
   display: block;
   width: clamp(48px, 3.6vw, 58px);
@@ -18,10 +20,12 @@
    GOTCHA: bar height must be an INTEGER px. At 1.4px the bars rounded
    differently per device DPI, so the icon looked uneven on iPhone versus
    iPad. 2px renders identically everywhere. */
+/* safe-area-inset-right: home indicator sits on the right in iPhone landscape;
+   in portrait it is at the bottom and inset-right is 0. */
 .menu-btn {
   position: fixed;
   top: var(--pad);
-  right: var(--pad);
+  right: calc(var(--pad) + env(safe-area-inset-right, 0px));
   z-index: 45;
   display: inline-flex;
   align-items: center;
@@ -66,7 +70,12 @@
   overflow-x: hidden;
   /* contains its own scroll so the desktop page doesn't need body.locked */
   overscroll-behavior: contain;
-  padding: var(--pad) var(--pad) 56px;
+  /* safe-area insets: the panel slides in from the right so inset-right keeps
+     content clear of the home indicator; inset-top guards the status bar area. */
+  padding: calc(var(--pad) + env(safe-area-inset-top, 0px))
+           calc(var(--pad) + env(safe-area-inset-right, 0px))
+           56px
+           var(--pad);
 }
 .toc.open { transform: translateX(0); }
 
@@ -121,9 +130,12 @@
 .toc__foot a { text-decoration: underline; text-underline-offset: 2px; color: var(--ink); }
 
 /* ---------- footer ---------- */
+/* safe-area-inset-bottom: home indicator in portrait; in landscape it is 0. */
 .foot {
   border-top: 1px solid var(--line);
-  padding: clamp(28px, 4vw, 48px) var(--pad);
+  padding: clamp(28px, 4vw, 48px) calc(var(--pad) + env(safe-area-inset-right, 0px))
+           calc(clamp(28px, 4vw, 48px) + env(safe-area-inset-bottom, 0px))
+           calc(var(--pad) + env(safe-area-inset-left, 0px));
   display: flex;
   justify-content: space-between;
   align-items: flex-end;

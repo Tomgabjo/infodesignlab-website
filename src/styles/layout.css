@@ -19,8 +19,13 @@
 .media__slide { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease; }
 .media__slide.on { opacity: 1; }
 /* cover, not contain: contain letterboxed the figures with thick white bands
-   above and below, which was rejected. Size the panel to the figure instead. */
-.media__slide img { width: 100%; height: 100%; object-fit: cover; }
+   above and below, which was rejected. Size the panel to the figure instead.
+   SPECIFICITY NOTE: Astro's responsiveStyles generates img[data-astro-image]
+   rules at [0,1,1], the same as .media__slide img. Adding [data-astro-image]
+   here raises us to [0,2,1] so our height:100% always wins regardless of
+   stylesheet load order. */
+.media__slide img,
+.media__slide img[data-astro-image] { width: 100%; height: 100%; object-fit: cover; }
 
 /* transparent report covers, floated on the light canvas */
 .media__slide--covers {
@@ -56,7 +61,10 @@
    hidden (not clip) because clip proved unreliable in iOS Safari for
    composited animated content. Safe for sticky here because .col is a
    SIBLING of .media, not its ancestor. */
-.col { padding: 0 var(--pad); overflow-x: hidden; }
+/* safe-area-inset-right: home indicator is on the right in iPhone landscape;
+   text content must not run into it. Left pad stays as-is — the media panel
+   occupies the full left side and .col's left edge starts at 48%. */
+.col { padding: 0 calc(var(--pad) + env(safe-area-inset-right, 0px)) 0 var(--pad); overflow-x: hidden; }
 
 @media (max-width: 900px) {
   .split { grid-template-columns: 1fr; }
