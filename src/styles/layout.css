@@ -81,10 +81,9 @@
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
-  /* Halved from clamp(30px,5vh,48px) at the studio's request — with the image
-     sitting directly above, the original clearance (inherited from the desktop
-     logo gap) left the hero heading floating too far off it. */
-  .intro { padding-top: clamp(15px, 2.5vh, 24px); }
+  /* Halved again (1 Aug) at the studio's request — was clamp(15px,2.5vh,24px),
+     itself already halved from the original desktop-derived value. */
+  .intro { padding-top: clamp(8px, 1.25vh, 12px); }
 }
 
 /* PHONE LANDSCAPE — restore the two-column split.
