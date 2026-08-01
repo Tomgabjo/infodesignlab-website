@@ -20,32 +20,56 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import Base from "../layouts/Base.astro";
 
-/** Left-hand reel: five real portfolio figures, independent of the right column. */
+/**
+ * Left-hand reel — five real portfolio figures, independent of the right column.
+ *
+ * THESE ARE DELIBERATELY PORTRAIT. The panel is 48% wide by 100svh, so it is a
+ * portrait box (~0.77 at 1440x900, ~0.85 at 1920x1080). The previous reel was
+ * five 3:2 LANDSCAPE photographs of printed spreads; object-fit:cover then had
+ * to crop ~50% off the sides and showed only the centre strip of a spread —
+ * which on a double page is the white gutter. That read as the image failing to
+ * fill the panel, and it only showed in two-column state because the
+ * single-column panel is wide and short, where the same images crop barely at all.
+ *
+ * Every candidate here is between 0.71 and 1.00, so the crop is small and the
+ * graphic itself fills the panel. If a figure is ever swapped in, check its
+ * aspect first: anything wider than ~1.0 will reintroduce the gutter problem.
+ *
+ * Local imports rather than the old pub.hyperagent.com prototype URLs, so these
+ * go through sharp and the production site carries no dependency on the
+ * prototype publishing host.
+ */
+import cdrVis1 from "../assets/the-state-of-carbon-dioxide-removal-2024/05-img.jpg";
+import cdrVis3 from "../assets/the-state-of-carbon-dioxide-removal-2024/07-img.jpg";
+import coverBd from "../assets/climate-change-impacts-reports/02-img.png";
+import coverKe from "../assets/climate-change-impacts-reports/04-img.png";
+import overshootCard from "../assets/overshoot-annual-review/08-card-0.webp";
+
 const reel = [
   {
-    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS3FE_7D5PF6REYNFAP9XV/work-overshoot-figure.jpg",
-    alt: "Conceptual dimensions of overshoot, printed figure",
-    cap: "Overshoot Annual Review — Figure 1, conceptual dimensions of overshoot",
+    src: cdrVis1,
+    alt: "Visualisation 1 from the executive summary of The State of Carbon Dioxide Removal, second edition",
+    cap: "The State of Carbon Dioxide Removal — executive summary, Visualisation 1",
   },
   {
-    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS531_6Z9HXFGTV4HWC5GP/work-03.jpg",
-    alt: "Regional attribution of observed change, printed figure",
-    cap: "IPCC AR6 — regional attribution of observed change",
+    src: coverBd,
+    alt: "Cover of the Climate Change Impacts in Bangladesh report",
+    cap: "Climate Change Impacts Reports — Bangladesh",
   },
   {
-    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS32D_KB1A2QDKBVE6XKZX/work-overshoot-target.jpg",
-    alt: "Emissions peak, temperature target and overshoot, printed figure",
-    cap: "Scientific American — emissions peak, target and overshoot",
+    src: cdrVis3,
+    alt: "Visualisation 3 from the executive summary of The State of Carbon Dioxide Removal, second edition",
+    cap: "The State of Carbon Dioxide Removal — the diversity of CDR methods",
   },
   {
-    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS3X7_2EMWN4AD4A9W556S/work-02.jpg",
-    alt: "Cumulative carbon dioxide removal from 2020 to 2100, bar chart",
-    cap: "The State of Carbon Dioxide Removal — cumulative CDR, 2020–2100",
+    src: overshootCard,
+    alt: "Overshoot platform card from the Annual Review collaboration",
+    cap: "Overshoot, Annual Review — platform card",
   },
   {
-    src: "https://pub.hyperagent.com/api/published/pbf01KYQWS5EB_CVW02WNC1WDYG5X2/work-04.jpg",
-    alt: "IPCC Reasons for Concern burning embers diagram",
-    cap: "IPCC — Reasons for Concern, RFC1–5",
+    src: coverKe,
+    alt: "Cover of the Climate Change Impacts in Kenya report",
+    cap: "Climate Change Impacts Reports — Kenya",
   },
 ];
 
@@ -85,7 +109,12 @@ const events = [...upcoming, ...past];
       {
         reel.map((f, i) => (
           <div class:list={["media__slide", i === 0 && "on"]} data-cap={f.cap}>
-            <img src={f.src} alt={f.alt} loading={i === 0 ? "eager" : "lazy"} />
+            <Image
+              src={f.src}
+              alt={f.alt}
+              sizes="(max-width: 900px) 100vw, 48vw"
+              loading={i === 0 ? "eager" : "lazy"}
+            />
           </div>
         ))
       }
@@ -157,9 +186,9 @@ const events = [...upcoming, ...past];
             // behaviour the work grid gives it.
             const Tag = stub ? "div" : "a";
             const href = stub ? undefined : `/selected-projects/${entry.id}/`;
-            const go = label.toLowerCase().includes("abstract")
-              ? "Read abstract →"
-              : "Read case study →";
+            // "Read more…" rather than "Read case study →": the longer wording sat
+            // directly above the next plug's title and read as a heading itself.
+            const go = "Read more…";
 
             return (
               <Tag class="work" href={href}>

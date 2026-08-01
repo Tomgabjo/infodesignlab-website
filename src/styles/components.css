@@ -98,6 +98,34 @@ a.work:hover .work__title {opacity:.62}
 .copy p {font-family:var(--serif);font-size:clamp(1.18rem,1.52vw,1.46rem);line-height:1.45;color:var(--ink-body);
   margin-bottom:1.05em;max-width:62ch}
 .copy .sub {margin-top:clamp(28px,4.5vh,48px)}
+
+/* LISTS ARE BODY COPY. No ul/ol/li rule existed anywhere, so list items fell
+   back to the body grotesque at 17px while the paragraphs around them were
+   serif at clamp(1.18rem,1.52vw,1.46rem) — a bulleted passage visibly changed
+   typeface and size mid-article. Every value here is deliberately the same as
+   .copy p above; change them together. Declared once, globally, rather than
+   per template. */
+.copy ul, .copy ol {max-width:62ch;margin:0 0 1.05em;padding-left:1.1em}
+.copy ul {list-style:disc}
+.copy ol {list-style:decimal}
+.copy li {font-family:var(--serif);font-size:clamp(1.18rem,1.52vw,1.46rem);
+  line-height:1.45;color:var(--ink-body);margin-bottom:.38em}
+.copy li:last-child {margin-bottom:0}
+/* Bullet in the muted grey so the marker sits quieter than the text. */
+.copy li::marker {color:var(--soft)}
+/* Nested lists and paragraphs inside a list item stay in the same register. */
+.copy li > ul, .copy li > ol {margin:.38em 0 0}
+.copy li p {font-size:inherit;margin-bottom:.38em;max-width:none}
+
+/* Homepage / overview intro prose uses the grotesque, so its lists follow that
+   face instead — same principle, matched to .prose p. */
+.prose ul, .prose ol {max-width:var(--measure);margin:0 0 1.05em;padding-left:1.1em}
+.prose ul {list-style:disc}
+.prose ol {list-style:decimal}
+.prose li {font-size:clamp(1.08rem,1.28vw,1.32rem);line-height:1.5;
+  color:var(--ink-body);margin-bottom:.38em}
+.prose li:last-child {margin-bottom:0}
+.prose li::marker {color:var(--soft)}
 /* Space BELOW a figure must equal the space above it. The prototypes set a top
    margin only, so a figure sat tight against the paragraph that followed and the
    vertical rhythm read lopsided. Same value both sides, here and on .figs. */
