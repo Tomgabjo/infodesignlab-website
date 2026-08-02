@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
-    "build": "tinacms build --skip-cloud-checks && astro build",
+    "build": "NODE_OPTIONS=--max-old-space-size=6144 tinacms build --skip-cloud-checks && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro"
