@@ -92,7 +92,7 @@ export default defineConfig({
           { type: "number", name: "order", label: "Grid order", required: true },
           { type: "boolean", name: "stub", label: "Stub" },
           { type: "boolean", name: "draft", label: "Draft" },
-          { type: "rich-text", name: "body", label: "Body", isBody: true },
+          { type: "string", name: "body", label: "Body", isBody: true, ui: { component: "textarea" } },
         ],
       },
 
