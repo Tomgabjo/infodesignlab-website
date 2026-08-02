@@ -170,7 +170,6 @@ export default defineConfig({
             options: ["talk", "workshop", "conference", "lecture"],
           },
           { type: "boolean", name: "draft", label: "Draft" },
-          { type: "rich-text", name: "body", label: "Body", isBody: true },
         ],
       },
 
