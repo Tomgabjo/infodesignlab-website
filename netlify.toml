@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Netlify Image CDN — on-demand resize and AVIF/WebP negotiation for
+# portfolio images in public/images/. No build step needed: request any
+# /.netlify/images?url=/images/<slug>/file.ext&w=800 and the CDN serves the
+# right format and size, cached at the edge.
+#
+# Docs: https://docs.netlify.com/build/image-cdn/overview/

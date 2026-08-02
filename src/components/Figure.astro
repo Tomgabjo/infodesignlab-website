@@ -1,15 +1,15 @@
 ---
 /**
- * A real portfolio figure, aligned to the text column, caption sitting over the
- * image. No borders and no grey gutters — figures sit on white, per the design
- * system, and the graph itself is the focus.
+ * A real portfolio figure, aligned to the text column, caption sitting below
+ * the image. No borders and no grey gutters — figures sit on white, per the
+ * design system, and the graph itself is the focus.
  *
  * Accepts either:
- *   - an imported local image (ImageMetadata) -> goes through Astro/sharp, which
- *     emits a responsive srcset. This is the path for migrated portfolio files
- *     in src/assets, and the reason they live there.
- *   - a plain URL string -> rendered as a bare <img>. Only for images hosted
- *     elsewhere, which sharp cannot process at build time.
+ *   - an imported local image (ImageMetadata) — goes through Astro/sharp,
+ *     emitting a responsive srcset. Used for hero reel images in src/assets/hero/.
+ *   - a plain URL string like "/images/slug/00-img.jpg" — served via the
+ *     Netlify Image CDN for on-demand resize and AVIF/WebP negotiation.
+ *     All migrated portfolio images now live in public/images/ and use this path.
  *
  * Available inside MDX bodies so a figure can sit between the paragraphs it
  * belongs to, rather than being pushed into frontmatter.
@@ -25,6 +25,7 @@ interface Props {
   /** Hint for srcset selection; figures span the text column, not the viewport. */
   sizes?: string;
 }
+
 const {
   src,
   alt,
@@ -33,14 +34,34 @@ const {
 } = Astro.props;
 
 const isLocal = typeof src !== "string";
+
+function netlifyImg(path: string, w: number) {
+  return `/.netlify/images?url=${encodeURIComponent(path)}&w=${w}`;
+}
+
+const strSrc = isLocal ? "" : (src as string);
+const cdnWidths = [400, 800, 1200, 1800];
 ---
 
 <figure class="fig">
   {
     isLocal ? (
-      <Image src={src as ImageMetadata} alt={alt} sizes={sizes} loading="lazy" decoding="async" />
+      <Image
+        src={src as ImageMetadata}
+        alt={alt}
+        sizes={sizes}
+        loading="lazy"
+        decoding="async"
+      />
     ) : (
-      <img src={src as string} alt={alt} loading="lazy" decoding="async" />
+      <img
+        src={netlifyImg(strSrc, 1200)}
+        srcset={cdnWidths.map((w) => `${netlifyImg(strSrc, w)} ${w}w`).join(", ")}
+        sizes={sizes}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+      />
     )
   }
   {caption && <figcaption>{caption}</figcaption>}

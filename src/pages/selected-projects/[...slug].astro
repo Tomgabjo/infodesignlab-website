@@ -39,9 +39,8 @@ const { title, label, summary, venue, authors, design, references, cover } =
 // or the build fails with "Expected component X to be defined".
 const mdxComponents = { Figure, Figures };
 
-// Open Graph needs a URL string. A migrated cover is an imported image object,
-// whose .src is the built asset path; a stub cover is already a URL.
-const ogImage = typeof cover === "string" ? cover : cover?.src;
+// All covers are now URL strings (public/images/); no conversion needed.
+const ogImage = cover;
 
 const { Content } = await render(entry);
 ---

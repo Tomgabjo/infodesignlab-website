@@ -22,12 +22,10 @@ import { glob } from "astro/loaders";
 
 const caseStudies = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/case-studies" }),
-  // The schema is a function so it can use image(), which validates a local
-  // file path and hands the template an ImageMetadata object that sharp can
-  // process. Migrated pages use local files; not-yet-migrated stubs still
-  // point at remote URLs, so cover accepts either.
-  schema: ({ image }) =>
-    z.object({
+  // All cover/covers images now live in public/images/ and are referenced as
+  // URL strings like "/images/slug/00-img.jpg". The image() validator is no
+  // longer needed here; Netlify Image CDN handles resize and format on demand.
+  schema: z.object({
     title: z.string(),
     /** Left-rail content-type label, e.g. "Abstract", "Case study". */
     label: z.string().default("Case study"),
@@ -81,11 +79,11 @@ const caseStudies = defineCollection({
      * Card image for the work grid. A local path (optimised by sharp) once the
      * page is migrated; a remote URL while it is still a stub.
      */
-    cover: z.union([image(), z.string()]).optional(),
+    cover: z.string().optional(),
     coverAlt: z.string().default(""),
     /** Trio-of-covers card variant, as used by the country reports. */
     coverVariant: z.enum(["single", "covers"]).default("single"),
-    covers: z.array(z.union([image(), z.string()])).default([]),
+    covers: z.array(z.string()).default([]),
     /** Controls grid order. */
     order: z.number().default(0),
     /**

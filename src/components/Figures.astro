@@ -1,19 +1,53 @@
 ---
 /**
- * A row of figures. Two columns by default (see .figs in components.css),
- * collapsing to one under 700px.
+ * A row of portfolio figures.
  *
- * cols={3} is for sets of square tiles — the Overshoot page closes with six
- * 1080×1080 platform cards, which read as a contact sheet rather than a pair of
- * figures. It collapses to two columns on tablet and one on a phone, so a
- * square never shrinks below legibility.
+ * Takes an `items` list rather than slot children so TinaCMS can read and
+ * write this component as a structured list field in its rich-text editor.
+ * A slot-based approach cannot be represented as a Tina template.
+ *
+ * cols={2}  default, two columns collapsing to one under 700px.
+ * cols={3}  for sets of square tiles (e.g. the six CMCC platform cards on the
+ *           Overshoot page). Collapses to two on tablet, one on phone.
+ *
+ * Each item carries { src, alt, caption? }.
+ * src is a public/images/ URL string; the Netlify Image CDN handles resize
+ * and format negotiation on demand.
  */
+interface Item {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
 interface Props {
   cols?: 2 | 3;
+  items: Item[];
 }
-const { cols = 2 } = Astro.props;
+
+const { cols = 2, items = [] } = Astro.props;
+
+function cdnSrc(src: string, w: number) {
+  return `/.netlify/images?url=${encodeURIComponent(src)}&w=${w}`;
+}
 ---
 
 <div class:list={["figs", cols === 3 && "figs--3"]}>
-  <slot />
+  {
+    items.map((item) => (
+      <figure class="fig">
+        <img
+          src={cdnSrc(item.src, 800)}
+          srcset={[400, 800, 1200, 1800].map((w) => `${cdnSrc(item.src, w)} ${w}w`).join(", ")}
+          sizes={cols === 3
+            ? "(max-width: 700px) 100vw, (max-width: 900px) 50vw, 33vw"
+            : "(max-width: 700px) 100vw, 50vw"}
+          alt={item.alt}
+          loading="lazy"
+          decoding="async"
+        />
+        {item.caption && <figcaption>{item.caption}</figcaption>}
+      </figure>
+    ))
+  }
 </div>
