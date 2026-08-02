@@ -4,7 +4,7 @@ import { defineConfig } from "tinacms";
  * TinaCMS configuration for InfoDesignLab
  *
  * Four collections mirror the four Astro content collections exactly:
- *   caseStudies  — 19 project pages (abstract/article template)
+ *   caseStudies  — 18 project pages (abstract/article template)
  *   events       — 109 events, 2012–2026 + upcoming
  *   publications — 9 external citations
  *   pages        — 5 prose overview pages (co-design, who-we-are, etc.)
@@ -12,13 +12,6 @@ import { defineConfig } from "tinacms";
  * CREDENTIALS:
  *   TINA_PUBLIC_CLIENT_ID and TINA_TOKEN must be set as Netlify environment
  *   variables. Never commit values here — the repo is public.
- *
- * IMAGES:
- *   Portfolio images live in public/images/<slug>/ and are served via the
- *   Netlify Image CDN. Tina's media root is set to "images" so uploads from
- *   the /admin UI land in public/images/ alongside migrated files.
- *   Figure and Figures are registered as rich-text templates so Tom can
- *   insert and reorder images in the body without touching code.
  */
 
 const branch =
@@ -38,8 +31,7 @@ export default defineConfig({
 
   media: {
     tina: {
-      // Uploads land in public/images/ — same directory as migrated assets.
-      mediaRoot: "images",
+      mediaRoot: "",
       publicFolder: "public",
     },
   },
@@ -88,8 +80,7 @@ export default defineConfig({
             ],
           },
           { type: "number", name: "year", label: "Year" },
-          // Cover image path, e.g. /images/slug/00-img.jpg
-          { type: "string", name: "cover", label: "Cover image path" },
+          { type: "string", name: "cover", label: "Cover image" },
           { type: "string", name: "coverAlt", label: "Cover alt text" },
           {
             type: "string",
@@ -97,19 +88,10 @@ export default defineConfig({
             label: "Cover variant",
             options: ["single", "covers"],
           },
-          // covers is a trio used only by climate-change-impacts-reports.
-          // Kept as string so the existing pub.hyperagent.com URLs are not
-          // broken. Upgrade to image[] if Tom needs to edit this field.
           { type: "string", name: "covers", label: "Cover trio images", list: true },
           { type: "number", name: "order", label: "Grid order", required: true },
           { type: "boolean", name: "stub", label: "Stub" },
           { type: "boolean", name: "draft", label: "Draft" },
-          // Plain rich-text body. Figure and Figures JSX components in the MDX
-          // body are rendered by Astro via mdxComponents — they do not need to
-          // be Tina templates to display correctly on the site. Registering them
-          // as templates requires a correctly generated tina-lock.json that can
-          // only be produced by running tinacms build locally; deferred to a
-          // future round when that is set up.
           { type: "rich-text", name: "body", label: "Body", isBody: true },
         ],
       },
