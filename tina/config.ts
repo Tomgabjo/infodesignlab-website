@@ -127,13 +127,10 @@ export default defineConfig({
                 label: "Figure grid",
                 fields: [
                   {
+                    // 2 = side-by-side pair (default), 3 = square tile set (e.g. CMCC cards)
                     type: "number",
                     name: "cols",
-                    label: "Columns",
-                    options: [
-                      { label: "2 columns", value: 2 },
-                      { label: "3 columns (square tiles)", value: 3 },
-                    ],
+                    label: "Columns (enter 2 or 3)",
                   },
                   {
                     type: "object",
