@@ -88,8 +88,8 @@ export default defineConfig({
             ],
           },
           { type: "number", name: "year", label: "Year" },
-          // Cover image — media picker opens public/images/ via Tina's media root.
-          { type: "image", name: "cover", label: "Cover image" },
+          // Cover image path, e.g. /images/slug/00-img.jpg
+          { type: "string", name: "cover", label: "Cover image path" },
           { type: "string", name: "coverAlt", label: "Cover alt text" },
           {
             type: "string",
@@ -117,7 +117,8 @@ export default defineConfig({
                 name: "Figure",
                 label: "Figure",
                 fields: [
-                  { type: "image", name: "src", label: "Image" },
+                  // src = /images/<slug>/NN-img.jpg — served via Netlify Image CDN
+                  { type: "string", name: "src", label: "Image path" },
                   { type: "string", name: "alt", label: "Alt text" },
                   { type: "string", name: "caption", label: "Caption" },
                 ],
@@ -138,7 +139,7 @@ export default defineConfig({
                     label: "Figures",
                     list: true,
                     fields: [
-                      { type: "image", name: "src", label: "Image" },
+                      { type: "string", name: "src", label: "Image path" },
                       { type: "string", name: "alt", label: "Alt text" },
                       { type: "string", name: "caption", label: "Caption" },
                     ],
