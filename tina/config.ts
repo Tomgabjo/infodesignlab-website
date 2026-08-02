@@ -104,50 +104,13 @@ export default defineConfig({
           { type: "number", name: "order", label: "Grid order", required: true },
           { type: "boolean", name: "stub", label: "Stub" },
           { type: "boolean", name: "draft", label: "Draft" },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
-            // Figure and Figures are available as insertable components in the
-            // Tina rich-text editor. The src field uses Tina's media picker so
-            // Tom can upload images directly from /admin.
-            templates: [
-              {
-                name: "Figure",
-                label: "Figure",
-                fields: [
-                  // src = /images/<slug>/NN-img.jpg — served via Netlify Image CDN
-                  { type: "string", name: "src", label: "Image path" },
-                  { type: "string", name: "alt", label: "Alt text" },
-                  { type: "string", name: "caption", label: "Caption" },
-                ],
-              },
-              {
-                name: "Figures",
-                label: "Figure grid",
-                fields: [
-                  {
-                    // 2 = side-by-side pair (default), 3 = square tile set (e.g. CMCC cards)
-                    type: "number",
-                    name: "cols",
-                    label: "Columns (enter 2 or 3)",
-                  },
-                  {
-                    type: "object",
-                    name: "items",
-                    label: "Figures",
-                    list: true,
-                    fields: [
-                      { type: "string", name: "src", label: "Image path" },
-                      { type: "string", name: "alt", label: "Alt text" },
-                      { type: "string", name: "caption", label: "Caption" },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
+          // Plain rich-text body. Figure and Figures JSX components in the MDX
+          // body are rendered by Astro via mdxComponents — they do not need to
+          // be Tina templates to display correctly on the site. Registering them
+          // as templates requires a correctly generated tina-lock.json that can
+          // only be produced by running tinacms build locally; deferred to a
+          // future round when that is set up.
+          { type: "rich-text", name: "body", label: "Body", isBody: true },
         ],
       },
 
