@@ -31,7 +31,7 @@ export default defineConfig({
 
   media: {
     tina: {
-      mediaRoot: "",
+      mediaRoot: "images",
       publicFolder: "public",
     },
   },
@@ -80,7 +80,7 @@ export default defineConfig({
             ],
           },
           { type: "number", name: "year", label: "Year" },
-          { type: "string", name: "cover", label: "Cover image" },
+          { type: "image", name: "cover", label: "Cover image" },
           { type: "string", name: "coverAlt", label: "Cover alt text" },
           {
             type: "string",
@@ -92,7 +92,43 @@ export default defineConfig({
           { type: "number", name: "order", label: "Grid order", required: true },
           { type: "boolean", name: "stub", label: "Stub" },
           { type: "boolean", name: "draft", label: "Draft" },
-          { type: "rich-text", name: "body", label: "Body", isBody: true },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Body",
+            isBody: true,
+            templates: [
+              {
+                name: "Figure",
+                label: "Figure",
+                match: { start: "<Figure", end: "/>" },
+                fields: [
+                  { type: "string", name: "src", label: "Image path" },
+                  { type: "string", name: "alt", label: "Alt text" },
+                  { type: "string", name: "caption", label: "Caption" },
+                ],
+              },
+              {
+                name: "Figures",
+                label: "Figures (grid)",
+                match: { start: "<Figures", end: "/>" },
+                fields: [
+                  { type: "number", name: "cols", label: "Columns" },
+                  {
+                    type: "object",
+                    name: "items",
+                    label: "Images",
+                    list: true,
+                    fields: [
+                      { type: "string", name: "src", label: "Image path" },
+                      { type: "string", name: "alt", label: "Alt text" },
+                      { type: "string", name: "caption", label: "Caption" },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
 
