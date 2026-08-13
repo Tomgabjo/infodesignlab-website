@@ -42,18 +42,19 @@ jobs:
           # bug (TinaCMS PR #7051, still an open draft, unreleased as of Aug
           # 2026). Only `tinacms dev` regenerates the lock file, because the
           # lock-write step only runs from dev's startup path, right after
-          # codegen — before dev's GraphQL server actually starts listening.
-          # `dev` normally stays running as a server, so we bound it with
-          # `timeout` and let it get killed once codegen + the lock write
-          # have had time to finish.
-          timeout 150 npx tinacms dev --noWatch --skip-cloud-checks --skip-search-indexing || true
+          # codegen. `dev`'s own `--no-server` flag (confirmed from its CLI
+          # error output) tells it to run codegen and exit WITHOUT starting
+          # the GraphQL server — no timeout/kill hack needed. Note: `dev`
+          # does not accept --skip-cloud-checks or --skip-search-indexing
+          # (those are build-only flags); only --no-server and --noWatch.
+          npx tinacms dev --no-server --noWatch
           echo "--- tina-lock.json diff after dev run ---"
           git diff --stat tina/tina-lock.json || true
 
       - name: Verify the lock file actually changed
         run: |
           if git diff --quiet tina/tina-lock.json; then
-            echo "ERROR: tina-lock.json did not change. The dev run may not have finished writing it — rerun with a longer timeout, or check the log above for a CLI error." >&2
+            echo "ERROR: tina-lock.json did not change. Check the log above for a CLI error." >&2
             exit 1
           fi
           echo "tina-lock.json changed as expected — proceeding to commit."
