@@ -37,7 +37,7 @@ jobs:
           # the cloud authentication so only the local schema compile runs.
           # If this step fails with an auth error, add TINA_TOKEN as a
           # GitHub Actions secret and uncomment the next line:
-          # TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
           NODE_OPTIONS: '--max-old-space-size=8192'
         run: npx tinacms build --skip-cloud-checks
 
