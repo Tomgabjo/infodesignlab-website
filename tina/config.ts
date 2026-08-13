@@ -103,7 +103,7 @@ export default defineConfig({
                 label: "Figure",
                 match: { start: "<Figure", end: "/>" },
                 fields: [
-                  { type: "string", name: "src", label: "Image path" },
+                  { type: "image", name: "src", label: "Image" },
                   { type: "string", name: "alt", label: "Alt text" },
                   { type: "string", name: "caption", label: "Caption" },
                 ],
@@ -120,7 +120,7 @@ export default defineConfig({
                     label: "Images",
                     list: true,
                     fields: [
-                      { type: "string", name: "src", label: "Image path" },
+                      { type: "image", name: "src", label: "Image" },
                       { type: "string", name: "alt", label: "Alt text" },
                       { type: "string", name: "caption", label: "Caption" },
                     ],
