@@ -34,12 +34,61 @@ const { title, description, image, noindex } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Handcrafted in Oslo. Every graph on this site was made the slow way:
+         hundreds of hours of dialogue with scientists before a single line
+         settled. If you are reading the source, you look closer than most —
+         so do we. See /colophon/ · post@infodesignlab.com -->
     <SiteHead title={title} description={description} image={image} noindex={noindex} />
   </head>
   <body id="top">
+    <script is:inline>
+      /* Gates the settle transitions in base.css: without JS the class is
+         never set and nothing is ever hidden. Runs before content parses,
+         so there is no flash of hidden figures. */
+      document.documentElement.classList.add("js");
+    </script>
     <Logo />
     <TableOfContentsMenu />
     <slot />
     <Footer />
+
+    <script is:inline>
+      /* Figures and rails settle into place the first time they enter the
+         viewport (see the quiet-details block in base.css). Each element is
+         unobserved after it settles — once, then done. With reduced motion
+         the CSS never hides anything, so these classes are inert. */
+      addEventListener("DOMContentLoaded", () => {
+        const targets = Array.prototype.filter.call(
+          document.querySelectorAll(".fig, .figs, .rail"),
+          (el) => !(el.classList.contains("fig") && el.closest(".figs"))
+        );
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach((el) => el.classList.add("is-set"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-set");
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -6% 0px", threshold: 0.08 }
+        );
+        targets.forEach((el) => io.observe(el));
+      });
+
+      /* A note for the curious. */
+      console.log(
+        "%c┌────────────┐\n│  INFO      │\n│  DESIGN    │\n│  LAB       │\n└────────────┘",
+        "font-family:ui-monospace,Menlo,Consolas,monospace;color:#78776f;line-height:1.35"
+      );
+      console.log(
+        "%cYou looked. We hoped someone would.\n\nEvery graph on this site was handcrafted — hundreds of hours of\ndialogue with scientists, and care in every line. Not all of it is\nmeant to be noticed. But it is all meant to be felt.\n\n↳ post@infodesignlab.com · /colophon/",
+        "font-family:ui-monospace,Menlo,Consolas,monospace;color:#231f20;line-height:1.6"
+      );
+    </script>
   </body>
 </html>

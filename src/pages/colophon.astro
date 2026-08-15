@@ -1,0 +1,69 @@
+---
+/**
+ * Colophon — the quiet page behind the footer's "handcrafted" link.
+ *
+ * Static route rather than a pages-collection entry, deliberately: the pages
+ * template ends in the Selected-work grid, which a colophon should not carry,
+ * and adding an opt-out flag would mean a schema change mirrored into the
+ * Tina config and lock. This reuses the overview template's classes only —
+ * no fourth template, no new CSS.
+ */
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<Base
+  title="Colophon — InfoDesignLab"
+  description="What this site is made of, and how — typefaces, tools, and the care behind the graphs."
+>
+  <main class="wrap">
+    <header class="head">
+      <div class="head__label">Colophon</div>
+      <h1 class="head__title">Made the slow way</h1>
+    </header>
+
+    <div class="body">
+      <aside class="rail">
+        <strong><Icon name="corner-down-right" /> In short</strong>
+        The small print — what this site is made of, and how.
+
+        <br /><br />
+        <strong><Icon name="corner-down-right" /> See also</strong>
+        <a href="/co-design-process/">Co-design process</a>
+        <br />
+        <a href="mailto:post@infodesignlab.com">Contact</a>
+        <br />
+      </aside>
+
+      <div class="copy">
+        <p>
+          Every visualisation on this site is real work, made for and with
+          real people — scientists, policy-makers, editors, readers. Each one
+          took hundreds of hours of dialogue before a single line settled.
+          They are not always novel and not always surprising, but every one
+          of them was designed with care, in collaborations that run from the
+          scientific to the political.
+        </p>
+        <p>
+          The site is set in three typefaces and no more: a grotesque for
+          headings and the homepage voice, Newsreader for the reading, and a
+          monospace for the small print — including this rail. The canvas is
+          a quiet grey; the menu blushes pink. If you select a sentence
+          anywhere on the site, you will see the same pink.
+        </p>
+        <p>
+          It is hand-coded — no theme, no template, every rule written for
+          this site — built with Astro, edited through TinaCMS, and served by
+          Netlify. Every change is a commit with an author and a diff, which
+          feels right for a studio that believes understanding precedes
+          action.
+        </p>
+        <p>
+          Some of the details here are not meant to be noticed. But they are
+          all meant to be felt. If you found this page, you look closely —{" "}
+          <a href="mailto:post@infodesignlab.com">we should talk</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+</Base>

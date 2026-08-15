@@ -53,6 +53,47 @@ img { display: block; max-width: 100%; }
   flex-shrink: 0;
 }
 
+/* ---------------------------------------------------------------------------
+   Quiet details — small, once, easy to miss. Each degrades to a still,
+   complete state: the settle rules live entirely inside a no-preference
+   media query, so with Reduce Motion on nothing is ever hidden.
+   --------------------------------------------------------------------------- */
+
+/* Selecting any text blushes the menu pink. Almost nobody sees it;
+   everyone who selects a sentence does. */
+::selection { background: var(--pink); color: var(--ink); }
+
+/* Underlined links: the resting underline is untouched and always visible.
+   On hover / keyboard focus / tap the underline quietly steps down and
+   softens to --soft, then returns on release. Links without an underline
+   carry no text-decoration, so these rules are invisible on them. */
+a { transition: text-decoration-color .45s ease, text-underline-offset .45s ease; }
+a:hover, a:focus-visible, a:active {
+  text-decoration-color: var(--soft);
+  text-underline-offset: 0.34em;
+}
+
+/* Figures and the metadata rail settle into place the first time they enter
+   the viewport — a small rise and fade, once, then done. Gated on html.js
+   (set inline in Base.astro) so nothing is hidden without JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js :is(.fig, .figs, .rail) {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  html.js :is(.fig, .figs, .rail).is-set { opacity: 1; transform: none; }
+  /* Figures inside a .figs row settle with the row, never individually. */
+  html.js .figs .fig { opacity: 1; transform: none; transition: none; }
+  /* Inside the article rail, the metadata blocks ink in with a small stagger. */
+  html.js .rail .meta__block { opacity: 0; transition: opacity .55s ease; }
+  html.js .rail.is-set .meta__block { opacity: 1; }
+  html.js .rail.is-set .meta__block:nth-child(2) { transition-delay: .09s; }
+  html.js .rail.is-set .meta__block:nth-child(3) { transition-delay: .18s; }
+  html.js .rail.is-set .meta__block:nth-child(4) { transition-delay: .27s; }
+  html.js .rail.is-set .meta__block:nth-child(5) { transition-delay: .36s; }
+}
+
 /* GOTCHA: this blanket rule will silently disable any CSS-animation-driven
    component for users with Reduce Motion on. The clients ticker is therefore
    driven by requestAnimationFrame and handles the preference deliberately —

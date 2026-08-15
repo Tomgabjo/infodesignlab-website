@@ -1,3 +1,16 @@
+```
+┌────────────┐
+│  INFO      │
+│  DESIGN    │
+│  LAB       │
+└────────────┘
+```
+
+> Every graph in this repository was handcrafted — hundreds of hours of
+> dialogue with scientists before a single line settled. Not all of it is
+> meant to be noticed. But it is all meant to be felt.
+> **Made with love in Oslo.** ↳ [post@infodesignlab.com](mailto:post@infodesignlab.com)
+
 # infodesignlab-website
 
 The InfoDesignLab website — an information design studio in Oslo making climate
