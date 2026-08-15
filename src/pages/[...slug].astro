@@ -27,7 +27,24 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { title, label, summary, inShort, seeAlso, capabilities, quote } = entry.data;
+const {
+  title,
+  label,
+  summary,
+  inShort,
+  seeAlso,
+  capabilities,
+  quote,
+  cover,
+  coverAlt,
+  coverBand,
+  coverBandImage,
+} = entry.data;
+
+// Opt-in full-width band, same behaviour as the case-study template:
+// defaults to the regular cover image when the band is on but no separate
+// band image is set.
+const bandImage = coverBand ? coverBandImage || cover : undefined;
 
 const { Content } = await render(entry);
 ---
@@ -38,6 +55,14 @@ const { Content } = await render(entry);
       <div class="head__label">{label}</div>
       <h1 class="head__title">{title}</h1>
     </header>
+
+    {
+      bandImage && (
+        <div class="cover-band">
+          <img src={bandImage} alt={coverAlt} loading="eager" />
+        </div>
+      )
+    }
 
     <div class="body">
       <aside class="rail">

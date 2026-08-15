@@ -84,6 +84,19 @@ const caseStudies = defineCollection({
     /** Trio-of-covers card variant, as used by the country reports. */
     coverVariant: z.enum(["single", "covers"]).default("single"),
     covers: z.array(z.string()).default([]),
+    /**
+     * Opt-in full-width cover band on the article page itself, rendered
+     * between the heading and the two-column rail+body grid — same width as
+     * that grid, inside the page's own side padding, never bled to the
+     * physical browser edge. Off by default; not every case study wants one.
+     */
+    coverBand: z.boolean().default(false),
+    /**
+     * The band's own image. Optional and defaults to `cover` at render time
+     * when the band is on but no separate image is set — Tom asked for the
+     * band to be changeable but to default to the regular cover image.
+     */
+    coverBandImage: z.string().optional(),
     /** Controls grid order. */
     order: z.number().default(0),
     /**
@@ -113,6 +126,15 @@ const pages = defineCollection({
       .default([]),
     /** Optional pull quote, e.g. the Shobha Maharaj testimonial. */
     quote: z.object({ text: z.string(), cite: z.string() }).optional(),
+    /**
+     * Cover image, added 15 Aug 2026 so the three overview pages can carry
+     * the same opt-in cover band as case studies. Same fields and same
+     * defaulting behaviour as the caseStudies collection — see there.
+     */
+    cover: z.string().optional(),
+    coverAlt: z.string().default(""),
+    coverBand: z.boolean().default(false),
+    coverBandImage: z.string().optional(),
     order: z.number().default(0),
     draft: z.boolean().default(false),
   }),

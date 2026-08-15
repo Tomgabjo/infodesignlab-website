@@ -140,6 +140,23 @@
   padding: clamp(28px, 4.5vh, 54px) 0 clamp(28px, 4.5vh, 50px);
 }
 
+/* Opt-in full-width cover band (caseStudies / pages, `coverBand` flag). A
+   plain block child of .wrap, so it is exactly as wide as .head/.body above
+   and below it — inside .wrap's own --pad side padding, never bled to the
+   physical browser edge. Tom's correction, 15 Aug: "side to side" means the
+   two columns that are already the building blocks of the page, not the
+   viewport. Margin top/bottom equal, per the site's figure-spacing rule. */
+.cover-band {
+  margin: clamp(28px, 4.5vh, 54px) 0;
+  background: #fff;
+}
+.cover-band img {
+  width: 100%;
+  height: clamp(220px, 32vw, 460px);
+  object-fit: cover;
+  display: block;
+}
+
 @media (max-width: 820px) {
   .head { grid-template-columns: 1fr; gap: 14px; }
   .body { grid-template-columns: 1fr; gap: 22px; padding-top: 24px; }

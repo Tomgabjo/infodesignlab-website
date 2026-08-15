@@ -32,8 +32,23 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { title, label, summary, venue, authors, design, references, cover } =
-  entry.data;
+const {
+  title,
+  label,
+  summary,
+  venue,
+  authors,
+  design,
+  references,
+  cover,
+  coverAlt,
+  coverBand,
+  coverBandImage,
+} = entry.data;
+
+// Opt-in full-width band, per case study. Defaults to the regular cover
+// image when the band is on but no separate band image is set.
+const bandImage = coverBand ? coverBandImage || cover : undefined;
 
 // Made available to MDX bodies so a figure can sit between the paragraphs it
 // belongs to. Any component used in an .mdx body MUST be listed in this map,
@@ -52,6 +67,14 @@ const { Content } = await render(entry);
       <div class="head__label">{label}</div>
       <h1 class="head__title">{title}</h1>
     </header>
+
+    {
+      bandImage && (
+        <div class="cover-band">
+          <img src={bandImage} alt={coverAlt} loading="eager" />
+        </div>
+      )
+    }
 
     <div class="body">
       <aside class="meta">
