@@ -39,7 +39,14 @@ const { title, description, image, noindex } = Astro.props;
   <body id="top">
     <Logo />
     <TableOfContentsMenu />
-    <slot />
-    <Footer />
+    <!--
+      .page carries the grey canvas (--bg) and everything scrollable. body
+      itself is now a plain white 50px frame (base.css) around every page —
+      the grey canvas is inset from it, never the other way round.
+    -->
+    <div class="page">
+      <slot />
+      <Footer />
+    </div>
   </body>
 </html>

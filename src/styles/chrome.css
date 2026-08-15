@@ -33,7 +33,7 @@
   color: var(--ink);
   cursor: pointer;
   font-family: var(--mono);
-  font-size: .72rem;
+  font-size: .92rem;
   letter-spacing: .16em;
   text-transform: uppercase;
   padding: 0;
@@ -87,7 +87,7 @@
   font-weight: var(--w-secondary);
   letter-spacing: -.018em;
   line-height: .96;
-  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-size: clamp(2.42rem, 5.08vw, 3.69rem);
 }
 .toc__close {
   background: none;
@@ -95,7 +95,7 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  font-size: 1.55rem; /* .icon is 1em, so this still sets the glyph size */
+  font-size: 1.97rem; /* .icon is 1em, so this still sets the glyph size */
   line-height: 1;
   color: var(--ink);
 }
@@ -104,7 +104,7 @@
    including the h3 headings. */
 .toc__row { padding: clamp(15px, 2.1vw, 22px) 0; border-top: 1px solid rgba(26, 26, 26, .16); }
 .toc__row h3 {
-  font-size: clamp(1.16rem, 2vw, 1.44rem);
+  font-size: clamp(1.47rem, 2.54vw, 1.83rem);
   font-weight: var(--w-toc-row);
   letter-spacing: -.008em;
   margin-bottom: 7px;
@@ -112,7 +112,7 @@
 .toc__row h3 a { text-decoration: underline; text-underline-offset: 3px; }
 .toc__row p {
   font-family: var(--serif);
-  font-size: 1.03rem;
+  font-size: 1.31rem;
   line-height: 1.42;
   color: #3a3530;
   max-width: 44ch;
@@ -122,7 +122,7 @@
 .toc__foot {
   margin-top: clamp(20px, 3.4vh, 36px);
   font-family: var(--mono);
-  font-size: .7rem;
+  font-size: .89rem;
   letter-spacing: .05em;
   text-transform: uppercase;
   color: #7c6c6c;
@@ -136,13 +136,16 @@
   padding: clamp(28px, 4vw, 48px) calc(var(--pad) + env(safe-area-inset-right, 0px))
            calc(clamp(28px, 4vw, 48px) + env(safe-area-inset-bottom, 0px))
            calc(var(--pad) + env(safe-area-inset-left, 0px));
+  /* Lifted a little off the new 50px white frame at the bottom of the page
+     (Tom, 15 Aug), on top of the frame itself. */
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 18px;
   flex-wrap: wrap;
   font-family: var(--mono);
-  font-size: .7rem;
+  font-size: .89rem;
   letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--soft);

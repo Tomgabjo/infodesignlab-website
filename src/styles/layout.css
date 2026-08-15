@@ -10,11 +10,15 @@
 
 .media {
   position: sticky;
-  top: 0;
-  /* dvh (dynamic viewport height) tracks the actual visible viewport as the
-     browser chrome shows/hides. svh was fixed to the smaller chrome-visible
-     height, leaving a white gap below the panel when chrome hid. */
-  height: 100dvh;
+  /* Both top and height account for the new 50px white frame (body padding,
+     base.css): without this the panel would stick flush to the raw viewport
+     top, ignoring the frame, and its bottom edge would run 50px past the
+     frame's own bottom edge. dvh (dynamic viewport height) tracks the actual
+     visible viewport as the browser chrome shows/hides — svh was fixed to
+     the smaller chrome-visible height, leaving a white gap below the panel
+     when chrome hid. */
+  top: 50px;
+  height: calc(100dvh - 100px);
   background: #fff;
   border-right: 1px solid var(--line);
   overflow: hidden;
@@ -54,7 +58,7 @@
   bottom: 20px;
   right: 22px;
   font-family: var(--mono);
-  font-size: .66rem;
+  font-size: .84rem;
   letter-spacing: .03em;
   color: #4a4a45;
 }
@@ -99,8 +103,8 @@
   .split { grid-template-columns: 48% 52%; }
   .media {
     position: sticky;
-    top: 0;
-    height: 100dvh;
+    top: 50px;
+    height: calc(100dvh - 100px);
     order: 0;
     border-right: 1px solid var(--line);
     border-bottom: 0;
@@ -114,30 +118,40 @@
 .head {
   display: grid;
   grid-template-columns: var(--rail) 1fr;
+  align-items: start;
   gap: clamp(20px, 4vw, 56px);
-  padding-bottom: clamp(30px, 5vh, 60px);
-  border-bottom: 1px solid var(--line);
+  /* The hairline under the heading is removed (Tom, 15 Aug) and the gap to
+     whatever follows — the .body grid, or the cover band — is pulled in
+     tight, so content sits close to the heading rather than separated by a
+     rule and a full section's worth of breathing room. */
+  padding-bottom: clamp(12px, 1.8vh, 22px);
 }
 .head__label {
   font-weight: var(--w-hero);
   letter-spacing: -.016em;
   line-height: .98;
-  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-size: clamp(2.54rem, 5.34vw, 4.07rem);
   color: #3a3a34;
 }
 .head__title {
   font-weight: var(--w-article);
   letter-spacing: -.024em;
   line-height: 1.03;
-  font-size: clamp(2.9rem, 6.1vw, 5.7rem);
+  font-size: clamp(3.69rem, 7.75vw, 7.25rem);
   max-width: 24ch;
 }
 
 .body {
   display: grid;
   grid-template-columns: var(--rail) 1fr;
+  /* Explicit start alignment, so the rail/meta column and the copy column
+     both begin at the same y regardless of what's above this grid — a plain
+     heading, or a full-width cover band. */
+  align-items: start;
   gap: clamp(20px, 4vw, 56px);
-  padding: clamp(28px, 4.5vh, 54px) 0 clamp(28px, 4.5vh, 50px);
+  /* Top padding pulled in to match .head's tightened bottom gap — see note
+     there. Bottom padding (space before the work grid) is unchanged. */
+  padding: clamp(8px, 1.2vh, 16px) 0 clamp(28px, 4.5vh, 50px);
 }
 
 /* Opt-in full-width cover band (caseStudies / pages, `coverBand` flag). A

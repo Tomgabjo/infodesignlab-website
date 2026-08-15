@@ -30,45 +30,45 @@
 /* Desktop .intro padding-top is now in layout.css alongside its mobile override,
    so the cascade is settled inside one file. Do not re-add it here. */
 .intro h1 {font-weight:var(--w-hero);letter-spacing:-.022em;line-height:.96;
-  font-size:clamp(3.5rem,7vw,6.8rem);margin-bottom:clamp(20px,2.6vh,30px)}
-.prose p {max-width:var(--measure);margin-bottom:1.05em;font-size:clamp(1.08rem,1.28vw,1.32rem);line-height:1.5;color:var(--ink-body)}
+  font-size:clamp(4.45rem,8.9vw,8.64rem);margin-bottom:clamp(20px,2.6vh,30px)}
+.prose p {max-width:var(--measure);margin-bottom:1.05em;font-size:clamp(1.37rem,1.63vw,1.68rem);line-height:1.5;color:var(--ink-body)}
 .prose p:last-child {margin-bottom:0}
 .prose b {font-weight:700;color:var(--ink)}
 .quote {margin:clamp(40px,6vh,76px) 0 clamp(30px,4.5vh,54px);padding-top:clamp(24px,3.4vh,36px);
   border-top:1px solid var(--line);max-width:46ch}
-.quote p {font-family:var(--serif);font-style:italic;font-size:clamp(1.14rem,1.5vw,1.42rem);line-height:1.4;color:var(--ink-quote)}
-.quote cite {display:block;margin-top:16px;font-family:var(--mono);font-style:normal;font-size:.7rem;
+.quote p {font-family:var(--serif);font-style:italic;font-size:clamp(1.45rem,1.91vw,1.81rem);line-height:1.4;color:var(--ink-quote)}
+.quote cite {display:block;margin-top:16px;font-family:var(--mono);font-style:normal;font-size:.89rem;
   letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
 .ticker__track {overflow:hidden;width:100%;max-width:100%;position:relative;
   cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
 .ticker__track.dragging {cursor:grabbing}
 .ticker__inner {display:flex;white-space:nowrap;will-change:transform}
-.ticker__inner span {font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-ticker);
+.ticker__inner span {font-family:var(--mono);font-size:.92rem;letter-spacing:.04em;color:var(--ink-ticker);
   padding-right:4em;flex-shrink:0}
 .work {display:block;padding:clamp(22px,3vh,34px) 0;border-top:1px solid var(--line);max-width:var(--measure)}
-.work__label {font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+.work__label {font-family:var(--mono);font-size:.86rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--soft);margin-bottom:10px}
-.work__title {font-weight:var(--w-secondary);letter-spacing:-.012em;line-height:1.1;font-size:clamp(1.35rem,2.3vw,2rem);
+.work__title {font-weight:var(--w-secondary);letter-spacing:-.012em;line-height:1.1;font-size:clamp(1.72rem,2.92vw,2.54rem);
   max-width:var(--measure)}
-.work__desc {font-family:var(--serif);font-size:clamp(1.06rem,1.24vw,1.28rem);line-height:1.44;color:var(--ink-desc);
+.work__desc {font-family:var(--serif);font-size:clamp(1.35rem,1.58vw,1.63rem);line-height:1.44;color:var(--ink-desc);
   max-width:var(--measure);margin-top:10px}
 .plug__img {width:100%;max-width:var(--measure);margin:14px 0 16px;background:#fff}
 .plug__img img {width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;display:block}
 .plug__img--covers {background:transparent;display:flex;gap:10px;align-items:flex-end}
 .plug__img--covers img {width:calc(33.333% - 7px);height:auto;aspect-ratio:auto;object-fit:contain;
   filter:drop-shadow(0 8px 20px rgba(26,26,23,.16))}
-.work__go {display:inline-block;margin-top:14px;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;
+.work__go {display:inline-block;margin-top:14px;font-family:var(--mono);font-size:.89rem;letter-spacing:.08em;
   text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:2px}
 a.work:hover .work__go {border-color:var(--ink)}
 a.work:hover .work__title {opacity:.62}
 .events {max-width:var(--measure);margin-top:clamp(16px,2.6vh,32px);padding-top:clamp(24px,3.4vh,38px);border-top:1px solid var(--line);
   padding-bottom:clamp(46px,7vh,88px)}
-.events h2 {font-weight:var(--w-secondary);letter-spacing:-.018em;font-size:clamp(1.7rem,3vw,2.5rem);margin-bottom:12px}
+.events h2 {font-weight:var(--w-secondary);letter-spacing:-.018em;font-size:clamp(2.16rem,3.81vw,3.18rem);margin-bottom:12px}
 .events__intro {font-family:var(--serif);max-width:44ch;color:var(--ink-desc);margin-bottom:clamp(20px,3vh,32px)}
 .evt {display:grid;grid-template-columns:118px 1fr;gap:4px clamp(14px,1.8vw,26px);align-items:baseline;
   padding:clamp(13px,1.8vh,19px) 0;border-top:1px solid var(--line)}
-.evt__date {font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;color:var(--soft)}
-.evt__title {font-weight:var(--w-secondary);letter-spacing:-.006em;font-size:clamp(1rem,1.5vw,1.16rem)}
+.evt__date {font-family:var(--mono);font-size:.92rem;letter-spacing:.03em;color:var(--soft)}
+.evt__title {font-weight:var(--w-secondary);letter-spacing:-.006em;font-size:clamp(1.27rem,1.91vw,1.48rem)}
 /* External link arrow: Lucide "arrow-up-right" as a CSS mask-image icon, so it
    is a real vector glyph instead of a Unicode character (which needed the
    \fe0e text-presentation-selector workaround to stop rendering as a colour
@@ -86,9 +86,9 @@ a.work:hover .work__title {opacity:.62}
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E") no-repeat center / contain;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E") no-repeat center / contain;
 }
-.evt__where {font-family:var(--serif);font-size:.99rem;color:var(--ink-desc);grid-column:2}
+.evt__where {font-family:var(--serif);font-size:1.26rem;color:var(--ink-desc);grid-column:2}
 .evt--next .evt__date {color:var(--ink)}
-.events__more {margin-top:clamp(20px,3vh,32px);display:inline-block;font-family:var(--mono);font-size:.72rem;
+.events__more {margin-top:clamp(20px,3vh,32px);display:inline-block;font-family:var(--mono);font-size:.92rem;
   letter-spacing:.09em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:3px}
 
 @media(max-width:640px) {
@@ -98,7 +98,7 @@ a.work:hover .work__title {opacity:.62}
 }
 
 /* ===== from abstract prototype ===== */
-.meta {font-family:var(--mono);font-size:.72rem;line-height:1.62;color:var(--soft)}
+.meta {font-family:var(--mono);font-size:.92rem;line-height:1.62;color:var(--soft)}
 .meta__block {margin-bottom:26px}
 .meta__block strong {display:block;color:var(--ink);font-weight:400;margin-bottom:7px}
 /* Author names sit in the SAME grey as every other value in this column — the
@@ -107,8 +107,8 @@ a.work:hover .work__title {opacity:.62}
    rather than a blank line. */
 .meta__block .who {display:block}
 .meta__block .aff {display:block}
-.copy h2 {font-weight:var(--w-secondary);letter-spacing:-.015em;font-size:clamp(1.35rem,2.3vw,1.85rem);margin:0 0 14px}
-.copy p {font-family:var(--serif);font-size:clamp(1.18rem,1.52vw,1.46rem);line-height:1.45;color:var(--ink-body);
+.copy h2 {font-weight:var(--w-secondary);letter-spacing:-.015em;font-size:clamp(1.72rem,2.92vw,2.35rem);margin:0 0 14px}
+.copy p {font-family:var(--serif);font-size:clamp(1.5rem,1.93vw,1.86rem);line-height:1.45;color:var(--ink-body);
   margin-bottom:1.05em;max-width:62ch}
 .copy .sub {margin-top:clamp(28px,4.5vh,48px)}
 
@@ -121,7 +121,7 @@ a.work:hover .work__title {opacity:.62}
 .copy ul, .copy ol {max-width:62ch;margin:0 0 1.05em;padding-left:1.1em}
 .copy ul {list-style:disc}
 .copy ol {list-style:decimal}
-.copy li {font-family:var(--serif);font-size:clamp(1.18rem,1.52vw,1.46rem);
+.copy li {font-family:var(--serif);font-size:clamp(1.5rem,1.93vw,1.86rem);
   line-height:1.45;color:var(--ink-body);margin-bottom:.38em}
 .copy li:last-child {margin-bottom:0}
 /* Bullet in the muted grey so the marker sits quieter than the text. */
@@ -135,7 +135,7 @@ a.work:hover .work__title {opacity:.62}
 .prose ul, .prose ol {max-width:var(--measure);margin:0 0 1.05em;padding-left:1.1em}
 .prose ul {list-style:disc}
 .prose ol {list-style:decimal}
-.prose li {font-size:clamp(1.08rem,1.28vw,1.32rem);line-height:1.5;
+.prose li {font-size:clamp(1.37rem,1.63vw,1.68rem);line-height:1.5;
   color:var(--ink-body);margin-bottom:.38em}
 .prose li:last-child {margin-bottom:0}
 .prose li::marker {color:var(--soft)}
@@ -145,15 +145,15 @@ a.work:hover .work__title {opacity:.62}
 .fig {position:relative;margin:clamp(24px,3.6vh,44px) 0;background:#fff;line-height:0}
 .fig img {width:100%;height:auto}
 .fig figcaption {position:absolute;left:16px;bottom:14px;right:16px;line-height:1.4;
-  font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;color:var(--ink-cap)}
+  font-family:var(--mono);font-size:.84rem;letter-spacing:.03em;color:var(--ink-cap)}
 .figs {display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,18px);margin:clamp(24px,3.6vh,44px) 0}
 /* inner figures inherit the row's spacing, so they must not add their own */
 .figs .fig {margin:0}
 .more {border-top:1px solid var(--line);margin-top:clamp(36px,6vh,72px);padding-top:clamp(22px,3.4vh,38px)}
 .more__head {display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
   margin-bottom:clamp(20px,3vh,32px)}
-.more__head h2 {font-weight:var(--w-secondary);letter-spacing:-.018em;font-size:clamp(1.5rem,2.6vw,2.1rem)}
-.more__head a {font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+.more__head h2 {font-weight:var(--w-secondary);letter-spacing:-.018em;font-size:clamp(1.91rem,3.3vw,2.67rem)}
+.more__head a {font-family:var(--mono);font-size:.89rem;letter-spacing:.1em;text-transform:uppercase;
   border-bottom:1px solid var(--ink);padding-bottom:3px}
 /* Lucide "arrow-right", same mask-icon technique as the external-link arrow.
    The trailing "→" used to be baked into the moreText prop string itself
@@ -178,9 +178,9 @@ a.work:hover .work__title {opacity:.62}
 .card__img--covers {background:transparent;display:flex;gap:6px;align-items:flex-end}
 .card__img--covers img {width:calc(33.333% - 4px);aspect-ratio:auto;object-fit:contain;
   filter:drop-shadow(0 6px 14px rgba(26,26,23,.16))}
-.card__label {font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+.card__label {font-family:var(--mono);font-size:.81rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--soft);margin-bottom:6px}
-.card__title {font-weight:var(--w-secondary);letter-spacing:-.012em;line-height:1.16;font-size:clamp(1rem,1.35vw,1.16rem)}
+.card__title {font-weight:var(--w-secondary);letter-spacing:-.012em;line-height:1.16;font-size:clamp(1.27rem,1.72vw,1.48rem)}
 .card:hover .card__title {opacity:.6}
 .card--current {opacity:.5;pointer-events:none}
 .card--current .card__label {color:var(--ink)}
@@ -190,18 +190,18 @@ a.work:hover .work__title {opacity:.62}
 }
 
 /* ===== from overview prototype ===== */
-.rail {font-family:var(--mono);font-size:.72rem;line-height:1.62;color:var(--soft)}
+.rail {font-family:var(--mono);font-size:.92rem;line-height:1.62;color:var(--soft)}
 .rail strong {display:block;color:var(--ink);font-weight:400;margin-bottom:7px}
 .copy p:last-child {margin-bottom:0}
 .copy p b {font-family:var(--sans);font-weight:700;font-size:.94em}
 .copy a {text-decoration:underline;text-underline-offset:2px}
 .caps {border-top:1px solid var(--line);padding:clamp(22px,3.4vh,38px) 0 0}
-.caps__head {font-family:var(--mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+.caps__head {font-family:var(--mono);font-size:.89rem;letter-spacing:.13em;text-transform:uppercase;
   color:var(--soft);margin-bottom:clamp(16px,2.4vh,26px)}
 .caps__list {display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 clamp(20px,3vw,48px)}
 .cap {display:grid;grid-template-columns:1fr;gap:4px;padding:clamp(13px,1.8vh,18px) 0;border-top:1px solid var(--line)}
-.cap__name {font-weight:var(--w-secondary);letter-spacing:-.01em;font-size:clamp(1.02rem,1.4vw,1.18rem)}
-.cap__note {font-family:var(--serif);font-size:1rem;color:var(--ink-desc);line-height:1.4}
+.cap__name {font-weight:var(--w-secondary);letter-spacing:-.01em;font-size:clamp(1.3rem,1.78vw,1.5rem)}
+.cap__note {font-family:var(--serif);font-size:1.27rem;color:var(--ink-desc);line-height:1.4}
 
 /* --------------------------------------------------------------------------
    Added during the route-template build (31 Jul)
@@ -231,7 +231,7 @@ a.work:hover .work__title {opacity:.62}
    content now, on every template. */
 .meta__refs li {
   list-style: none;
-  font-size: .68rem;
+  font-size: .86rem;
   line-height: 1.55;
   margin-bottom: 11px;
   padding-left: 0;
