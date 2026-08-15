@@ -29,7 +29,7 @@ coverBandImage: /images/ipcc-reports/35-img.jpg
 order: 1
 ---
 
-We **work with scientists** to turn complex data into unique visualisations, meaningful narratives, compelling messages and stunning communication products. Our [co-design process](/co-design-process/) helps us meet our audience where they are.
+1We **work with scientists** to turn complex data into unique visualisations, meaningful narratives, compelling messages and stunning communication products. Our [co-design process](/co-design-process/) helps us meet our audience where they are.
 
 As design partners in research projects, we embed co-creation and information design across work packages, helping diverse stakeholders align around common goals. From the beginning to the final outcome, we work alongside scientists to make knowledge more **actionable, inclusive, and visible**.
 
