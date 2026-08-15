@@ -49,15 +49,6 @@
 
   /* Left rail on inner pages: content-type label + mono metadata. */
   --rail: minmax(180px, 26%);
-
-  /* Site-wide white frame (Tom, 15 Aug): a single vw-based value applied
-     uniformly to all four sides of body, so the side gap and the top/bottom
-     gap are always the SAME pixel value at any viewport — deliberately not
-     vh for the vertical sides, which would make them a different number of
-     px than the horizontal ones on a non-square screen. 50px flat was far
-     too wide on narrow phones; this floors at 10px there and caps at 50px
-     once the viewport is wide enough that 2.8vw would exceed it. */
-  --frame: clamp(10px, 2.8vw, 50px);
 }
 
 /* --------------------------------------------------------------------------

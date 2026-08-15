@@ -29,8 +29,11 @@
 .thumb-covers img {width:calc(33.333% - 7px);height:auto;filter:drop-shadow(0 8px 18px rgba(26,26,23,.15))}
 /* Desktop .intro padding-top is now in layout.css alongside its mobile override,
    so the cascade is settled inside one file. Do not re-add it here. */
+/* Reverted to its pre-16-Aug size (Tom): every other font size in the
+   codebase followed the site-wide ~1.27x scale-up, but the homepage hero
+   heading specifically goes back to what it was before that round. */
 .intro h1 {font-weight:var(--w-hero);letter-spacing:-.022em;line-height:.96;
-  font-size:clamp(4.45rem,8.9vw,8.64rem);margin-bottom:clamp(20px,2.6vh,30px)}
+  font-size:clamp(3.5rem,7vw,6.8rem);margin-bottom:clamp(20px,2.6vh,30px)}
 .prose p {max-width:var(--measure);margin-bottom:1.05em;font-size:clamp(1.37rem,1.63vw,1.68rem);line-height:1.5;color:var(--ink-body)}
 .prose p:last-child {margin-bottom:0}
 .prose b {font-weight:700;color:var(--ink)}
