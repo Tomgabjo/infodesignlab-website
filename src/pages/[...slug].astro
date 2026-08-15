@@ -16,6 +16,7 @@ import { getCollection, render } from "astro:content";
 import type { GetStaticPaths } from "astro";
 import Base from "../layouts/Base.astro";
 import WorkGrid from "../components/WorkGrid.astro";
+import Icon from "../components/Icon.astro";
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("pages", ({ data }) => !data.draft);
@@ -43,7 +44,7 @@ const { Content } = await render(entry);
         {
           inShort && (
             <>
-              <strong>↳ In short</strong>
+              <strong><Icon name="corner-down-right" /> In short</strong>
               {inShort}
             </>
           )
@@ -53,7 +54,7 @@ const { Content } = await render(entry);
           seeAlso.length > 0 && (
             <>
               <br /><br />
-              <strong>↳ See also</strong>
+              <strong><Icon name="corner-down-right" /> See also</strong>
               {
                 seeAlso.map((link) => (
                   <>
@@ -78,7 +79,7 @@ const { Content } = await render(entry);
           {
             capabilities.length > 0 && (
               <>
-                <div class="caps__head">↳ What that looks like in practice</div>
+                <div class="caps__head"><Icon name="corner-down-right" /> What that looks like in practice</div>
                 <div class="caps__list">
                   {
                     capabilities.map((cap) => (
@@ -109,7 +110,7 @@ const { Content } = await render(entry);
       id="work"
       heading="Selected work"
       moreHref="/selected-projects/"
-      moreText="All work →"
+      moreText="All work"
     />
   </main>
 </Base>

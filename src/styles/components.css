@@ -69,9 +69,23 @@ a.work:hover .work__title {opacity:.62}
   padding:clamp(13px,1.8vh,19px) 0;border-top:1px solid var(--line)}
 .evt__date {font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;color:var(--soft)}
 .evt__title {font-weight:var(--w-secondary);letter-spacing:-.006em;font-size:clamp(1rem,1.5vw,1.16rem)}
-/* External link arrow: text-presentation selector (\fe0e) prevents emoji rendering.
-   Colour matches ↳ rail labels so the indicator sits quieter than the title. */
-.evt__title a[target="_blank"]::after {content:" ↗\fe0e";color:var(--soft);font-variant-emoji:text;text-decoration:none}
+/* External link arrow: Lucide "arrow-up-right" as a CSS mask-image icon, so it
+   is a real vector glyph instead of a Unicode character (which needed the
+   \fe0e text-presentation-selector workaround to stop rendering as a colour
+   emoji). mask-image + background-color:currentColor means the icon inherits
+   --soft the same way Icon.astro icons inherit colour elsewhere — the arrow
+   still sits quieter than the title, same as before. */
+.evt__title a[target="_blank"]::after {
+  content: "";
+  display: inline-block;
+  width: .78em;
+  height: .78em;
+  margin-left: .32em;
+  vertical-align: -.05em;
+  background-color: var(--soft);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E") no-repeat center / contain;
+}
 .evt__where {font-family:var(--serif);font-size:.99rem;color:var(--ink-desc);grid-column:2}
 .evt--next .evt__date {color:var(--ink)}
 .events__more {margin-top:clamp(20px,3vh,32px);display:inline-block;font-family:var(--mono);font-size:.72rem;
@@ -141,6 +155,22 @@ a.work:hover .work__title {opacity:.62}
 .more__head h2 {font-weight:var(--w-secondary);letter-spacing:-.018em;font-size:clamp(1.5rem,2.6vw,2.1rem)}
 .more__head a {font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
   border-bottom:1px solid var(--ink);padding-bottom:3px}
+/* Lucide "arrow-right", same mask-icon technique as the external-link arrow.
+   The trailing "→" used to be baked into the moreText prop string itself
+   (e.g. "All work →") — that text is now just "All work" and every
+   .more__head link gets this icon uniformly, so the glyph can't drift
+   between call sites. */
+.more__head a::after {
+  content: "";
+  display: inline-block;
+  width: .74em;
+  height: .74em;
+  margin-left: .4em;
+  vertical-align: -.08em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") no-repeat center / contain;
+}
 .grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(18px,2.4vw,34px)}
 .card {display:block}
 .card__img {background:#fff;margin-bottom:11px}

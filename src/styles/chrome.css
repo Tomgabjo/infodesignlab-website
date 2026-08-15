@@ -93,7 +93,9 @@
   background: none;
   border: 0;
   cursor: pointer;
-  font-size: 1.55rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.55rem; /* .icon is 1em, so this still sets the glyph size */
   line-height: 1;
   color: var(--ink);
 }

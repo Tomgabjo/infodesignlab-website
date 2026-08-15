@@ -42,6 +42,17 @@ body {
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 
+/* Shared inline-icon primitive (Icon.astro, Lucide set). 1em so an icon
+   scales with whatever text it sits beside; currentColor so it inherits
+   --ink or --soft from context with no extra styling per use. */
+.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+}
+
 /* GOTCHA: this blanket rule will silently disable any CSS-animation-driven
    component for users with Reduce Motion on. The clients ticker is therefore
    driven by requestAnimationFrame and handles the preference deliberately —

@@ -7,6 +7,7 @@
  */
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
 
 const allPubs = await getCollection("publications", ({ data }) => !data.draft);
 const pubs = allPubs.sort((a, b) => {
@@ -28,7 +29,7 @@ const pubs = allPubs.sort((a, b) => {
 
     <div class="body">
       <aside class="rail">
-        <strong>↳ In short</strong>
+        <strong><Icon name="corner-down-right" /> In short</strong>
         Selected external publications featuring InfoDesignLab's work.
       </aside>
 

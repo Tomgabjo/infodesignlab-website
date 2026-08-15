@@ -1,0 +1,42 @@
+---
+/**
+ * Small inline-SVG icon primitive. Icons are Lucide (MIT, lucide.dev) —
+ * picked deliberately as a very basic, common set rather than trying to
+ * match Cargo's own proprietary page-builder icon palette (that snippet was
+ * confirmed to be Cargo's internal UI, not a public pack — see the icon
+ * memory/context-doc note).
+ *
+ * Sized and coloured entirely by CSS: width/height come from the shared
+ * `.icon` rule in base.css (1em, so it scales with the surrounding text),
+ * and colour is `currentColor`, so an icon dropped into a --soft or --ink
+ * coloured element just inherits that colour with no extra prop.
+ *
+ * Add a new icon by adding its Lucide path data below — never hardcode a
+ * one-off inline <svg> elsewhere in a template; route it through here so the
+ * whole set stays consistent and swappable in one place.
+ */
+interface Props {
+  name: "x" | "arrow-up-right" | "corner-down-right" | "arrow-right";
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+
+const paths: Record<Props["name"], string> = {
+  x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  "arrow-up-right": '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
+  "corner-down-right": '<path d="m15 10 5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/>',
+  "arrow-right": '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+};
+---
+
+<svg
+  class:list={["icon", className]}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  set:html={paths[name]}
+/>

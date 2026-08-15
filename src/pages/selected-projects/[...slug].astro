@@ -17,6 +17,7 @@ import Base from "../../layouts/Base.astro";
 import WorkGrid from "../../components/WorkGrid.astro";
 import Figure from "../../components/Figure.astro";
 import Figures from "../../components/Figures.astro";
+import Icon from "../../components/Icon.astro";
 
 export const getStaticPaths = (async () => {
   // Stubs are listed in the work grid but have no page yet, so they get no route.
@@ -57,7 +58,7 @@ const { Content } = await render(entry);
         {
           venue && (
             <div class="meta__block">
-              <strong>↳ {venue.label}</strong>
+              <strong><Icon name="corner-down-right" /> {venue.label}</strong>
               {venue.value}
             </div>
           )
@@ -66,7 +67,7 @@ const { Content } = await render(entry);
         {
           authors.length > 0 && (
             <div class="meta__block">
-              <strong>↳ {authors.length === 1 ? "Author" : "Authors"}</strong>
+              <strong><Icon name="corner-down-right" /> {authors.length === 1 ? "Author" : "Authors"}</strong>
               {
                 // Name and each affiliation are separate blocks, so entries run
                 // on consecutive lines with no blank line between them.
@@ -84,7 +85,7 @@ const { Content } = await render(entry);
         {
           design.length > 0 && (
             <div class="meta__block">
-              <strong>↳ Design</strong>
+              <strong><Icon name="corner-down-right" /> Design</strong>
               {design.map((d) => <span class="who">{d}</span>)}
             </div>
           )
@@ -93,7 +94,7 @@ const { Content } = await render(entry);
         {
           references.length > 0 && (
             <div class="meta__block meta__refs">
-              <strong>↳ References</strong>
+              <strong><Icon name="corner-down-right" /> References</strong>
               <ul>
                 {
                   references.map((r) => (
@@ -126,7 +127,7 @@ const { Content } = await render(entry);
     <WorkGrid
       heading="All work"
       moreHref="/selected-projects/"
-      moreText="Back to overview →"
+      moreText="Back to overview"
       currentId={entry.id}
     />
   </main>
