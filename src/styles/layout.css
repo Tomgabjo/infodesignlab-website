@@ -10,15 +10,17 @@
 
 .media {
   position: sticky;
-  /* Both top and height account for the new 50px white frame (body padding,
-     base.css): without this the panel would stick flush to the raw viewport
-     top, ignoring the frame, and its bottom edge would run 50px past the
+  /* Both top and height account for the white frame (body padding, base.css)
+     on desktop: without this the panel would stick flush to the raw
+     viewport top, ignoring the frame, and its bottom edge would run past the
      frame's own bottom edge. dvh (dynamic viewport height) tracks the actual
      visible viewport as the browser chrome shows/hides — svh was fixed to
      the smaller chrome-visible height, leaving a white gap below the panel
-     when chrome hid. */
-  top: 50px;
-  height: calc(100dvh - 100px);
+     when chrome hid.
+     MOBILE NOTE: the phone-landscape-sticky override below deliberately does
+     NOT do this frame-aware calc() — see the comment there. */
+  top: var(--frame);
+  height: calc(100dvh - (var(--frame) * 2));
   background: #fff;
   border-right: 1px solid var(--line);
   overflow: hidden;
@@ -73,8 +75,11 @@
 /* Sticky-logo clearance — base (desktop) value. Kept here alongside the mobile
    override so both are in the same stylesheet: equal-specificity rules from a
    later stylesheet (components.css) would silently win the cascade otherwise.
-   Do NOT add this rule to components.css. */
-.intro { padding-top: calc(var(--pad) + clamp(56px, 9vh, 110px)); }
+   Do NOT add this rule to components.css.
+   Pushed up ~60px (Tom, 16 Aug), floored at var(--pad) — the same clearance
+   the fixed logo itself uses — so the heading never gets closer to the top
+   than the logo does, only closer than its previous, more generous gap. */
+.intro { padding-top: max(var(--pad), calc(var(--pad) + clamp(56px, 9vh, 110px) - 60px)); }
 
 @media (max-width: 900px) {
   .split { grid-template-columns: 1fr; }
@@ -103,8 +108,15 @@
   .split { grid-template-columns: 48% 52%; }
   .media {
     position: sticky;
-    top: 50px;
-    height: calc(100dvh - 100px);
+    /* Deliberately NOT frame-aware here (plain top:0 / 100dvh, not the
+       var(--frame) calc() the desktop rule uses). Tom, 16 Aug: on this exact
+       phone-landscape-sticky case, subtracting the frame inside a calc()
+       against a continuously-recalculating dvh made the panel visibly
+       jittery while scrolling — it no longer felt solid. He'd rather this
+       one panel ignore the frame than have that jank back, so this reverts
+       to the plain form that was solid before the frame existed. */
+    top: 0;
+    height: 100dvh;
     order: 0;
     border-right: 1px solid var(--line);
     border-bottom: 0;

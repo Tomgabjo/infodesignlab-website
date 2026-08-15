@@ -23,12 +23,14 @@ html {
   text-size-adjust: 100%;
 }
 
-/* Every page now sits inside a plain 50px white frame (Tom, 15 Aug) — body
-   itself carries the frame, and .page (wrapping the actual page content in
-   Base.astro) carries the grey canvas that used to live directly on body.
-   Fixed-position chrome (logo, menu button, ToC panel, scrim) stays
-   positioned relative to the raw viewport as before — it is not inset by
-   this frame, since none of it was asked to move. */
+/* Every page now sits inside a plain white frame (Tom, 15 Aug — resized
+   16 Aug from a flat 50px, which was far too wide on phones, to the
+   responsive var(--frame) defined in tokens.css). body itself carries the
+   frame, and .page (wrapping the actual page content in Base.astro) carries
+   the grey canvas that used to live directly on body. Fixed-position chrome
+   (logo, menu button, ToC panel, scrim) stays positioned relative to the raw
+   viewport as before — it is not inset by this frame, since none of it was
+   asked to move. */
 body {
   overflow-x: clip;
   background: #fff;
@@ -36,14 +38,14 @@ body {
   font-family: var(--sans);
   font-size: 21.6px;
   line-height: 1.5;
-  padding: 50px;
+  padding: var(--frame);
   min-height: 100vh;
 }
 
 .page {
   background: var(--bg);
   overflow-x: clip;
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - (var(--frame) * 2));
 }
 
 /* GOTCHA: body.locked with overflow:hidden ALSO kills sticky. Scope the
