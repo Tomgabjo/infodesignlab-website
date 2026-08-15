@@ -88,7 +88,7 @@ export default defineConfig({
             label: "Cover variant",
             options: ["single", "covers"],
           },
-          { type: "string", name: "covers", label: "Cover trio images", list: true },
+          { type: "image", name: "covers", label: "Cover trio images", list: true },
           { type: "number", name: "order", label: "Grid order", required: true },
           { type: "boolean", name: "stub", label: "Stub" },
           { type: "boolean", name: "draft", label: "Draft" },
