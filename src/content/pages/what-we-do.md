@@ -1,29 +1,31 @@
 ---
-title: "What we do"
-label: "Overview"
-summary: "Information design and data visualisation for science, policy and the public."
-inShort: "Information design and data visualisation for science, policy and the public."
+title: What we do
+label: Overview
+summary: 'Information design and data visualisation for science, policy and the public.'
+inShort: 'Information design and data visualisation for science, policy and the public.'
 seeAlso:
-  - text: "How we do it"
-    href: "/co-design-process/"
-  - text: "Selected work"
-    href: "#work"
+  - text: How we do it
+    href: /co-design-process/
+  - text: Selected work
+    href: '#work'
 capabilities:
-  - name: "Data visualisation"
-    note: "Signature figures for assessments, reports and summaries for policymakers."
-  - name: "Information design"
-    note: "Structuring complex evidence so it can be read, navigated and trusted."
-  - name: "Editorial & report design"
-    note: "Full publications, from visual identity to print-ready execution."
-  - name: "Co-design workshops"
-    note: "Participatory sessions that build shared understanding across stakeholders."
-  - name: "Visual identity"
-    note: "Coherent visual systems for research programmes and assessments."
-  - name: "Decision-making tools"
-    note: "Interfaces and toolkits that support policy and planning."
+  - name: Data visualisation
+    note: 'Signature figures for assessments, reports and summaries for policymakers.'
+  - name: Information design
+    note: 'Structuring complex evidence so it can be read, navigated and trusted.'
+  - name: Editorial & report design
+    note: 'Full publications, from visual identity to print-ready execution.'
+  - name: Co-design workshops
+    note: Participatory sessions that build shared understanding across stakeholders.
+  - name: Visual identity
+    note: Coherent visual systems for research programmes and assessments.
+  - name: Decision-making tools
+    note: Interfaces and toolkits that support policy and planning.
 quote:
-  text: "“I found the participatory process to be a very effective way to combine/coalesce the (at times contradicting) ideas of different stakeholders during our conceptualization workshops.”"
-  cite: "Shobha Maharaj, IPCC AR6 Lead Author"
+  text: “I found the participatory process to be a very effective way to combine/coalesce the (at times contradicting) ideas of different stakeholders during our conceptualization workshops.”
+  cite: 'Shobha Maharaj, IPCC AR6 Lead Author'
+coverBand: true
+coverBandImage: /images/ipcc-reports/35-img.jpg
 order: 1
 ---
 
