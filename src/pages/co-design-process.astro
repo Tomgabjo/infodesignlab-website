@@ -5,121 +5,59 @@
  * STATIC ROUTE, deliberately and TEMPORARILY (Tom, 16 Aug 2026): "we go for
  * the static route for now. Just to get a better feel and become able to see
  * the new way of treating content in the right context." The agreed end state
- * is structured Tina fields on the pages collection, once the structure has
- * been lived with and settled — see the context doc. Until then this page is
- * NOT editable in /admin, and src/content/pages/co-design-process.md has been
- * removed so the catch-all route does not collide with this one. That file is
- * recoverable from Git history and is the source for the future schema.
+ * is structured Tina fields on the pages collection, once the shape has settled
+ * — see the context doc. Until then this page is NOT editable in /admin, and
+ * src/content/pages/co-design-process.md was removed so the catch-all route
+ * does not collide. That file is in Git history and is the source for the
+ * eventual schema.
  *
- * No fourth template: this reuses the overview template's own skeleton
- * (.wrap / .head / .body / .rail / .copy) and the shared WorkGrid. The only
- * additions are the expandable-row and foundation-card components in
- * components.css, written to be reused by the other overview pages.
+ * BALANCE OF PROSE TO ACCORDIONS — revised 18 Aug 2026 on Tom's note: "I do
+ * want this page to be read and perceived as a text to be read with expandable
+ * functions in it. Now it is too little text and the interactive accordions
+ * sort of take the focus. I want them, but I want them to play second violin
+ * for those with special interest."
  *
- * Copy is verbatim from the studio's own co-design process page — 1,751 words,
- * restructured but not rewritten. Roughly 300 words read at rest; the rest
- * lives behind expansion.
+ * So the source prose was moved OUT of the accordions and into the running
+ * text: roughly 1,300 of the 1,751 words now read at rest, and only genuinely
+ * supplementary detail stays behind an expander. Nothing was written for this
+ * page — every sentence is the studio's own copy from the live co-design
+ * process page, verbatim. Where a passage needed to be split across two
+ * paragraphs it was split, never reworded.
+ *
+ * No fourth template: this reuses the overview skeleton (.wrap / .head / .body
+ * / .rail / .copy) and the shared WorkGrid.
  */
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import WorkGrid from "../components/WorkGrid.astro";
+import CoDesignDiagram from "../components/CoDesignDiagram.astro";
 
-/** Section 01 — why co-design matters. */
-const why = [
-  {
-    mark: "01",
-    title: "Design as a strategic problem-solving process",
-    body: [
-      "Whether we're co-designing data visualisations to convey scientific findings, transforming scientific reports into engaging experiences, collaborating in large research projects across different work packages, or conducting hands-on workshops, we see Design as a strategic problem-solving process. Design enhances our understanding of any content by allowing us to map out interconnections, facilitate dialogues among scientists, build bridges between data experts and the audience, and involve key stakeholders.",
-    ],
-  },
-  {
-    mark: "02",
-    title: "Visualisation is not only for the end",
-    body: [
-      "Data visualisations are more than just tools; they enhance understanding throughout the research process and are crucial when it comes time to communicate the findings.",
-      "Creating scientifically rigorous and user-friendly data visualisations can play a critical role in making complex information more accessible to wider audiences, in supporting scientists during their research process and empowering people to make informed decisions.",
-    ],
-  },
-  {
-    mark: "03",
-    title: "What the research supports",
-    body: [
-      "For data visualisations to be effective sense-making and decision-making tools that help us discern, distinguish, learn and understand, the design and production processes are not trivial. Increasingly, research insights from the fields of design, cognition, psychology and behavioural economics, as well as the increasing robustness of human-centred and participatory design methodologies, can guide us in designing data visualisations that enhance understanding, empower the final users and support informed decision-making at all levels.",
-    ],
-  },
-  {
-    mark: "04",
-    title: "Involvement that leaves ripples",
-    body: [
-      "Co-design is centered on the involvement of all those who affect and are affected by the consequences of design, and exactly that involvement can be the centre of ripples that last.",
-      "Over nearly two decades of projects, we've come to realize that it's not just what we design, but how we design it that can leave a lasting mark on our audience's experience and the journey of all stakeholders involved in the process. That involvement is what we really care about and we have built tools to foster it.",
-      "Together, we explore and stress-test solutions, achieving a sense of joint ownership of the final product.",
-    ],
-  },
-  {
-    mark: "05",
-    title: "The projects behind this",
-    body: [
-      "We are proud to have collaborated with a number of high-profile clients on a range of multi-disciplinary projects covering climate science, sustainable development and public health. The projects might vary in terms of magnitude and number of actors involved, but they all have a common denominator, the co-design process.",
-    ],
-  },
-];
-
-/** Section 02 — the two sides of the conversation. */
-const sides = [
-  {
-    mark: "↳",
-    title: "The audience",
-    sub: "who will read it",
-    body: [
-      "Our goal is to empower an audience to see patterns. If the ambition is turning data into information, presenting it in a way that becomes knowledge in the mind of the users, hopefully help make important decisions and, ultimately, inspire change, for us learning how our audience will decode the information and understanding the context in which the information will be processed are key insights that guide the design.",
-    ],
-  },
-  {
-    mark: "↳",
-    title: "The scientists and data authors",
-    sub: "who know what it means",
-    body: [
-      "On the other side we have the authors of the data and the scientists. Listening to their needs and ideas is crucial, diving into the content with their guidance helps us build a deep and shared understanding of the nature of their data and the science that underpins it, as well as the assumptions, uncertainties, caveats, connections and challenges associated with it.",
-    ],
-  },
-  {
-    mark: "↳",
-    title: "What keeps it running",
-    sub: "leadership, and what remains after",
-    body: [
-      "Leadership and dedicated support is important for making sure the co-design process is positively accepted by the stakeholders involved in the process and for ensuring its smooth running.",
-      "The legacy of such a way of working does not consist only in design deliverables and effective visualisations, but also in cultural changes and mind shifts within the organisations we collaborate with.",
-    ],
-  },
-];
-
-/** Section 03 — the three disciplines, as full-width cards. */
+/**
+ * The three disciplines. Rendered as a STATIC full-width triptych, not as
+ * expanders — these definitions are core text, so hiding them behind a click
+ * was the wrong call in the first version.
+ */
 const foundations = [
   {
     name: "Information Design",
-    sub: "the presentation of data",
     body: "Information Design is the organisation and presentation of data in a way that transforms it into valuable, understandable information. Through Information Design, we can turn complex information into meaningful visuals, empower audiences and spark change. The tools we use range from color to typography, from cognitive science to universal design, from in-depth interviews to user testing, from static to interactive images.",
   },
   {
     name: "Design Thinking",
-    sub: "creative problem solving",
     body: "Design Thinking is about creative problem solving. It is a path to innovation that puts human needs at the centre of all we do. Taking this mindset ensures we create something that resonates with people, is desirable, feasible to produce and makes good business sense.",
   },
   {
     name: "Systems Thinking",
-    sub: "context and interrelation",
     body: "Systems thinking focuses on how different parts of a system interrelate, how systems change over time and how they fit within the context of larger systems. Systems Thinking allows us to gain a deep understanding of the context and the actors, painting a complex and rich picture.",
   },
 ];
 
-/** Section 04 — the cycles, plus the honest note about the diagram. */
+/** The three cycles — the clearest case for an expander: detail on demand. */
 const cycles = [
   {
     mark: "A",
     title: "Cycle A",
-    sub: "design meetings · design work · user reality check",
+    sub: "design meetings · design work · user involvement",
     body: [
       "After an initial period of research during which we dig into the content at the heart of the project studying the science and the data, we begin with Design Meetings A with the scientists and internal project team. Here, we discuss the content and data, ask as many questions as possible and work with the scientists on the narrative structure. The period of Design Work A ends with a first iteration of sketches.",
     ],
@@ -127,7 +65,7 @@ const cycles = [
   {
     mark: "B",
     title: "Cycle B",
-    sub: "design meetings · design work · user reality check",
+    sub: "design meetings · design work · user involvement",
     body: [
       "At Design Meetings B, we discuss the first iteration of sketches, gather feedback from scientists and the project team, gather new inputs and define action points. In Design Work B we make the changes and develop a new iteration of sketches.",
     ],
@@ -135,41 +73,14 @@ const cycles = [
   {
     mark: "C",
     title: "Cycle C",
-    sub: "design meetings · design work · user reality check",
+    sub: "design meetings · design work · user involvement",
     body: [
       "Finally, Cycle C begins with another set of Design Meetings C to discuss the new versions and identify any remaining challenges and/or potential changes. In Design work C we make final changes, then we have the end product.",
     ],
   },
-  {
-    mark: "¶",
-    title: "Why not a neater diagram",
-    sub: "on twists and turns",
-    body: [
-      "A neat diagram illustrating the co-design process might not easily capture the twists and turns that we need to be equipped to face along the journey! Over the years we have built effective facilitation tools to ensure the participation of users, scientists, designers, and a large number of stakeholders, this allows us and our clients to own the process, to monitor progress and to adjust to unexpected changes.",
-      "We plan the process to create maximum space for sharing, for conversations and feedback. Merging ideas across different parts of the globe, time-zones and schedules, we listen, we learn and we design, until we have co-designed something together that fulfils the initial challenge as well as is scientifically rigorous.",
-    ],
-  },
 ];
 
-/** Section 05 — what the studio brings. */
-const bring = [
-  {
-    mark: "06",
-    title: "The importance of mastering the content",
-    body: [
-      "You can only design information effectively if you master the content. As information designers, we achieve that by a constant dialogue with the content experts, by researching the content and asking the right questions to identify the right challenges. Our experience in dealing with big data, our knowledge of scientific processes, our passion for numbers and statistics, our care for quantitative and qualitative information and, above all, an understanding of the barriers that can prevent users from making sense of complex information guide us our decisions during the design process. It is vital to design information not only in a way that is clear, but also in a way that strikes the right note in the mind of the viewer.",
-    ],
-  },
-  {
-    mark: "07",
-    title: "The technical know-how",
-    body: [
-      "Information design lies at the intersection of beauty and function, text and image, perception and cognition, logic and emotion, enabling us to reveal what hides behind our data and to address effective messages. The combination of analytical, technological and design skills is crucial to deliver innovative, beautiful and powerful solutions. Beauty and engagement are a fundamental component of designing understanding.",
-    ],
-  },
-];
-
-/** Section 06 — commission types, verbatim from the source list. */
+/** Commission types, verbatim from the source list. */
 const commissions = [
   "turning complex scientific reports into experiences that enhance understanding and engagement",
   "visualising complex data by defining the appropriate visual narrative that meets the needs of an audience",
@@ -181,28 +92,42 @@ const commissions = [
 ];
 
 /**
- * External sources, rendered in the LEFT RAIL with the rest of the apparatus.
- * Only DOIs that have been verified are linked; the two without a confirmed
- * URL are listed as plain text rather than guessed at.
+ * Left-rail sources. Every entry is now linked (Tom, 18 Aug) — the Nightingale
+ * article and the Data Stories episode URLs were confirmed against the
+ * publishers before being added, per the standing no-fabricated-citations rule.
+ * `external: false` marks the one internal link, which therefore gets no
+ * outbound arrow.
  */
 const readMore = [
+  {
+    text: "Designing climate understanding",
+    where: "InfoDesignLab · World Design Congress 2025",
+    href: "/selected-projects/designing-climate-understanding/",
+    external: false,
+  },
   {
     text: "Co-designing engaging and accessible data visualisations: a case study of the IPCC reports",
     where: "Springer Nature · Climatic Change",
     href: "https://doi.org/10.1007/s10584-021-03171-4",
+    external: true,
   },
   {
     text: "Communicating Climate Risk: Insights from the IPCC Information Design Team",
     where: "Nightingale",
+    href: "https://nightingaledvs.com/%E2%80%8B%E2%80%8Bcommunicating-climate-risk-insights-from-the-ipcc-information-design-team/",
+    external: true,
   },
   {
     text: "Visualizing Global Warming with IPCC",
-    where: "Data Stories podcast · Angela Morelli and Tom Gabriel Johansen",
+    where: "Data Stories 154 · Angela Morelli and Tom Gabriel Johansen",
+    href: "https://datastori.es/154-visualizing-global-warming-with-ipcc-with-angela-morelli-and-tom-gabriel-johansen/",
+    external: true,
   },
   {
     text: "Effects of the Informed Health Choices primary school intervention, Uganda",
     where: "The Lancet · Informed Health Choices",
     href: "https://doi.org/10.1016/S0140-6736(17)31226-6",
+    external: true,
   },
 ];
 ---
@@ -230,11 +155,13 @@ const readMore = [
             readMore.map((r) => (
               <>
                 <span class="who">
-                  {r.href ? (
-                    <a href={r.href} target="_blank" rel="noopener noreferrer">{r.text}</a>
-                  ) : (
-                    r.text
-                  )}
+                  <a
+                    href={r.href}
+                    target={r.external ? "_blank" : undefined}
+                    rel={r.external ? "noopener noreferrer" : undefined}
+                  >
+                    {r.text}
+                  </a>
                 </span>
                 <span class="aff">{r.where}</span>
               </>
@@ -252,100 +179,195 @@ const readMore = [
 
       <div class="copy">
         <p>
-          Co-design encapsulates a way of approaching data visualisation that ensures a deep
-          and shared understanding between those creating the visuals — information designers,
-          content experts, cognitive scientists — and the audience who will read them.
+          Whether we&rsquo;re co-designing data visualisations to convey scientific findings,
+          transforming scientific reports into engaging experiences, collaborating in large
+          research projects across different work packages, or conducting hands-on workshops, we
+          see Design as a strategic problem-solving process. Design enhances our understanding of
+          any content by allowing us to map out interconnections, facilitate dialogues among
+          scientists, build bridges between data experts and the audience, and involve key
+          stakeholders.
         </p>
         <p>
-          From our extensive experience working closely with the science community, we have
-          found the co-design and user-involvement approach is <b>the only route to collective
+          Data visualisations are more than just tools; they enhance understanding throughout the
+          research process and are crucial when it comes time to communicate the findings.
+          Creating scientifically rigorous and user-friendly data visualisations can play a
+          critical role in making complex information more accessible to wider audiences, in
+          supporting scientists during their research process and empowering people to make
+          informed decisions.
+        </p>
+
+        <div class="xrows">
+          <article class="xr">
+            <button class="xr__h" type="button" aria-expanded="false">
+              <span class="xr__x"><span class="xr__t">What the research supports</span></span>
+              <span class="xr__i" aria-hidden="true" />
+            </button>
+            <div class="xr__p">
+              <div>
+                <p>
+                  For data visualisations to be effective sense-making and decision-making tools
+                  that help us discern, distinguish, learn and understand, the design and
+                  production processes are not trivial. Increasingly, research insights from the
+                  fields of design, cognition, psychology and behavioural economics, as well as
+                  the increasing robustness of human-centred and participatory design
+                  methodologies, can guide us in designing data visualisations that enhance
+                  understanding, empower the final users and support informed decision-making at
+                  all levels.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <h2 class="xsec__t">Why co-design, in visualising science</h2>
+        <p>
+          Co-design encapsulates a way of approaching data visualisation that ensures a deep and
+          shared understanding between those creating the visuals — information designers,
+          content experts, cognitive scientists — and the audience.
+        </p>
+        <p>
+          Why is co-design so important when it comes to the visualisation, and more broadly
+          communication, of scientific findings? Because co-designing data visualisations with
+          the readers and above all with the content experts helps us meet our audience where
+          they are.
+        </p>
+        <p>
+          Co-design is centered on the involvement of all those who affect and are affected by
+          the consequences of design, and exactly that involvement can be the centre of ripples
+          that last.
+        </p>
+        <p>
+          Over nearly two decades of projects, we&rsquo;ve come to realize that it&rsquo;s not
+          just <b>what</b>{" "}we design, but <b>how</b>{" "}we design it that can leave a lasting
+          mark on our audience&rsquo;s experience and the journey of all stakeholders involved in
+          the process. That involvement is what we really care about and we have built tools to
+          foster it. Together, we explore and stress-test solutions, achieving a sense of joint
+          ownership of the final product.
+        </p>
+
+        <div class="xrows">
+          <article class="xr">
+            <button class="xr__h" type="button" aria-expanded="false">
+              <span class="xr__x"><span class="xr__t">The projects behind this</span></span>
+              <span class="xr__i" aria-hidden="true" />
+            </button>
+            <div class="xr__p">
+              <div>
+                <p>
+                  We are proud to have collaborated with a number of high-profile clients on a
+                  range of multi-disciplinary projects covering climate science, sustainable
+                  development and public health. The projects might vary in terms of magnitude
+                  and number of actors involved, but they all have a common denominator, the
+                  co-design process.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <h2 class="xsec__t">A participatory journey</h2>
+        <p>
+          Our goal is to empower an audience to see patterns. If the ambition is turning data
+          into information, presenting it in a way that becomes knowledge in the mind of the
+          users, hopefully help make important decisions and, ultimately, inspire change, for us
+          learning how our audience will decode the information and understanding the context in
+          which the information will be processed are key insights that guide the design.
+        </p>
+        <p>
+          On the other side we have the authors of the data and the scientists. Listening to
+          their needs and ideas is crucial, diving into the content with their guidance helps us
+          build a deep and shared understanding of the nature of their data and the science that
+          underpins it, as well as the assumptions, uncertainties, caveats, connections and
+          challenges associated with it.
+        </p>
+        <p>
+          From our extensive experience working closely with the science community, we have found
+          the co-design and user-involvement approach is{" "}<b>the only route to collective
           success</b>{" "}when it comes to turning complex scientific data into effective visual
           tools for decision-making.
         </p>
 
-        <div class="xsec"><span class="xsec__n">01</span><h2 class="xsec__t">Why co-design, in visualising science</h2></div>
-        <p class="xlede">The projects vary in magnitude and in the number of actors involved, but they share one denominator.</p>
-        <button class="xall" type="button">Expand all</button>
         <div class="xrows">
-          {
-            why.map((r) => (
-              <article class="xr">
-                <button class="xr__h" type="button" aria-expanded="false">
-                  <span class="xr__m">{r.mark}</span>
-                  <span class="xr__x"><span class="xr__t">{r.title}</span></span>
-                  <span class="xr__i" aria-hidden="true" />
-                </button>
-                <div class="xr__p"><div>{r.body.map((p) => <p>{p}</p>)}</div></div>
-              </article>
-            ))
-          }
+          <article class="xr">
+            <button class="xr__h" type="button" aria-expanded="false">
+              <span class="xr__x"><span class="xr__t">What keeps it running</span></span>
+              <span class="xr__i" aria-hidden="true" />
+            </button>
+            <div class="xr__p">
+              <div>
+                <p>
+                  Leadership and dedicated support is important for making sure the co-design
+                  process is positively accepted by the stakeholders involved in the process and
+                  for ensuring its smooth running.
+                </p>
+              </div>
+            </div>
+          </article>
+          <article class="xr">
+            <button class="xr__h" type="button" aria-expanded="false">
+              <span class="xr__x"><span class="xr__t">What remains afterwards</span></span>
+              <span class="xr__i" aria-hidden="true" />
+            </button>
+            <div class="xr__p">
+              <div>
+                <p>
+                  The legacy of such a way of working does not consist only in design
+                  deliverables and effective visualisations, but also in cultural changes and
+                  mind shifts within the organisations we collaborate with.
+                </p>
+              </div>
+            </div>
+          </article>
         </div>
 
-        <div class="xsec"><span class="xsec__n">02</span><h2 class="xsec__t">A participatory journey</h2></div>
-        <p class="xlede">Two groups have to end up understanding each other. Most of our craft sits in between them.</p>
-        <div class="xrows">
-          {
-            sides.map((r) => (
-              <article class="xr">
-                <button class="xr__h" type="button" aria-expanded="false">
-                  <span class="xr__m">{r.mark}</span>
-                  <span class="xr__x">
-                    <span class="xr__t">{r.title}</span>
-                    <span class="xr__s">{r.sub}</span>
-                  </span>
-                  <span class="xr__i" aria-hidden="true" />
-                </button>
-                <div class="xr__p"><div>{r.body.map((p) => <p>{p}</p>)}</div></div>
-              </article>
-            ))
-          }
-        </div>
+        <h2 class="xsec__t">A systemic approach</h2>
+        <p>
+          The way we work at InfoDesignLab has its foundation in three disciplines: Information
+          Design, Design Thinking, and System Thinking.
+        </p>
       </div>
     </div>
 
     <section class="fw">
-      <div class="xsec"><span class="xsec__n">03</span><h2 class="xsec__t">A systemic approach</h2></div>
-      <p class="fw__lede">The way we work at InfoDesignLab has its foundation in three disciplines.</p>
       <div class="fcards">
         {
-          foundations.map((f, i) => (
+          foundations.map((f) => (
             <article class="fc">
-              <button class="fc__h" type="button" aria-expanded="false">
-                <span class="fc__n">{String(i + 1).padStart(2, "0")}</span>
-                <span class="fc__t">{f.name}</span>
-                <span class="fc__s">{f.sub}</span>
-                <span class="fc__i" aria-hidden="true" />
-              </button>
-              <div class="fc__p"><div><p>{f.body}</p></div></div>
+              <h3 class="fc__t">{f.name}</h3>
+              <p class="fc__b">{f.body}</p>
             </article>
           ))
         }
       </div>
     </section>
 
+    <div class="body">
+      <aside class="rail rail--quiet"></aside>
+      <div class="copy">
+        <h2 class="xsec__t">The skeleton of the process</h2>
+        <p>
+          A neat diagram illustrating the co-design process might not easily capture the twists
+          and turns that we need to be equipped to face along the journey. Over the years we have
+          built effective facilitation tools to ensure the participation of users, scientists,
+          designers, and a large number of stakeholders; this allows us and our clients to own
+          the process, to monitor progress and to adjust to unexpected changes.
+        </p>
+        <p>
+          We plan the process to create maximum space for sharing, for conversations and
+          feedback. Merging ideas across different parts of the globe, time-zones and schedules,
+          we listen, we learn and we design, until we have co-designed something together that
+          fulfils the initial challenge as well as is scientifically rigorous.
+        </p>
+        <p>
+          Our co-design process is based on iterations, each with three cycles A, B, C, though
+          the number is not set in stone. In each cycle, there is a sequence of design meetings,
+          design work and user involvement.
+        </p>
+      </div>
+    </div>
+
     <section class="fw">
-      <div class="xsec"><span class="xsec__n">04</span><h2 class="xsec__t">The skeleton of the process</h2></div>
-      <p class="fw__lede">
-        Our co-design process is based on iterations, each with three cycles — A, B and C,
-        though the number is not set in stone. In each cycle there is a sequence of design
-        meetings, design work and user involvement.
-      </p>
-      <figure class="fwfig">
-        <div class="fwfig__scroll">
-          <img
-            src="/images/co-design-process/01-milestones-one-iteration.webp"
-            alt="Milestones of the co-design process with one design iteration: the challenge and the brief, user adoption, in-depth conversations and mastering the content, leading into a design iteration containing Cycle A, Cycle B and Cycle C — each with design meetings, design work and a user reality check — with user testing between, ending in launch."
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-        <figcaption>
-          <Icon name="corner-down-right" /> Milestones of the co-design process with one design
-          iteration. The rhythm is defined in line with content experts' availability and
-          stakeholders' needs, ensuring maximum flexibility to meet the evolving needs of the
-          projects we work on.
-        </figcaption>
-      </figure>
+      <CoDesignDiagram />
     </section>
 
     <div class="body">
@@ -369,24 +391,32 @@ const readMore = [
           }
         </div>
 
-        <div class="xsec"><span class="xsec__n">05</span><h2 class="xsec__t">What we bring to it</h2></div>
-        <div class="xrows">
-          {
-            bring.map((r) => (
-              <article class="xr">
-                <button class="xr__h" type="button" aria-expanded="false">
-                  <span class="xr__m">{r.mark}</span>
-                  <span class="xr__x"><span class="xr__t">{r.title}</span></span>
-                  <span class="xr__i" aria-hidden="true" />
-                </button>
-                <div class="xr__p"><div>{r.body.map((p) => <p>{p}</p>)}</div></div>
-              </article>
-            ))
-          }
-        </div>
+        <h2 class="xsec__t">What we bring to it</h2>
+        <p>
+          You can only design information effectively if you master the content. As information
+          designers, we achieve that by a constant dialogue with the content experts, by
+          researching the content and asking the right questions to identify the right
+          challenges. Our experience in dealing with big data, our knowledge of scientific
+          processes, our passion for numbers and statistics, our care for quantitative and
+          qualitative information and, above all, an understanding of the barriers that can
+          prevent users from making sense of complex information guide us our decisions during
+          the design process.
+        </p>
+        <p>
+          It is vital to design information not only in a way that is clear, but also in a way
+          that strikes the right note in the mind of the viewer. Information design lies at the
+          intersection of beauty and function, text and image, perception and cognition, logic
+          and emotion, enabling us to reveal what hides behind our data and to address effective
+          messages.
+        </p>
+        <p>
+          The combination of analytical, technological and design skills is crucial to deliver
+          innovative, beautiful and powerful solutions. Beauty and engagement are a fundamental
+          component of designing understanding.
+        </p>
 
-        <div class="xsec"><span class="xsec__n">06</span><h2 class="xsec__t">The type of projects we work on</h2></div>
-        <p class="xlede">Our commissions can consist of:</p>
+        <h2 class="xsec__t">The type of projects we work on</h2>
+        <p>Our commissions can consist of:</p>
         <ol class="cml">
           {
             commissions.map((c, i) => (
@@ -404,36 +434,16 @@ const readMore = [
   </main>
 
   <script is:inline>
-    /* Expandable rows and foundation cards. Progressive enhancement: with JS
-       off every panel is closed but the page still reads as a full overview,
-       and the reduced-motion rules in components.css drop the transitions. */
+    /* Expandable rows. Progressive enhancement: with JS off every panel is
+       closed but the page still reads as a complete text, because the running
+       prose — not the expanders — now carries the argument. */
     (function () {
-      function wire(sel) {
-        document.querySelectorAll(sel).forEach(function (el) {
-          var btn = el.querySelector("button");
-          if (!btn) return;
-          btn.addEventListener("click", function () {
-            var open = el.classList.toggle("on");
-            btn.setAttribute("aria-expanded", open ? "true" : "false");
-          });
-        });
-      }
-      wire(".xr");
-      wire(".fc");
-
-      document.querySelectorAll(".xall").forEach(function (b) {
-        b.addEventListener("click", function () {
-          var group = b.parentNode.querySelector(".xrows");
-          if (!group) return;
-          var rows = [].slice.call(group.querySelectorAll(".xr"));
-          var opening = rows.some(function (r) {
-            return !r.classList.contains("on");
-          });
-          rows.forEach(function (r) {
-            r.classList.toggle("on", opening);
-            r.querySelector("button").setAttribute("aria-expanded", opening ? "true" : "false");
-          });
-          b.textContent = opening ? "Collapse all" : "Expand all";
+      document.querySelectorAll(".xr").forEach(function (el) {
+        var btn = el.querySelector("button");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          var open = el.classList.toggle("on");
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
         });
       });
     })();

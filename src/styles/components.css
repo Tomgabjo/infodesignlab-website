@@ -196,7 +196,18 @@ a.work:hover .work__title {opacity:.62}
 .rail {font-family:var(--mono);font-size:.92rem;line-height:1.62;color:var(--soft)}
 .rail strong {display:block;color:var(--ink);font-weight:400;margin-bottom:7px}
 .copy p:last-child {margin-bottom:0}
-.copy p b {font-family:var(--sans);font-weight:700;font-size:.94em}
+/* INLINE EMPHASIS STAYS IN THE SURROUNDING TYPEFACE (Tom, 18 Aug 2026):
+   "A bolded section should not become bold and change font." The old rule
+   switched serif body copy to the grotesque at .94em, so a bolded phrase
+   visibly changed face mid-sentence. Now it is the same face at a heavier
+   weight. 600 rather than 700 because Newsreader is loaded as a variable font
+   over 400-700 and 600 is a genuine weight at body sizes; 700 in a serif
+   running text reads heavier than the site's quiet register wants.
+   Applies to every element in the serif copy column, not just <p>. */
+.copy b, .copy strong, .copy em b, .xr__p b, .xr__p strong,
+.fc__b b, .fc__b strong, .cm__t b, .cm__t strong {
+  font-family: inherit; font-weight: 600; font-size: inherit; color: var(--ink);
+}
 .copy a {text-decoration:underline;text-underline-offset:2px}
 .caps {border-top:1px solid var(--line);padding:clamp(22px,3.4vh,38px) 0 0}
 .caps__head {font-family:var(--mono);font-size:.89rem;letter-spacing:.13em;text-transform:uppercase;
@@ -258,57 +269,53 @@ a.work:hover .work__title {opacity:.62}
 @media (max-width: 560px)  { .figs--3 { grid-template-columns: 1fr; } }
 
 /* --------------------------------------------------------------------------
-   Enriched overview pages — expandable rows, foundation cards, wide figures
+   Enriched overview pages — running text with expandable asides
    --------------------------------------------------------------------------
-   Added 16 Aug 2026 for the Co-design process page, the first overview page
-   restructured from continuous prose into a scannable overview with the depth
-   behind expansion. Written generically (not page-scoped) so the other
-   overview pages can adopt the same pattern without a second implementation —
-   the standing rule is that a design-system addition is declared once.
+   Revised 18 Aug 2026 on Tom's review of the first version. Three changes, all
+   of them subtractions:
 
-   Register, deliberately: hairlines and type only. No fills, no borders, no
-   button chrome. A row's resting state is a mono marker, an underlined title
-   and a small plus; open state ink-darkens the marker and underline and turns
-   the plus into a minus. Expanded prose is the SAME size as .copy p, because
-   expanded body copy is still body copy (same rule as lists).
+   1. Subsection headings lost their number and their rule. "You can remove the
+      numbers in front of each heading and also the extra horisontal lines
+      separating each sub section (but keep lines between the accordian
+      points)." So .xsec/.xsec__n are gone and .xsec__t is a plain h2 carrying
+      only vertical space. Hairlines survive ONLY between accordion rows.
+   2. The three disciplines became a STATIC triptych. They were expanders; the
+      definitions are core text and should never have been behind a click.
+   3. The accordions now hold supplementary detail only, so they read as asides
+      to a text rather than as the structure of the page.
+
+   Register unchanged: hairlines and type, no fills, no button chrome.
    -------------------------------------------------------------------------- */
 
-/* section heads inside the copy column and full-width blocks */
-.xsec {display:flex;align-items:baseline;gap:.9rem;border-top:1px solid var(--ink);
-  padding-top:.8rem;margin:clamp(44px,7vh,92px) 0 clamp(14px,2vh,22px);max-width:62ch}
-.fw .xsec {max-width:none}
-.xsec__n {font-family:var(--mono);font-size:.86rem;letter-spacing:.11em;color:var(--soft)}
+/* Subsection heading — space only, no rule, no number. Generous top margin is
+   what separates sections now that the hairline is gone. */
 .xsec__t {font-weight:var(--w-secondary);letter-spacing:-.015em;
-  font-size:clamp(1.72rem,2.92vw,2.35rem);margin:0}
+  font-size:clamp(1.72rem,2.92vw,2.35rem);line-height:1.14;
+  margin:clamp(48px,7.5vh,104px) 0 clamp(16px,2.2vh,26px);max-width:44ch}
+.copy .xsec__t:first-child {margin-top:0}
 
-/* short serif lead-in under a section head */
-.xlede {font-family:var(--serif);font-size:clamp(1.28rem,1.6vw,1.52rem);line-height:1.45;
-  color:var(--ink-desc);max-width:46ch;margin-bottom:clamp(16px,2.4vh,26px)}
-.copy p.xlede {font-size:clamp(1.28rem,1.6vw,1.52rem);margin-bottom:clamp(16px,2.4vh,26px)}
-.fw__lede {font-family:var(--serif);font-size:clamp(1.28rem,1.6vw,1.52rem);line-height:1.45;
-  color:var(--ink-desc);max-width:52ch;margin:0 0 clamp(20px,3vh,32px)}
-
-.xall {all:unset;font-family:var(--mono);font-size:.82rem;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--soft);cursor:pointer;text-decoration:underline;
-  text-underline-offset:3px;display:inline-block;margin-bottom:clamp(12px,1.8vh,18px)}
-.xall:focus-visible {outline:1px solid var(--ink);outline-offset:3px}
-
-/* ---- expandable row ---- */
-.xrows {max-width:62ch}
+/* ---- expandable aside ----
+   Explicit grid-column on every child, so a row WITHOUT a marker span still
+   puts its title in column two and stays aligned with the marked rows. */
+.xrows {max-width:62ch;margin:clamp(22px,3.2vh,34px) 0}
 .xr {border-top:1px solid var(--line)}
 .xrows .xr:last-child {border-bottom:1px solid var(--line)}
 .xr__h {all:unset;display:grid;grid-template-columns:2.4rem 1fr 1rem;gap:0 1rem;width:100%;
-  box-sizing:border-box;padding:clamp(15px,2.2vh,22px) 0;cursor:pointer;align-items:start}
+  box-sizing:border-box;padding:clamp(14px,2vh,20px) 0;cursor:pointer;align-items:start}
 .xr__h:focus-visible {outline:1px solid var(--ink);outline-offset:4px}
-.xr__m {font-family:var(--mono);font-size:.86rem;letter-spacing:.06em;color:var(--soft);
-  padding-top:.42em;transition:color .3s ease}
-.xr__t {display:block;font-weight:var(--w-secondary);letter-spacing:-.01em;
-  font-size:clamp(1.3rem,1.78vw,1.5rem);line-height:1.22;text-decoration:underline;
+.xr__m {grid-column:1;font-family:var(--mono);font-size:.86rem;letter-spacing:.06em;
+  color:var(--soft);padding-top:.3em;transition:color .3s ease}
+.xr__x {grid-column:2}
+.xr__i {grid-column:3}
+/* Smaller than a section heading on purpose: an aside must not compete with
+   the running text it sits inside. */
+.xr__t {display:block;font-weight:var(--w-secondary);letter-spacing:-.008em;
+  font-size:clamp(1.16rem,1.42vw,1.28rem);line-height:1.24;text-decoration:underline;
   text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--line);
   transition:text-decoration-color .3s ease}
-.xr__s {display:block;font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;
-  color:var(--soft);margin-top:.6em}
-.xr__i {position:relative;height:1rem;margin-top:.5em}
+.xr__s {display:block;font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;
+  color:var(--soft);margin-top:.55em}
+.xr__i {position:relative;height:1rem;margin-top:.4em}
 .xr__i::before,.xr__i::after {content:"";position:absolute;background:var(--soft);
   transition:transform .4s cubic-bezier(.22,.61,.36,1),background .3s ease}
 .xr__i::before {left:0;top:6px;width:13px;height:1px}
@@ -317,58 +324,48 @@ a.work:hover .work__title {opacity:.62}
 .xr.on .xr__i::before,.xr.on .xr__i::after {background:var(--ink)}
 .xr.on .xr__m {color:var(--ink)}
 .xr.on .xr__t {text-decoration-color:var(--ink)}
-/* grid-template-rows 0fr -> 1fr animates height without a hardcoded max-height */
+/* 0fr -> 1fr animates height with no hardcoded max-height */
 .xr__p {display:grid;grid-template-rows:0fr;
   transition:grid-template-rows .5s cubic-bezier(.22,.61,.36,1);
   padding-left:calc(2.4rem + 1rem);padding-right:2rem}
 .xr.on .xr__p {grid-template-rows:1fr}
 .xr__p > div {overflow:hidden;min-height:0}
+/* Body copy, matching .copy p — expanded body copy is still body copy. */
 .xr__p p {font-family:var(--serif);font-size:clamp(1.5rem,1.93vw,1.86rem);line-height:1.45;
   color:var(--ink-body);margin:0 0 .9em;max-width:62ch;opacity:0;transition:opacity .4s ease .1s}
 .xr__p p:last-child {margin-bottom:clamp(20px,3vh,30px)}
 .xr.on .xr__p p {opacity:1}
 
 /* ---- full-width blocks, inside .wrap's own --pad (never viewport-bled) ---- */
-.fw {margin:clamp(30px,5vh,60px) 0 0}
+.fw {margin:clamp(34px,5.5vh,68px) 0}
+
+/* The three disciplines: static, no interaction. Hairline above each column is
+   the only chrome. */
 .fcards {display:grid;grid-template-columns:repeat(3,1fr);gap:0 clamp(20px,3vw,48px);
   align-items:start}
-.fc {border-top:1px solid var(--ink)}
-.fc__h {all:unset;display:block;width:100%;box-sizing:border-box;
-  padding:clamp(13px,1.9vh,18px) 0 clamp(15px,2.2vh,22px);cursor:pointer;position:relative}
-.fc__h:focus-visible {outline:1px solid var(--ink);outline-offset:4px}
-.fc__n {display:block;font-family:var(--mono);font-size:.82rem;letter-spacing:.11em;
-  color:var(--soft);margin-bottom:1.5em}
-.fc__t {display:block;font-weight:var(--w-secondary);letter-spacing:-.01em;
-  font-size:clamp(1.3rem,1.78vw,1.5rem);line-height:1.16}
-.fc__s {display:block;font-family:var(--serif);font-size:1.2rem;color:var(--ink-desc);
-  line-height:1.4;margin-top:.3em}
-.fc__i {position:absolute;right:0;bottom:clamp(15px,2.2vh,22px);width:13px;height:13px}
-.fc__i::before,.fc__i::after {content:"";position:absolute;background:var(--soft);
-  transition:transform .4s cubic-bezier(.22,.61,.36,1),background .3s ease}
-.fc__i::before {left:0;top:6px;width:13px;height:1px}
-.fc__i::after {left:6px;top:0;width:1px;height:13px}
-.fc.on .fc__i::after {transform:scaleY(0)}
-.fc.on .fc__i::before,.fc.on .fc__i::after {background:var(--ink)}
-.fc__p {display:grid;grid-template-rows:0fr;
-  transition:grid-template-rows .5s cubic-bezier(.22,.61,.36,1)}
-.fc.on .fc__p {grid-template-rows:1fr}
-.fc__p > div {overflow:hidden;min-height:0}
-.fc__p p {font-family:var(--serif);font-size:1.27rem;line-height:1.44;color:var(--ink-desc);
-  margin:0;padding:0 0 clamp(16px,2.4vh,24px);opacity:0;transition:opacity .4s ease .1s}
-.fc.on .fc__p p {opacity:1}
+.fc {border-top:1px solid var(--ink);padding-top:clamp(13px,1.9vh,18px)}
+.fc__t {font-weight:var(--w-secondary);letter-spacing:-.01em;
+  font-size:clamp(1.3rem,1.78vw,1.5rem);line-height:1.16;margin:0 0 .5em}
+.fc__b {font-family:var(--serif);font-size:1.27rem;line-height:1.44;color:var(--ink-desc);
+  margin:0}
 
-/* Wide diagram. On a phone the milestones figure is unreadable if scaled to
-   fit, so it becomes a CONTAINED horizontal scroller instead: taller image,
-   pan sideways. overscroll-behavior-x keeps the gesture inside the figure, and
-   because nothing on an inner page is position:sticky, the overflow-vs-sticky
-   trap does not apply here. Caption sits below, not overlaid as on .fig —
-   this figure is too dense to have text laid over it. */
-.fwfig {margin:clamp(24px,3.6vh,44px) 0}
-.fwfig__scroll {background:#fff;overflow-x:auto;-webkit-overflow-scrolling:touch;
-  overscroll-behavior-x:contain}
-.fwfig__scroll img {display:block;width:100%;height:auto}
-.fwfig figcaption {font-family:var(--mono);font-size:.84rem;letter-spacing:.03em;
-  line-height:1.5;color:var(--ink-cap);margin-top:12px;max-width:62ch}
+/* ---- the process diagram ----
+   Inline SVG, black stroke on transparent, per the reference language. Stroke
+   widths live here rather than on the elements so the whole figure retunes in
+   one place. Strokes deliberately scale WITH the figure (no
+   vector-effect:non-scaling-stroke) — a 6px outline that stayed 6px while the
+   shapes shrank would read heavier and heavier on narrower screens. */
+.cdd {margin:clamp(24px,3.6vh,44px) 0}
+.cdd__svg {display:block;width:100%;height:auto}
+.cdd-s {fill:none;stroke:var(--ink);stroke-width:6}
+.cdd-arw {fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;
+  stroke-linejoin:round}
+.cdd-p {fill:var(--ink);stroke:none}
+.cdd-l {font-family:var(--mono);fill:var(--ink);letter-spacing:.11em}
+.cdd-c {font-family:var(--mono);fill:var(--ink);letter-spacing:.06em}
+.cdd__svg--narrow {display:none}
+.cdd figcaption {font-family:var(--mono);font-size:.84rem;letter-spacing:.03em;
+  line-height:1.55;color:var(--ink-cap);margin-top:clamp(14px,2vh,20px);max-width:62ch}
 
 /* ---- numbered commission list ---- */
 .cml {list-style:none;margin:0;padding:0;max-width:62ch}
@@ -380,22 +377,38 @@ a.work:hover .work__title {opacity:.62}
 .cm__t {font-family:var(--serif);font-size:clamp(1.35rem,1.66vw,1.6rem);line-height:1.42;
   color:var(--ink-body)}
 
-/* Empty rail on a second .body grid, purely to hold the copy column on the
-   same left edge. Hidden on mobile, where .body is a single column anyway. */
+/* Empty rail on a follow-on .body grid, holding the copy column on the same
+   left edge. Hidden on mobile, where .body is one column anyway. */
 .rail--quiet {min-height:1px}
+
+/* ---- outbound arrow on rail links ----
+   Same Lucide arrow-up-right mask icon as .evt__title, so every external link
+   on the site carries one glyph from one family. Internal rail links have no
+   target attribute and so get no arrow. */
+.rail a[target="_blank"]::after {
+  content: "";
+  display: inline-block;
+  width: .78em;
+  height: .78em;
+  margin-left: .3em;
+  vertical-align: -.05em;
+  background-color: var(--soft);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E") no-repeat center / contain;
+}
 
 @media (max-width:820px) {
   .fcards {grid-template-columns:1fr;gap:0}
-  .fc + .fc {border-top:1px solid var(--line)}
-  .fc__n {margin-bottom:.8em}
+  .fc + .fc {margin-top:clamp(20px,3vh,28px)}
   .xr__h {grid-template-columns:1.9rem 1fr 1rem;gap:0 .75rem}
   .xr__p {padding-left:calc(1.9rem + .75rem);padding-right:0}
   .cml li {grid-template-columns:1.9rem 1fr;gap:0 .75rem}
   .rail--quiet {display:none}
-  .fwfig__scroll img {width:auto;height:clamp(230px,44vh,340px);max-width:none}
+  /* Purpose-built vertical diagram, not the wide one scaled down. */
+  .cdd__svg--wide {display:none}
+  .cdd__svg--narrow {display:block}
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .xr__p,.fc__p,.xr__p p,.fc__p p,
-  .xr__i::before,.xr__i::after,.fc__i::before,.fc__i::after {transition:none!important}
+  .xr__p,.xr__p p,.xr__i::before,.xr__i::after {transition:none!important}
 }
