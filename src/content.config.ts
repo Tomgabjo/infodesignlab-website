@@ -151,6 +151,9 @@ const events = defineCollection({
     where: z.string(),
     href: z.string().optional(),
     kind: z.enum(["talk", "workshop", "conference", "lecture"]).default("talk"),
+    /** Optional, per Path A: a plain URL string into public/images/, not an
+     * Astro image() import. Shown in the event row (list pages + homepage). */
+    image: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

@@ -152,6 +152,7 @@ export default defineConfig({
             label: "Kind",
             options: ["talk", "workshop", "conference", "lecture"],
           },
+          { type: "image", name: "image", label: "Image (optional)" },
           { type: "boolean", name: "draft", label: "Draft" },
         ],
       },

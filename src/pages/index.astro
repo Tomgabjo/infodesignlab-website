@@ -248,6 +248,7 @@ const events = [...upcoming, ...past];
                     )
                   }
                 </div>
+                {e.data.image && <img class="evt__img" src={e.data.image} alt="" loading="lazy" />}
                 <div class="evt__where">{e.data.where}</div>
               </article>
             );

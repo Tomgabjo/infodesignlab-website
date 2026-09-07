@@ -170,7 +170,26 @@
   display: block;
 }
 
+/* Venue + Design pair, relocated into the main (.copy) column — sits below
+   the cover band and above the article body. Reuses .meta__block's quiet
+   mono register (components.css) so it still reads as attribution, just
+   positioned in the main column rather than the rail. Two-up, wrapping to
+   one column if either block genuinely needs more room than half the
+   column (e.g. a long author-style Design list). */
+.meta-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+.meta-top .meta__block { margin-bottom: 0; }
+
 @media (max-width: 820px) {
   .head { grid-template-columns: 1fr; gap: 14px; }
   .body { grid-template-columns: 1fr; gap: 22px; padding-top: 24px; }
+  /* Rail (Authors/References) now falls BELOW the main column when stacked,
+     not above it — was DOM order = visual order before this. Venue/Design
+     already live in .copy so they naturally stay above the body text. */
+  .body > .copy { order: 1; }
+  .body > .meta { order: 2; margin-top: clamp(28px, 4.5vh, 50px); }
 }

@@ -9,7 +9,13 @@
  * astro.config.mjs sets build.format:"directory" for the same reason.
  *
  * Asymmetric editorial grid (layout.css): left rail = content-type label and
- * mono metadata, right = title and body.
+ * mono metadata (Authors, References), right = title and body.
+ *
+ * Venue and Design sit in the MAIN column as a side-by-side ".meta-top" pair,
+ * below the optional cover band and above the body copy — moved out of the
+ * rail 7 Sep 2026 so mobile doesn't stack all rail content above the article
+ * text. On mobile the rail (Authors/References) falls BELOW the main column
+ * via `order` in the 820px breakpoint (layout.css), not above it.
  */
 import { getCollection, render } from "astro:content";
 import type { GetStaticPaths } from "astro";
@@ -79,15 +85,6 @@ const { Content } = await render(entry);
     <div class="body">
       <aside class="meta">
         {
-          venue && (
-            <div class="meta__block">
-              <strong><Icon name="corner-down-right" /> {venue.label}</strong>
-              {venue.value}
-            </div>
-          )
-        }
-
-        {
           authors.length > 0 && (
             <div class="meta__block">
               <strong><Icon name="corner-down-right" /> {authors.length === 1 ? "Author" : "Authors"}</strong>
@@ -101,15 +98,6 @@ const { Content } = await render(entry);
                   </>
                 ))
               }
-            </div>
-          )
-        }
-
-        {
-          design.length > 0 && (
-            <div class="meta__block">
-              <strong><Icon name="corner-down-right" /> Design</strong>
-              {design.map((d) => <span class="who">{d}</span>)}
             </div>
           )
         }
@@ -143,6 +131,29 @@ const { Content } = await render(entry);
       </aside>
 
       <div class="copy">
+        {
+          (venue || design.length > 0) && (
+            <div class="meta-top">
+              {
+                venue && (
+                  <div class="meta__block">
+                    <strong><Icon name="corner-down-right" /> {venue.label}</strong>
+                    {venue.value}
+                  </div>
+                )
+              }
+              {
+                design.length > 0 && (
+                  <div class="meta__block">
+                    <strong><Icon name="corner-down-right" /> Design</strong>
+                    {design.map((d) => <span class="who">{d}</span>)}
+                  </div>
+                )
+              }
+            </div>
+          )
+        }
+
         <Content components={mdxComponents} />
       </div>
     </div>

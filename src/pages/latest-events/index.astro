@@ -43,29 +43,41 @@ const events = [...upcoming, ...past];
       </div>
     </div>
 
-    <section class="events" id="events">
-      {
-        events.map((e) => {
-          const isNext = e.data.date >= now;
-          return (
-            <article class:list={["evt", isNext && "evt--next"]}>
-              <div class="evt__date">{e.data.dateLabel ?? ""}</div>
-              <div class="evt__title">
-                {
-                  e.data.href ? (
-                    <a href={e.data.href} target="_blank" rel="noopener noreferrer">
-                      {e.data.title}
-                    </a>
-                  ) : (
-                    e.data.title
-                  )
-                }
-              </div>
-              <div class="evt__where">{e.data.where}</div>
-            </article>
-          );
-        })
-      }
-    </section>
+    {
+      /* Empty quiet rail holds this section's left edge in line with the
+         main/title column above, instead of the events list starting flush
+         against .wrap's own left padding (the "leaning left" Tom reported).
+         Same trick already used on /co-design-process. Collapses away under
+         820px, where the whole page is one column anyway. */
+    }
+    <div class="body">
+      <aside class="rail rail--quiet" aria-hidden="true" />
+
+      <section class="events" id="events">
+        {
+          events.map((e) => {
+            const isNext = e.data.date >= now;
+            return (
+              <article class:list={["evt", isNext && "evt--next"]}>
+                <div class="evt__date">{e.data.dateLabel ?? ""}</div>
+                <div class="evt__title">
+                  {
+                    e.data.href ? (
+                      <a href={e.data.href} target="_blank" rel="noopener noreferrer">
+                        {e.data.title}
+                      </a>
+                    ) : (
+                      e.data.title
+                    )
+                  }
+                </div>
+                {e.data.image && <img class="evt__img" src={e.data.image} alt="" loading="lazy" />}
+                <div class="evt__where">{e.data.where}</div>
+              </article>
+            );
+          })
+        }
+      </section>
+    </div>
   </main>
 </Base>

@@ -91,6 +91,11 @@ a.work:hover .work__title {opacity:.62}
 }
 .evt__where {font-family:var(--serif);font-size:1.26rem;color:var(--ink-desc);grid-column:2}
 .evt--next .evt__date {color:var(--ink)}
+/* Optional event image, after the title and before the "where" line. Sits in
+   the title/subtitle column only (never the 118px date column, never the
+   row's full width) — a small quiet thumbnail, not a full-bleed figure. */
+.evt__img {grid-column:2;width:100%;max-width:320px;height:clamp(90px,14vw,160px);
+  object-fit:cover;display:block;margin:6px 0 2px;background:#fff}
 .events__more {margin-top:clamp(20px,3vh,32px);display:inline-block;font-family:var(--mono);font-size:.92rem;
   letter-spacing:.09em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:3px}
 
@@ -98,6 +103,7 @@ a.work:hover .work__title {opacity:.62}
   .evt {grid-template-columns:1fr}
   .evt__date {order:-1}
   .evt__where {grid-column:1}
+  .evt__img {grid-column:1;max-width:100%}
 }
 
 /* ===== from abstract prototype ===== */
