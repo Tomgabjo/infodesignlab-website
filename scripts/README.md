@@ -1,4 +1,18 @@
-# Migration scripts
+# Scripts
+
+## publish.py — everyday publishing (no CMS)
+
+Used by the studio's build agent to add content from text and images Tom sends.
+Writes new files only (never overwrites) and warns about likely duplicates.
+
+```bash
+python3 scripts/publish.py event --title "..." --date 2026-11-20 --where "Venue, City" [--image file]
+python3 scripts/publish.py publication --title "..." --publisher "..." [--href URL] [--author NAME ...]
+python3 scripts/publish.py image file.jpg --folder <slug>
+python3 scripts/publish.py check     # astro check + build + post-build checks
+```
+
+# Migration scripts (historical)
 
 ## extract-squarespace.py
 
