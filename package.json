@@ -7,8 +7,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "tinacms dev -c \"astro dev\"",
-    "build": "NODE_OPTIONS=--max-old-space-size=8192 tinacms build && astro build",
+    "dev": "astro dev",
+    "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro"
@@ -16,10 +16,8 @@
   "dependencies": {
     "@astrojs/mdx": "7.0.5",
     "@astrojs/sitemap": "3.7.3",
-    "@tinacms/cli": "2.5.6",
     "astro": "7.1.6",
-    "sharp": "0.35.3",
-    "tinacms": "3.11.0"
+    "sharp": "0.35.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

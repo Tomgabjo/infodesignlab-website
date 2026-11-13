@@ -7,11 +7,7 @@ dist/
 # Astro generated types and cache
 .astro/
 
-# TinaCMS generated client and types (regenerated at build time by tinacms build)
-tina/__generated__/
-
-# environment — the Tina read-only token and client ID live in Netlify's
-# environment variables, never in the repo
+# environment — secrets never live in the repo
 .env
 .env.*
 !.env.example

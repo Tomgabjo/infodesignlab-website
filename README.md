@@ -21,8 +21,8 @@ science legible. Replaces the previous Squarespace site.
 | Layer | Choice | Why |
 |---|---|---|
 | Site | [Astro](https://astro.build) | Static output, content collections, built-in image optimisation |
-| Editing | [TinaCMS](https://tina.io) | Git-based, imposes no design constraints |
-| Hosting | [Netlify](https://netlify.com) | Free tier, preview deploy per change, one-click rollback |
+| Editing | Agent-centric, no CMS | Tom sends text and images; the agent writes the files, checks the build, shows a preview and publishes on approval |
+| Hosting | [Netlify](https://netlify.com) | Preview deploy per branch, one-click rollback |
 | Source | GitHub | Full history; content and code in one place |
 
 Content lives as markdown in the repository, so every edit is a commit with an
@@ -39,7 +39,9 @@ Three page templates carry the whole site:
 
 ## Operating model
 
-- **Content** — edited by InfoDesignLab through TinaCMS. No code required.
+- **Content** — InfoDesignLab sends text and images to the studio's build
+  agent, which edits the markdown, runs `npm run check` and `npm run build`,
+  shows the change and publishes after approval. No dashboard required.
 - **Design and code** — changed via this repository, with a Netlify preview
   per change.
 

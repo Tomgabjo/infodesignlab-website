@@ -2,9 +2,8 @@
 /**
  * A row of portfolio figures.
  *
- * Takes an `items` list rather than slot children so TinaCMS can read and
- * write this component as a structured list field in its rich-text editor.
- * A slot-based approach cannot be represented as a Tina template.
+ * Takes an `items` list rather than slot children, so one component holds
+ * rows of 2, 3 or 6 images and stays easy to write by script.
  *
  * cols={2}  default, two columns collapsing to one under 700px.
  * cols={3}  for sets of square tiles (e.g. the six CMCC platform cards on the

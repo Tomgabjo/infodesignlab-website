@@ -4,8 +4,7 @@
  *
  * Static route rather than a pages-collection entry, deliberately: the pages
  * template ends in the Selected-work grid, which a colophon should not carry,
- * and adding an opt-out flag would mean a schema change mirrored into the
- * Tina config and lock. This reuses the overview template's classes only —
+ * and adding an opt-out flag would mean a schema change for one page. This reuses the overview template's classes only —
  * no fourth template, no new CSS.
  */
 import Base from "../layouts/Base.astro";
@@ -53,8 +52,7 @@ import Icon from "../components/Icon.astro";
         </p>
         <p>
           It is hand-coded — no theme, no template, every rule written for
-          this site — built with Astro, edited through TinaCMS, and served by
-          Netlify. Every change is a commit with an author and a diff, which
+          this site — built with Astro and served by Netlify. Every change is a commit with an author and a diff, which
           feels right for a studio that believes understanding precedes
           action.
         </p>
