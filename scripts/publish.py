@@ -8,6 +8,7 @@ then shows the change and publishes after his approval.
   python3 scripts/publish.py event --title "..." --date 2026-11-20 \
       --where "Venue, City" [--date-label "20 Nov 2026"] [--href URL] \
       [--kind talk|workshop|conference|lecture] [--image path/to/file]
+      [--video URL]
 
   python3 scripts/publish.py publication --title "..." --publisher "..." \
       [--date 2026-05-01] [--date-label "2026"] [--href URL] \
@@ -127,6 +128,10 @@ def cmd_event(a):
     if a.href:
         lines.append(f"href: {q(a.href)}")
     lines.append(f"kind: {q(a.kind)}")
+    if a.video:
+        if not re.match(r"https?://", a.video):
+            sys.exit("--video must be a full http(s) URL.")
+        lines.append(f"video: {q(a.video)}")
     if a.image:
         lines.append(f"image: {q(copy_image(a.image, 'events', slug))}")
     lines += ["---", ""]
@@ -193,6 +198,7 @@ def main():
     e.add_argument("--href")
     e.add_argument("--kind", choices=KINDS, default="talk")
     e.add_argument("--image")
+    e.add_argument("--video", help="URL of a recording, e.g. YouTube")
     e.add_argument("--slug")
     e.set_defaults(fn=cmd_event)
 

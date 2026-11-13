@@ -78,7 +78,8 @@ a.work:hover .work__title {opacity:.62}
    emoji). mask-image + background-color:currentColor means the icon inherits
    --soft the same way Icon.astro icons inherit colour elsewhere — the arrow
    still sits quieter than the title, same as before. */
-.evt__title a[target="_blank"]::after {
+.evt__title a[target="_blank"]::after,
+.evt__where a[target="_blank"]::after {
   content: "";
   display: inline-block;
   width: .78em;
@@ -90,6 +91,9 @@ a.work:hover .work__title {opacity:.62}
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 .evt__where {font-family:var(--serif);font-size:1.26rem;color:var(--ink-desc);grid-column:2}
+/* Recording link on the where line: same serif and ink as the venue, underlined
+   at rest like every inline link, same quiet arrow as the title link. */
+.evt__where a {text-decoration:underline;text-underline-offset:2px}
 .evt--next .evt__date {color:var(--ink)}
 /* Optional event image, after the title and before the "where" line. Sits in
    the title/subtitle column only (never the 118px date column, never the

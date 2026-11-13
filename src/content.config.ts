@@ -154,6 +154,9 @@ const events = defineCollection({
     /** Optional, per Path A: a plain URL string into public/images/, not an
      * Astro image() import. Shown in the event row (list pages + homepage). */
     image: z.string().optional(),
+    /** Optional recording of the event (e.g. a YouTube link). Rendered as a
+     * quiet "Watch the recording" link on the where line, list pages + homepage. */
+    video: z.string().url().optional(),
     draft: z.boolean().default(false),
   }),
 });
